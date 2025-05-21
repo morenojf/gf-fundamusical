@@ -1,19 +1,13 @@
-import http from 'http'
+import { Router } from 'express' // nativo de express permite crear rutas
+import { controller } from '../controller/controller.mjs' // importo el controlador desde el archivo controller.mjs
 
-const PORT = 3128 // Puerto en el que se va a escuchar el servidor, si es 0 se elige uno aleatorio
+export const routing = Router()
 
-const server = http.createServer((req, res) => {
-  res.setHeader('Content-Type', 'text/plain; charset=utf-8') // El header Content-Type indica que el contenido es texto plano y que se usará la codificación UTF-8
+routing.get('/', controller.getAll)
+routing.post('/', controller.creat)
 
-  if (req.url === '/') {
-    console.log('Request received:')
-    res.end('este es el sin nada')
-  } else if (req.url === '/segundotry') {
-    console.log('Request received:')
-    res.end('este es el segundo')
-  } else {
-    res.statusCode = 404 // Not Found
-    console.log('Request received:')
-    res.end('not found')
-  }
-})
+routing.get('/:id', controller.getById)
+routing.delete('/:id', controller.delete)
+routing.patch('/:id', controller.update) // actualizar un W parcialmente
+ 
+const test = 1
