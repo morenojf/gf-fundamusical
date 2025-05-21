@@ -1,46 +1,8 @@
 // Este archivo levanta el servidor y configura los middlewares.
-
 import express from 'express'
-
-// importacion de la "base de datos""
-// Importo la base de datos desde el archivo example.json, y le digo que es un json para que no me tire error de tipo
-// No se puede importar un json directamente, por eso lo importo con createRequire para usar commonjs dentro de un archivo mjs
-import { createRequire } from 'module'
-const required = createRequire(import.meta.url)
-const movies = required('../common/example.json')
 const app = express()
 
 const PORT = process.env.PORT || 3128
-
-app.get('/', (req, res) => {
-  res.send('<h1>Esta es la pagina principal</h1>').status(200) // Express automáticamente establece el Content-Type
-})
-
-// Esto se le conoce como endpoint, es una ruta que se le asigna un recurso
-// En este caso, la ruta es /lepiculas y el recurso es la base de datos de peliculas
-app.get('/lepiculas', (req, res) => {
-  const { genre } = req.query
-  if (genre) {
-    const filteredMovies = movies.filter(
-      movie => movie.Genre.includes(genre))
-    return res.json(filteredMovies)
-  }
-  res.json(movies)
-})
-
-// Esta ruta es para obtener una pelicula en particular, se le pasa el id por la url
-app.get('/lepiculas/:id', (req, res) => {
-  const { id } = req.params
-  const movie = movies.find(movie => movie.imdbID === id)
-  if (movie) return res.json(movie.Title) // Express automáticamente establece el Content-Type
-
-  res.status(404).send('Not Found | Error 404') // Si no se encuentra la pelicula, se devuelve un error 404
-})
-
-// Esta linea de codigo es para que si no se encuentra la ruta, se devuelva un error 404. Siempre se coloca de ultimo.
-app.use((req, res) => {
-  res.status(404).send('Not Found | Error 404')
-})
 
 export { app, PORT } // Exporto el servidor y el puerto para poder usarlos en otros archivos
 

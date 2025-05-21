@@ -17,7 +17,3 @@ const server = http.createServer((req, res) => {
     res.end('not found')
   }
 })
-
-server.listen(PORT, () => {
-  console.log(`Server is listening on port http://localhost:${server.address().port}`)
-})
