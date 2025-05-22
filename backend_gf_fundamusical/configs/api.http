@@ -1,6 +1,6 @@
 ### AQUI ESTARÁN LOS ENDPOINTS DE LA API PARA RECUPERAR LOS DATOS SEGUN LA URL
 
-GET http://localhost:3128/lepiculas/
+GET http://localhost:3128/movies
 
 ### DAMOS EL ID Y REGREESA EL NOMBRE DE ESE ID en formato JSON
 

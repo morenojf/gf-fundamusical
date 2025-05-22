@@ -1,6 +1,7 @@
 // Este archivo levanta el servidor y configura los middlewares.
-import express from 'express'
+import express, { json } from 'express'
 const app = express()
+app.use(json()) // Middleware para parsear el body de la peticion a json
 
 const PORT = process.env.PORT || 3128
 

@@ -1,31 +1,19 @@
 // este archivo recibira la ruta y seleccionara el modelo correspondiente.
 // en caso de fallo, lanza el error res.srtatus(httpStatus)
 // En caso de succeso, devuelve el resultado.
+import express, { json } from 'express'
+import { modelLocalDB } from '../model/localdb/fs.mjs' // Base de datos local
 
-import { model } from '../model/localdb.mjs'
+const app = express()
+app.use(json()) // Middleware para parsear el body de la peticion a json
 
-app.get('/', (req, res) => {
-  res.send('<h1>Esta es la pagina principal</h1>').status(200) // Express automáticamente establece el Content-Type
-})
+// import { modelMySLQ } from '../model/mysql-db/dbfundamusical.mjs' BASE DE DATOS MYSQL
 
-app.get('/lepiculas', (req, res) => {
-  const { genre } = req.query
-  if (genre) {
-	const filteredMovies = movies.filter(
-	  movie => movie.Genre.includes(genre))
-	return res.json(filteredMovies)
+export class controller {
+  static getAll (req, res) {
+    // const { genre } = req.query esta es para filtrar por genero pero quiero que me todas las peliculas primero para testear
+    const movies = modelLocalDB.getAll() // ({ genre }) esto es parte del filtro por genero
+    // res.json(movies).status(200)
+    return console.log(movies)
   }
-  res.json(movies)
-})
-
-app.get('/lepiculas/:id', (req, res) => {
-  const { id } = req.params
-  const movie = movies.find(movie => movie.imdbID === id)
-  if (movie) return res.json(movie.Title) // Express automáticamente establece el Content-Type
-
-  res.status(404).send('Not Found | Error 404') // Si no se encuentra la pelicula, se devuelve un error 404
-})
-
-app.use((req, res) => {
-  res.status(404).send('Not Found | Error 404')
-})
+}

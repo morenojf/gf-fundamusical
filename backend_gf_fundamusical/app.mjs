@@ -7,4 +7,4 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port http://localhost:${PORT}`)
 })
 
-app.use('/gf_fundamusical', routing)
+app.use('/movies', routing)
