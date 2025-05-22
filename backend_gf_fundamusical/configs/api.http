@@ -1,11 +1,11 @@
 ### AQUI ESTARÁN LOS ENDPOINTS DE LA API PARA RECUPERAR LOS DATOS SEGUN LA URL
 
-GET http://localhost:3128/movies
+GET http://localhost:3128/movies/
 
 ### DAMOS EL ID Y REGREESA EL NOMBRE DE ESE ID en formato JSON
 
-GET http://localhost:3128/lepiculas/tt0499549
+GET http://localhost:3128/movies/tt0848228
 
 ### Recuperar peliculas por genero 
 
-GET http://localhost:3128/lepiculas?genre=Action
+GET http://localhost:3128/movies?genre=Action

@@ -6,6 +6,6 @@ export const routing = Router()
 routing.get('/', controller.getAll) // testeando funcionalidad de la base de datos
 // routing.post('/', controller.creat)
 
-// routing.get('/:id', controller.getById)
+routing.get('/:id', controller.getById)
 // routing.delete('/:id', controller.delete)
 // routing.patch('/:id', controller.update) // actualizar un W parcialmente
