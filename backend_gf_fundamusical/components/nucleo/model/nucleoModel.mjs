@@ -1,10 +1,6 @@
-// IMPORTA LA BASE DE DATOS LOCAL QUE ES UN JSON
-// import { connection } from '../../../services/localdb/localdb.mjs'
-
-// IMPORTA LA BASE DE DATOS MYSQL QUE ES UNA FUNCIÓN
 import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 
-const connectionDB = connection // esto es para poder usar la conexion a la base de datos mysql en el resto de los archivos
+const connectionDB = connection
 
 // TESTING FUNCIONALITY
 // connectionDB.connect(err => {
@@ -15,7 +11,7 @@ const connectionDB = connection // esto es para poder usar la conexion a la base
 //   console.log('connected to the database from articulosModel')
 // })
 
-export class articlesModel {
+export class nucleoModel {
   static getAll () {
     const articulos = connectionDB.query('SELECT * FROM articulos')
     if (!articulos) {
@@ -42,5 +38,3 @@ export class articlesModel {
     }
   }
 }
-
-// Eliminar un articulo solo se hará desde el front end eliminando el campo del articulo, una vez creado el articulo no se puede eliminar.
