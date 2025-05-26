@@ -13,15 +13,9 @@ const connectionDB = connection
 
 // await test.testing()
 
-export class nucleoModel {
+export class planInversionModel {
   static async getAll () {
-    const [nucleos] = await connectionDB.query('SELECT * FROM nucleo')
-    console.log([nucleos])
-    return nucleos
-  }
-
-  static async getPartial () {
-    const [partialInfo] = await connectionDB.query('SELECT nucleoName, nucleoCoordinador, nucleoDirector FROM nucleo')
-	return partialInfo
+	const [planes] = await connectionDB.query('SELECT * FROM planInversion')
+	return planes
   }
 }

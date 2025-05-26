@@ -1,11 +1,16 @@
 ### AQUI ESTARÁN LOS ENDPOINTS DE LA API PARA RECUPERAR LOS DATOS SEGUN LA URL
 
-GET http://localhost:3128/movies/
+### RECUPERAR EL DASHBOARD
+GET http://localhost:3128/api/dashboard
 
-### DAMOS EL ID Y REGREESA EL NOMBRE DE ESE ID en formato JSON
+### RECUPERAR VISTA GESTION DE PLANES
+GET http://localhost:3128/api/gestion/3
 
-GET http://localhost:3128/movies/tt0848228
+### OBTENER TODOS LOS PLANES DE CUENTA PARA EL MODAL
+GET http://localhost:3128/api/gestion-modal
 
-### Recuperar peliculas por genero 
+### OBTENER SUBCATEGORIAS SEGUN EL ID DE PLAN DE CUENTA
+GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/1
 
-GET http://localhost:3128/movies?genre=Action
+### LLENADO DE TABLAS PLAN INVERSION | PLAN INVERSION PLAN CUENTA | PLAN INVERSION SUBCATEGORIAS
+

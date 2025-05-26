@@ -13,15 +13,11 @@ const connectionDB = connection
 
 // await test.testing()
 
-export class nucleoModel {
-  static async getAll () {
-    const [nucleos] = await connectionDB.query('SELECT * FROM nucleo')
-    console.log([nucleos])
-    return nucleos
-  }
-
-  static async getPartial () {
-    const [partialInfo] = await connectionDB.query('SELECT nucleoName, nucleoCoordinador, nucleoDirector FROM nucleo')
-	return partialInfo
+export class periodoModel {
+  static async getByCondition (id) {
+	const [periodo] = await connectionDB.query('SELECT * FROM planInversion_periodo WHERE planInversionId = ?', [id])
+	if (!periodo.length) {
+		return console.log('No existen periodos para este Plan de Inversión')
+	} else return periodo
   }
 }

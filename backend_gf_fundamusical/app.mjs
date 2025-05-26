@@ -10,4 +10,4 @@ app.listen(PORT, () => {
   console.log(`Server is listening on port http://localhost:${PORT}`)
 })
 
-app.use('/movies', routing)
+app.use('/api', routing)
