@@ -2,10 +2,12 @@
 import mysql from 'mysql2/promise'
 
 // CONEXION A LA BASE DE DATOS MYSQL
+// Pass home Musica2013*
+// Pass off admin
 const config = {
   host: 'localhost',
   user: 'root',
-  password: 'Musica2013*',
+  password: 'admin',
   database: 'fundamusicaldb',
   port: 3306
 }
@@ -29,4 +31,4 @@ export const connection = await mysql.createConnection(config) // esto crea la c
 //   }
 // }
 
-// await testQuery() 
+// await testQuery()

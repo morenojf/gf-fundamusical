@@ -14,5 +14,4 @@ routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEÑAR PLAN DE INVERSION
 routing.get('/gestion/modal/plancuenta-subcategoria/:id', subcategoriaController.getById) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
 
-
 // routing.post('gestion/modal/plan-inversion', planInversionController.createPlanInversion) // Este se encargará de introducir los valores capturados del formulario del modal en la tabla Plan Inversión

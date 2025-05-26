@@ -4,7 +4,7 @@
 GET http://localhost:3128/api/dashboard
 
 ### RECUPERAR VISTA GESTION DE PLANES
-GET http://localhost:3128/api/gestion/3
+GET http://localhost:3128/api/gestion/2
 
 ### OBTENER TODOS LOS PLANES DE CUENTA PARA EL MODAL
 GET http://localhost:3128/api/gestion-modal
