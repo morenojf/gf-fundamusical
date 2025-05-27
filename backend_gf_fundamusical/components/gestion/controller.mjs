@@ -14,8 +14,8 @@ export class gestionController {
 
       res.status(200).json({
         nucleoInfo,
-        planes: planesInversion,
-        periodos: periodos,
+        planes: planesInversion || [],
+        periodos: periodos || [],
       });
     } catch (err) {
       return res.status(500).send("ERROR AL OBTENER DATOS DE GESTION");
