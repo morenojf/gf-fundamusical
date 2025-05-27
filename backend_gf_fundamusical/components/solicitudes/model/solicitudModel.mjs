@@ -14,33 +14,38 @@ const connectionDB = connection
 // await test.testing()
 
 export class solicitudModel {
-  static async getByCond() {
-    const [solicitudes] = await connectionDB.query("SELECT * FROM solicitud");
-    console.log([nucleos])
-    return nucleos
+  static async getByPeriod (userId, periodId) {
+    const [solicitudes] = await connectionDB.query('SELECT * FROM solicitud WHERE userId = ?', [userId], 'AND periodoId = ?', [periodId])
+    return solicitudes
   }
 
-  static async getQuantity() {
-    const [solicitudes] = await connectionDB.query('SELECT * FROM solicitud');
-	const cantidad = solicitudes.length
-	return cantidad
-  } 
-
-  static async getFinalizadas () {
-	const [solicitudesF] = await connection.query('SELECT * FROM solicitud WHERE solicitudStatus = 3')
-	const cantidad = solicitudesF.length
-	return cantidad
+  static async getQuantity (userId) {
+    const [solicitudes] = await connectionDB.query('SELECT * FROM solicitud WHERE userId = ?', [userId])
+    const cantidad = solicitudes.length
+    return cantidad
   }
 
-  static async getAnuladas () {
-	const [solicitudesA] = await connection.query('SELECT * FROM solicitud WHERE solicitudStatus = 2')
-	const cantidad = solicitudesA.length
-	return cantidad
+  static async getFinalizadas (userId) {
+    const [solicitudesF] = await connection.query(
+      'SELECT * FROM solicitud WHERE solicitudStatus = 3 AND userId = ?', [userId]
+    )
+    const cantidad = solicitudesF.length
+    return cantidad
   }
 
-  static async getActivas () {
-	const [solicitudesR] = await connection.query('SELECT * FROM solicitud WHERE solicitudStatus = 1')
-	const cantidad = solicitudesR.length
-	return cantidad
+  static async getAnuladas (userId) {
+    const [solicitudesA] = await connection.query(
+      'SELECT * FROM solicitud WHERE solicitudStatus = 2 AND userId = ?', [userId]
+    )
+    const cantidad = solicitudesA.length
+    return cantidad
+  }
+
+  static async getActivas (userId) {
+    const [solicitudesR] = await connection.query(
+      'SELECT * FROM solicitud WHERE solicitudStatus = 1 AND userId = ?', [userId]
+    )
+    const cantidad = solicitudesR.length
+    return cantidad
   }
 }

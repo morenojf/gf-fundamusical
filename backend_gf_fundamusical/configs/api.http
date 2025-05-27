@@ -4,17 +4,21 @@
 GET http://localhost:3128/api/dashboard
 
 ### RECUPERAR VISTA GESTION DE PLANES
-GET http://localhost:3128/api/gestion/4
+GET http://localhost:3128/api/gestion/1
 
-### CREAR NUEVO PLAN INVERSION
+### CREAR NUEVO PLAN INVERSION Y PERIODO INICIAL
 POST http://localhost:3128/api/gestion-modal
 
 ### OBTENER TODOS LOS PLANES DE CUENTA PARA EL MODAL
 GET http://localhost:3128/api/gestion-modal
 
 ### OBTENER SUBCATEGORIAS SEGUN EL ID DE PLAN DE CUENTA
-GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/1
+GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/2
 
 ### LLENADO DE TABLAS PLAN INVERSION | PLAN INVERSION PLAN CUENTA | PLAN INVERSION SUBCATEGORIAS
+POST http://localhost:3128/api/gestion/modal/plan-inversion
 
+### OBTERNER SOLICITUDES DEL PERIODO ID
+GET http://localhost:3128/api/periodo/5
 
+### CREAR SOLICITUD

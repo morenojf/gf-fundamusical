@@ -5,6 +5,10 @@ import { subcategoriaController } from '../components/subcategorias/controller/s
 import { planCuentaController } from '../components/planes_de_cuenta/controller/accController.mjs'
 import { planInversionController } from '../components/plan_inversion/controller/planInversionController.mjs'
 import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller.mjs'
+import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
+
+import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs'
+const datos = datosFormulario
 
 export const routing = Router()
 
@@ -13,12 +17,18 @@ export const routing = Router()
 routing.get('/dashboard', dashboardController.getAll) // DASHBOARD
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 
-routing.post('/gestion-modal', planInversionController.createNewPI ) // CREAR NUEVO PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id. 
+routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR NUEVO PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
 routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEÑAR PLAN DE INVERSION
-
 
 routing.get('/gestion/modal/plancuenta-subcategoria/:id', subcategoriaController.getById) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
 
+routing.post(
+  '/gestion/modal/plan-inversion',
+  (req, res, next) => {
+    req.body = datos
+    next()
+  },
+  PIcontroller.createNewPI
+) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
 
-routing.post('gestion/modal/plan-inversion', PIcontroller.createNewPI) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
-
+routing.get('/periodo/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO

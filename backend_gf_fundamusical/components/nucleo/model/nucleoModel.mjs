@@ -20,8 +20,8 @@ export class nucleoModel {
     return nucleos
   }
 
-  static async getPartial () {
-    const [partialInfo] = await connectionDB.query('SELECT nucleoName, nucleoCoordinador, nucleoDirector FROM nucleo')
+  static async getPartial (userId) {
+    const [partialInfo] = await connectionDB.query('SELECT nucleoName, nucleoCoordinador, nucleoDirector FROM nucleo WHERE userId = ?', [userId])
     return partialInfo
   }
 }

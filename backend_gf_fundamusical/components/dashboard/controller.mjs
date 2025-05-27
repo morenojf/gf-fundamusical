@@ -5,23 +5,25 @@ import { nucleoModel } from '../nucleo/model/nucleoModel.mjs'
 import { solicitudModel } from '../solicitudes/model/solicitudModel.mjs'
 
 export class dashboardController {
-  static async getAll(req, res) {
+  static async getAll (req, res) {
     try {
-      const nucleoInfo = await nucleoModel.getPartial();
-      const solicitudQ = await solicitudModel.getQuantity();
-      const solicitudF = await solicitudModel.getFinalizadas();
-      const solicitudA = await solicitudModel.getAnuladas();
-      const solicitudR = await solicitudModel.getActivas();
+      const userId = 1 // ideally this is dynamic and comes from JWT token
+
+      const nucleoInfo = await nucleoModel.getPartial(userId)
+      const solicitudQ = await solicitudModel.getQuantity(userId)
+      const solicitudF = await solicitudModel.getFinalizadas(userId)
+      const solicitudA = await solicitudModel.getAnuladas(userId)
+      const solicitudR = await solicitudModel.getActivas(userId)
 
       return res.status(200).json({
         nucleoInfo,
         totalSolicitudes: solicitudQ,
         totalFinalizadas: solicitudF,
         totalAnuladas: solicitudA,
-        totalActivas: solicitudR,
-      });
+        totalActivas: solicitudR
+      })
     } catch (err) {
-      return res.status(500).send("ERROR AL OBTENER DATOS DEL DASHBOARD");
+      return res.status(500).send('ERROR AL OBTENER DATOS DEL DASHBOARD')
     }
   }
 }
