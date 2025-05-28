@@ -8,7 +8,10 @@ import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
 
 import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs'
-const datos = datosFormulario
+const datosPI = datosFormulario
+
+import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs'
+const solicitudData  = datosSolicitud
 
 export const routing = Router()
 
@@ -17,7 +20,7 @@ export const routing = Router()
 routing.get('/dashboard', dashboardController.getAll) // DASHBOARD
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 
-routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR NUEVO PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
+routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
 routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEÑAR PLAN DE INVERSION
 
 routing.get('/gestion/modal/plancuenta-subcategoria/:id', subcategoriaController.getById) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
@@ -25,10 +28,19 @@ routing.get('/gestion/modal/plancuenta-subcategoria/:id', subcategoriaController
 routing.post(
   '/gestion/modal/plan-inversion',
   (req, res, next) => {
-    req.body = datos
+    req.body = datosPI
     next()
   },
   PIcontroller.createNewPI
 ) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
 
 routing.get('/periodo/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO
+
+routing.post('/periodo-crearsolicitud', 
+	(req, res, next) => {
+    req.body = solicitudData
+    next()
+  },solicitudController.createSolicitud)
+// needs userId, periodId, planInversionplanCuentaId, Motivo
+// periodoId obtenido dinámicamente al hacer una consulta la DB llamando al modelo periodo
+// Tambien debe añadir valores a la tabla articulos

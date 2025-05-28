@@ -2,17 +2,6 @@ import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 
 const connectionDB = connection
 
-// // TESTING FUNCIONALITY
-// export class test {
-//   static async testing () {
-//     const [nucleos] = await connectionDB.query('SELECT * FROM nucleo')
-//     console.log([nucleos])
-//     return nucleos
-//   }
-// }
-
-// await test.testing()
-
 export class nucleoModel {
   static async getAll () {
     const [nucleos] = await connectionDB.query('SELECT * FROM nucleo')

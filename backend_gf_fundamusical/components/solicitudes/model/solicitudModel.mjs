@@ -2,17 +2,6 @@ import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 
 const connectionDB = connection
 
-// // TESTING FUNCIONALITY
-// export class test {
-//   static async testing () {
-//     const [nucleos] = await connectionDB.query('SELECT * FROM nucleo')
-//     console.log([nucleos])
-//     return nucleos
-//   }
-// }
-
-// await test.testing()
-
 export class solicitudModel {
   static async getByPeriod (userId, periodId) {
     const [solicitudes] = await connectionDB.query('SELECT * FROM solicitud WHERE userId = ?', [userId], 'AND periodoId = ?', [periodId])
@@ -47,5 +36,16 @@ export class solicitudModel {
     )
     const cantidad = solicitudesR.length
     return cantidad
+  }
+
+  static async createSolicitud (solicitudData, periodoId) {
+	const userId = solicitudData[0].userId
+	const PIPCid = solicitudData[0].planInversionplanCuentaId
+	const motivo = solicitudData[0].motivo
+	const periodId = periodoId
+
+	const createdSolicitudId = await connectionDB.query('INSERT INTO solicitud (userId, periodoId, planInversionPlancuentaId, solicitudMotivo) VALUES (?, ?, ?, ?)', [userId, periodId, PIPCid, motivo])
+
+	return createdSolicitudId[0].insertId
   }
 }

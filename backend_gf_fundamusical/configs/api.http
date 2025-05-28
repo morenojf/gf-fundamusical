@@ -13,12 +13,13 @@ POST http://localhost:3128/api/gestion-modal
 GET http://localhost:3128/api/gestion-modal
 
 ### OBTENER SUBCATEGORIAS SEGUN EL ID DE PLAN DE CUENTA
-GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/2
+GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/1
 
 ### LLENADO DE TABLAS PLAN INVERSION | PLAN INVERSION PLAN CUENTA | PLAN INVERSION SUBCATEGORIAS
 POST http://localhost:3128/api/gestion/modal/plan-inversion
 
 ### OBTERNER SOLICITUDES DEL PERIODO ID
-GET http://localhost:3128/api/periodo/5
+GET http://localhost:3128/api/periodo/1
 
 ### CREAR SOLICITUD
+POST http://localhost:3128/api/periodo-crearsolicitud
