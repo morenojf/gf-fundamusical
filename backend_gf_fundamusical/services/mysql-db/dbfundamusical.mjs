@@ -7,7 +7,7 @@ import mysql from 'mysql2/promise'
 const config = {
   host: 'localhost',
   user: 'root',
-  password: 'Musica2013*',
+  password: 'admin',
   database: 'fundamusicaldb',
   port: 3306
 }

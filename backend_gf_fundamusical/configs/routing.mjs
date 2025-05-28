@@ -8,10 +8,10 @@ import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
 
 import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs'
-const datosPI = datosFormulario
 
 import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs'
-const solicitudData  = datosSolicitud
+const datosPI = datosFormulario
+const solicitudData = datosSolicitud
 
 export const routing = Router()
 
@@ -34,13 +34,15 @@ routing.post(
   PIcontroller.createNewPI
 ) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
 
-routing.get('/periodo/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO
+routing.get('/periodo-SolicitudesList/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO
 
-routing.post('/periodo-crearsolicitud', 
-	(req, res, next) => {
+// MOSTRAR PLANES DE CUENTAS DISPONIBLES SEGUN EL LOS SELECCIONADOS EN EL PI
+routing.get('/periodo/solicitud', planCuentaController.getByPIPC)
+
+routing.post('/periodo/solicitud-crearsolicitud', // CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
+  (req, res, next) => {
     req.body = solicitudData
     next()
-  },solicitudController.createSolicitud)
+  }, solicitudController.createSolicitud)
 // needs userId, periodId, planInversionplanCuentaId, Motivo
 // periodoId obtenido dinámicamente al hacer una consulta la DB llamando al modelo periodo
-// Tambien debe añadir valores a la tabla articulos

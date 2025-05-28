@@ -1,8 +1,9 @@
 import { solicitudModel } from '../model/solicitudModel.mjs'
 import { periodoModel } from '../../periodos/model/periodoModel.mjs' // GET CURRENT PERIOD
+import { planCuentaModel } from '../../planes_de_cuenta/model/planCuentaModel.mjs'
 
 export class solicitudController {
-  static async getByPeriod(req, res) {
+  static async getByPeriod (req, res) {
     const periodId = req.params
     const userId = 1 // Ideally dinamic once JWT is configured
     try {
@@ -17,20 +18,23 @@ export class solicitudController {
     }
   }
 
-  static async createSolicitud(req, res) {
+  static async createSolicitud (req, res) {
     const solicitudData = req.body
     const currentPeriodoId = await periodoModel.currentPeriod() // RETURN CURRENT PERIOD ID
+    const peticionPC = await planCuentaModel.getPCnameByPIPC(solicitudData[0].planInversionplanCuentaId)
+    const PCname = peticionPC[0].planCuentaName
 
     try {
       const createdSolicitud = await solicitudModel.createSolicitud(
         solicitudData,
-        currentPeriodoId
+        currentPeriodoId,
+        PCname
       )
       return res
         .status(200)
         .json({
           message: 'Se creó con exito la solicitud ID: ',
-          createdSolicitud: createdSolicitud
+          createdSolicitud
         })
     } catch (error) {
       console.log(error)

@@ -18,8 +18,11 @@ GET http://localhost:3128/api/gestion/modal/plancuenta-subcategoria/1
 ### LLENADO DE TABLAS PLAN INVERSION | PLAN INVERSION PLAN CUENTA | PLAN INVERSION SUBCATEGORIAS
 POST http://localhost:3128/api/gestion/modal/plan-inversion
 
-### OBTERNER SOLICITUDES DEL PERIODO ID
-GET http://localhost:3128/api/periodo/1
+### OBTERNER SOLICITUDES SEGUN EL PERIODO ID SELECCIONADO
+GET http://localhost:3128/api/periodo-SolicitudesList/1
+
+### OBTENER DENTRO DEL MODAL LOS PLANES DE CUENTA SEGUN EL PIPC PARA CREAR UNA SOLICITUD
+GET http://localhost:3128/api/periodo/solicitud
 
 ### CREAR SOLICITUD
-POST http://localhost:3128/api/periodo-crearsolicitud
+POST http://localhost:3128/api/periodo/solicitud-crearsolicitud
