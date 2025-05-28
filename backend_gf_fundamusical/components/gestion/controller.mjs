@@ -8,7 +8,7 @@ export class gestionController {
   static async getAll (req, res) {
     try {
       const { id } = req.params
-	  const userId = 1
+      const userId = 1
       const nucleoInfo = await nucleoModel.getPartial(userId)
       const planesInversion = await planInversionModel.getAll()
       const periodos = await periodoModel.getByCondition(id)
