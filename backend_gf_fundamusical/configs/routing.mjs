@@ -6,12 +6,14 @@ import { planCuentaController } from '../components/planes_de_cuenta/controller/
 import { planInversionController } from '../components/plan_inversion/controller/planInversionController.mjs'
 import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller.mjs'
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
+import { articulosController } from '../components/articulos/controller/articulosController.mjs'
 
-import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs'
-
-import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs'
+import { datosArticulos } from '../services/mysql-db/articlesDesignData.mjs' // DATOS CREAR ARTICULO
+import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs' // DATOS DISEÑO PI
+import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEÑO SOLICITUD
 const datosPI = datosFormulario
 const solicitudData = datosSolicitud
+const datosArticles = datosArticulos
 
 export const routing = Router()
 
@@ -23,7 +25,10 @@ routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
 routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEÑAR PLAN DE INVERSION
 
-routing.get('/gestion/modal/plancuenta-subcategoria/:id', subcategoriaController.getById) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
+routing.get(
+  '/gestion/modal/plancuenta-subcategoria/:id',
+  subcategoriaController.getById
+) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
 
 routing.post(
   '/gestion/modal/plan-inversion',
@@ -39,10 +44,29 @@ routing.get('/periodo-SolicitudesList/:id', solicitudController.getByPeriod) // 
 // MOSTRAR PLANES DE CUENTAS DISPONIBLES SEGUN EL LOS SELECCIONADOS EN EL PI
 routing.get('/periodo/solicitud', planCuentaController.getByPIPC)
 
-routing.post('/periodo/solicitud-crearsolicitud', // CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
+routing.post(
+  '/periodo/solicitud-crearsolicitud', // CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
   (req, res, next) => {
     req.body = solicitudData
     next()
-  }, solicitudController.createSolicitud)
+  },
+  solicitudController.createSolicitud
+)
 // needs userId, periodId, planInversionplanCuentaId, Motivo
 // periodoId obtenido dinámicamente al hacer una consulta la DB llamando al modelo periodo
+
+routing.post(
+  '/periodo/solicitud-addArticle/:id',
+  (req, res, next) => {
+    req.body = datosArticles
+    next()
+  },
+  articulosController.addToSolicitud
+)
+// EL ObjectArray ENVIADO DE FRONT TIENE ArticuloName PARA LA TABLA articulo
+// y cantidadSolicitada PARA LA TABLA solicitud_Articulo
+
+// 1.- DE LOS ARTICULOS ENVIADOS SE CREAN EN LA TABLA
+// 2.- SE TOMA EL ID DE LOS ARTICULOS ENVIADOS
+// 3.- SE COLOCAN EN LA TABLA INTERMEDIA SOLICITUD ARTICULO PARA RELACIONAR LOS ARTICULOS CON LA SOLICITUD EN ESPECIFICO
+

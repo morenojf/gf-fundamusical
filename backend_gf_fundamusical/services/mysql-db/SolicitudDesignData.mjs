@@ -4,9 +4,9 @@ export const datosSolicitud = [
   {
     userId: 1, // OBTENIDO DEL JWT
 
-    planInversionplanCuentaId: 3,
+    planInversionplanCuentaId: 2,
     // CORRESPONDE AL PLAN DE CUENTA SELECCIONADO EN LOS DISPONIBLES SEGUN EL PLAN DE INVERSION
 
-    motivo: 'Esta es mi cuarta solicitud con un planCuenta distinto'
+    motivo: 'COMIDITA PAL ESTOGAMO'
   }
 ]

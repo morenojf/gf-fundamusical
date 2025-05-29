@@ -3,17 +3,53 @@ import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 const connectionDB = connection
 
 export class solicitudModel {
-  static async getByPeriod (userId, periodId) {
+  static async getByPeriod(userId, periodId) {
     const [solicitudes] = await connectionDB.query(
-      'SELECT * FROM solicitud WHERE userId = ?',
-      [userId],
-      'AND periodoId = ?',
-      [periodId]
+      'SELECT * FROM solicitud WHERE userId = ? AND periodoId = ?',
+      [userId, periodId]
     )
     return solicitudes
   }
 
-  static async getQuantity (userId) {
+  static async addArticulos(solicitudList) {
+    if (solicitudList.length === 0) {
+      return null
+    } else {
+      console.log('EVALUANDO SI EXISTEN ARTICULOS')
+      const [comprobacionArticle] = await connectionDB.query(
+        'SELECT * FROM articulo'
+      )
+      if (comprobacionArticle.length === 0) {
+        console.log('NO HAY ARTICULOS EN LAS SOLICITUDES')
+        return null
+      } else {
+        const solicitudes = solicitudList
+		const updatedSolicitud = []
+
+		// SEGUN LA CANTIDAD DE SOLICITUDES, OBTENEMOS LA SOLICITUD ACTUAL Y LOS ARTICULOS RELACIONADOS A ESA SOLICITUD
+        for (let index = 0; index < solicitudes.length; index++) {
+          const solicitudActual = solicitudes[index]
+
+		  const [ArticulosRelacionados] = await connectionDB.query('SELECT articuloId FROM solicitud_Articulo WHERE solicitudId = ?', [solicitudActual.solicitudId])
+
+		  const articulosSolicitud = []
+
+		  // SEGUN LA CANTIDAD DE ARTICULOS DE UNA SOLICITUD, OBTENEMOS EL ARTICULO UNO POR UNO Y SU NOMBRE
+		  for (let index = 0; index < ArticulosRelacionados.length; index++) {
+			const articuloActual = ArticulosRelacionados[index]
+			const [nombreArticulo] = await connectionDB.query('SELECT articuloName FROM articulo WHERE articuloId = ?', [articuloActual.articuloId])
+			const [articuloCantidad] = await connectionDB.query('SELECT cantidadSolicitada FROM solicitud_Articulo WHERE articuloId = ?', [articuloActual.articuloId])
+			articulosSolicitud.push({Articulo: articuloActual.articuloId, Nombre: nombreArticulo[0].articuloName, Cantidad: articuloCantidad[0].cantidadSolicitada})
+		  }
+
+		  updatedSolicitud.push({solicitudActualData: solicitudActual, articulosSolicitud: articulosSolicitud})
+        }
+		return updatedSolicitud
+      }
+    }
+  }
+
+  static async getQuantity(userId) {
     const [solicitudes] = await connectionDB.query(
       'SELECT * FROM solicitud WHERE userId = ?',
       [userId]
@@ -22,7 +58,7 @@ export class solicitudModel {
     return cantidad
   }
 
-  static async getFinalizadas (userId) {
+  static async getFinalizadas(userId) {
     const [solicitudesF] = await connection.query(
       'SELECT * FROM solicitud WHERE solicitudStatus = 3 AND userId = ?',
       [userId]
@@ -31,7 +67,7 @@ export class solicitudModel {
     return cantidad
   }
 
-  static async getAnuladas (userId) {
+  static async getAnuladas(userId) {
     const [solicitudesA] = await connection.query(
       'SELECT * FROM solicitud WHERE solicitudStatus = 2 AND userId = ?',
       [userId]
@@ -40,7 +76,7 @@ export class solicitudModel {
     return cantidad
   }
 
-  static async getActivas (userId) {
+  static async getActivas(userId) {
     const [solicitudesR] = await connection.query(
       'SELECT * FROM solicitud WHERE solicitudStatus = 1 AND userId = ?',
       [userId]
@@ -49,7 +85,7 @@ export class solicitudModel {
     return cantidad
   }
 
-  static async createSolicitud (solicitudData, periodoId, PCname) {
+  static async createSolicitud(solicitudData, periodoId, PCname) {
     const userId = solicitudData[0].userId
     const PIPCid = solicitudData[0].planInversionplanCuentaId
     const motivo = solicitudData[0].motivo

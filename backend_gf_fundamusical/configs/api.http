@@ -26,3 +26,6 @@ GET http://localhost:3128/api/periodo/solicitud
 
 ### CREAR SOLICITUD
 POST http://localhost:3128/api/periodo/solicitud-crearsolicitud
+
+### CREAR ARTICULOS Y ADJUNTARLO A SOLICITUD
+POST http://localhost:3128/api/periodo/solicitud-addArticle/2
