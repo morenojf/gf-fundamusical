@@ -7,6 +7,8 @@ import { planInversionController } from '../components/plan_inversion/controller
 import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller.mjs'
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
 import { articulosController } from '../components/articulos/controller/articulosController.mjs'
+import { soporteController } from '../components/soportes/controller/soporteController.mjs'
+
 
 import { datosArticulos } from '../services/mysql-db/articlesDesignData.mjs' // DATOS CREAR ARTICULO
 import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs' // DATOS DISEÑO PI
@@ -70,3 +72,9 @@ routing.post(
 // 2.- SE TOMA EL ID DE LOS ARTICULOS ENVIADOS
 // 3.- SE COLOCAN EN LA TABLA INTERMEDIA SOLICITUD ARTICULO PARA RELACIONAR LOS ARTICULOS CON LA SOLICITUD EN ESPECIFICO
 
+routing.post('/periodo/solicitud-soporte/:id', soporteController.addSoporte)
+// CREAR EL SOPORTE DE LA SOLICITUD ESPECIFICA
+// needs userId (JWT), solicitudId (req.params.id), URL googleDrive de la factura, URL googleDrive Cartas PyR, Monto, TIPO DE MONEDA 1 =BS 2 =USD (default 1)}
+
+routing.get('/periodo/solicitud-soporte/:id', soporteController.getSoporteInfo)
+//OBTENER INFORMACION DEL SOPORTE SEGÚN LA SOLICITUD ESPECIFICA

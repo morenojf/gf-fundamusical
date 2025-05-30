@@ -85,6 +85,13 @@ export class solicitudModel {
     return cantidad
   }
 
+
+  static async changeStatus (solicitudId){
+	const targetId = solicitudId
+	const statusChanged = await connectionDB.query('UPDATE solicitud SET solicitudStatus = 3 WHERE solicitudId = ?', [targetId])
+	return console.log('Estado de solicitudID: #',targetId , ' actualizado como finalizado.')
+  }
+
   static async createSolicitud(solicitudData, periodoId, PCname) {
     const userId = solicitudData[0].userId
     const PIPCid = solicitudData[0].planInversionplanCuentaId
