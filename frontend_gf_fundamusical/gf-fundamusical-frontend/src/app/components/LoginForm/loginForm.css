@@ -1,0 +1,108 @@
+.logo-section {
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 300px; /* Adjust logo size as needed */
+  height: auto;
+  /* filter: brightness(0) invert(1); Makes a white logo if it's black */
+}
+
+h2 {
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 2em;
+  font-weight: 400;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+  position: relative; /* For positioning the eye icon */
+}
+
+.form-group label {
+  display: block;
+  color: #fff;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.form-group input {
+  width: calc(100% - 20px); /* Account for padding */
+  padding: 12px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.1); /* Very subtle input background */
+  color: #fff;
+  font-size: 1em;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.form-group input:focus {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.password-group {
+  margin-bottom: 30px; /* More space below password field */
+}
+
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%; /* Adjust to vertically center with input */
+  transform: translateY(calc(-50% + 12px)); /* Adjust for label and input padding */
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  width: 24px; /* Size for SVG icon */
+  height: 24px; /* Size for SVG icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon {
+  width: 100%;
+  height: 100%;
+  fill: currentColor; /* Use the color set on the parent .password-toggle */
+}
+
+
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #8e2de2; /* A vibrant purple from the gradient */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #7a1ac7; /* Slightly darker purple on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 30px;
+    margin: 15px; /* Add margin to prevent sticking to edges */
+  }
+
+  h2 {
+    font-size: 1.8em;
+  }
+
+  .logo {
+    width: 180px;
+  }
+}

@@ -1,0 +1,50 @@
+<main>
+  <div class="login-page">
+    <div class="login-container">
+      <div class="logo-section">
+        <img src="../assets/logo.png" alt="El Sistema Logo" class="logo" />
+      </div>
+      <h2>Iniciar sesión</h2>
+
+      <form [formGroup]="loginForm" (submit)="loginEvent()">
+        <div class="form-group">
+          <label for="username">Correo electrónico</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Usuario"
+            formControlName="userName"
+          /> <!-- insert username -->
+          @if (userName.invalid && userName.touched){
+			<p style="color:rgb(255, 255, 255)">Dirección de correo electrónico invalida</p>
+		  }
+        </div>
+
+        <div class="form-group password-group">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Contraseña"
+            formControlName="password"
+          />
+          <!-- insert password -->
+          <span class="password-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="eye-icon"
+            >
+              <path
+                d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 13c-3.1 0-5.63-2.19-6.3-5.06C5.06 10.19 7.59 8 10.7 8c3.1 0 5.63 2.19 6.3 5.06.67 2.87-1.86 5.06-4.96 5.06zM12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+              />
+            </svg>
+          </span>
+        </div>
+
+        <button type="submit" class="login-button" [disabled]="loginForm.invalid">Ingresar</button>
+      </form>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,281 @@
+/* dashboard.component.css */
+
+/* Globales para el layout */
+.dashboard-container {
+  position: fixed; /* Para que ocupe toda la ventana y no se desplace */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  font-family: Arial, sans-serif; /* Puedes usar 'sans-serif' o la fuente de tu preferencia */
+  background-color: #f0f2f5; /* Un gris claro para el fondo general del dashboard */
+}
+
+/* Barra Superior */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  background-color: #f9196a; /* El color rosa/fucsia de la barra superior */
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 100px; /* Altura fija para la barra superior */
+  box-sizing: border-box;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+}
+
+.top-bar-logo {
+  height: 100px; /* Ajusta el tamaño del logo si es necesario */
+  margin-right: 15px;
+  /* filter: brightness(0) invert(0); Si el logo es negro y quieres que sea blanco */
+}
+
+.system-name {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+/* Contenido Principal y Wrapper de Barra Lateral */
+.main-content-wrapper {
+  display: flex;
+  flex: 1; /* Ocupa el espacio restante verticalmente */
+}
+
+/* Barra Lateral de Navegación */
+.sidebar {
+  width: 70px; /* Ancho de la barra lateral */
+  background-color: #333; /* Color oscuro de la barra lateral */
+  color: white;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para empujar los iconos inferiores hacia abajo */
+  align-items: center;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sidebar-item {
+  display: flex;
+  flex-direction: column; /* Para alinear icono y texto verticalmente si se expande */
+  align-items: center;
+  justify-content: center; /* Centrar contenido */
+  padding: 15px 0;
+  color: rgba(255, 255, 255, 0.7); /* Color de texto/icono predeterminado */
+  text-decoration: none;
+  font-size: 0.8em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-item i {
+  font-size: 1.5em; /* Tamaño del icono */
+  margin-bottom: 5px;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+  background-color: #f9196a; /* Color de fondo al pasar el ratón o si está activo */
+  color: white; /* Color de texto/icono al pasar el ratón o si está activo */
+}
+
+/* Iconos de la barra lateral inferior */
+.sidebar-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column; /* Apilar verticalmente */
+  align-items: center;
+}
+
+/* Área de Contenido Principal */
+.content-area {
+  flex: 1; /* Ocupa todo el espacio restante horizontalmente */
+  padding: 30px;
+  overflow-y: auto; /* Para permitir desplazamiento si el contenido es muy largo */
+}
+
+.content-header {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.nucleo-title {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.coordinator, .director {
+  color: #666;
+  font-size: 0.95em;
+  margin-bottom: 5px;
+}
+
+.coordinator span, .director span {
+  font-weight: bold; /* Si vas a rellenar estos campos con datos */
+}
+
+/* Sección de Estadísticas y Gráfico */
+.stats-section {
+  display: flex;
+  gap: 30px; /* Espacio entre las tarjetas */
+  flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en pantallas más pequeñas */
+}
+
+.stats-card, .chart-card {
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  flex: 1; /* Permite que las tarjetas crezcan para ocupar el espacio */
+  min-width: 300px; /* Ancho mínimo para evitar que se aplasten demasiado */
+}
+
+.stats-card {
+  max-width: 400px; /* Ancho máximo para la tarjeta de estadísticas si hay espacio */
+}
+
+.card-title {
+  font-size: 1.4em;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed #eee;
+  font-size: 1.05em;
+}
+
+.stat-item:last-child {
+  border-bottom: none; /* Eliminar el borde inferior del último elemento */
+}
+
+.stat-label {
+  color: #555;
+}
+
+.stat-value {
+  color: #333;
+  font-weight: bold;
+}
+
+/* Estilos del Gráfico (Placeholder) */
+.chart-placeholder {
+  display: flex;
+  flex-direction: column;
+  height: 250px; /* Altura fija para el gráfico */
+  justify-content: flex-end; /* Alinear las barras al final */
+}
+
+.chart-bar-container {
+  display: flex;
+  height: calc(100% - 30px); /* Altura para las barras y el eje Y */
+  align-items: flex-end; /* Alinear barras en la parte inferior */
+  padding-right: 10px; /* Espacio para el eje Y */
+}
+
+.chart-y-axis {
+  display: flex;
+  flex-direction: column-reverse; /* Números de abajo hacia arriba */
+  justify-content: space-between;
+  height: 100%;
+  padding-right: 10px;
+  border-right: 1px solid #ccc;
+  color: #777;
+  font-size: 0.85em;
+  text-align: right;
+}
+
+.chart-bars {
+  display: flex;
+  flex: 1;
+  align-items: flex-end; /* Asegurar que las barras empiecen desde abajo */
+  height: 100%;
+  gap: 15px; /* Espacio entre las barras */
+  padding-left: 15px; /* Espacio desde el eje Y */
+}
+
+.chart-bars .bar {
+  width: 40px; /* Ancho de cada barra */
+  background-color: #66c7ed; /* Color de las barras */
+  border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
+  transition: height 0.5s ease; /* Para una pequeña animación si los valores cambian */
+}
+
+.chart-x-axis {
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  margin-top: 5px;
+  color: #777;
+  font-size: 0.85em;
+  text-align: center;
+}
+
+.chart-x-axis span {
+  flex: 1;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+  .top-bar {
+    padding: 10px 15px;
+  }
+
+  .top-bar-logo {
+    height: 30px;
+  }
+
+  .system-name {
+    font-size: 1.2em;
+  }
+
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar-item {
+    font-size: 0.75em;
+    padding: 12px 0;
+  }
+
+  .content-area {
+    padding: 20px;
+  }
+
+  .stats-section {
+    flex-direction: column; /* Apilar tarjetas en pantallas pequeñas */
+  }
+
+  .stats-card, .chart-card {
+    min-width: unset; /* Quitar min-width para permitir que se ajusten al 100% */
+    width: 100%;
+  }
+}
