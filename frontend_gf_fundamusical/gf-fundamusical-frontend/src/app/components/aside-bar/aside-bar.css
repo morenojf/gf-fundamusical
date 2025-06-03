@@ -1,0 +1,70 @@
+/* Barra Lateral de Navegación */
+
+/* Globales para el layout */
+.general-container {
+
+  display: flex; 
+  min-height: 100vh;
+/*para que la barra ocupe todo el largo de la pagina*/
+}
+
+
+.main-content-wrapper {
+  display: flex;
+  flex: 1; /* Ocupa el espacio restante verticalmente */
+}
+
+.sidebar {
+  width: 170px; /* Ancho de la barra lateral */
+  background-color: #333; /* Color oscuro de la barra lateral */
+  color: white;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para empujar los iconos inferiores hacia abajo */
+  align-items: center;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.sidebar-item {
+  display: flex;
+  flex-direction: column; /* Para alinear icono y texto verticalmente si se expande */
+  align-items: center;
+  justify-content: center; /* Centrar contenido */
+  padding: 10px 0;
+  color: rgba(255, 255, 255, 0.7); /* Color de texto/icono predeterminado */
+  text-decoration: none;
+  font-size: 1.0em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin: 10px;
+  width: 170px;
+
+}
+
+.sidebar-item i {
+  font-size: 1.5em; /* Tamaño del icono */
+  margin-bottom: 5px;
+}
+
+.sidebar-item:hover, .sidebar-item.active {
+  background-color: #f9196a; /* Color de fondo al pasar el ratón o si está activo */
+  color: white; /* Color de texto/icono al pasar el ratón o si está activo */
+}
+
+/* Iconos de la barra lateral inferior */
+.sidebar-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column; /* Apilar verticalmente */
+  align-items: center;
+}
