@@ -1,38 +1,45 @@
-      <div class="investment-plans-section">
-        <div class="accordion-card active">
-          <div class="accordion-header">
-            <span class="accordion-title">2025</span>
-            <span class="accordion-icon">&#9660;</span> </div>
-          <div class="accordion-content">
-            <button class="design-plan-button">
-              <span class="plus-icon">+</span> DISEÑAR PLAN DE INVERSIÓN
-            </button>
-            </div>
-        </div>
+<div class="investment-plans-section">
+  @if (!servicioVG.vistaGestionObject?.planes?.length) {
+  <div class="accordion-card active">
+    <div class="accordion-header">
+      <span class="accordion-title">{{currentYear}}</span>
+      <span class="accordion-icon">&#9660;</span>
+    </div>
 
-        <div class="accordion-card">
-          <div class="accordion-header">
-            <span class="accordion-title">2024</span>
-            <span class="accordion-icon">&#9660;</span>
-          </div>
-          <div class="accordion-content">
-            <p>No hay planes de inversión disponibles para 2024.</p>
-          </div>
-        </div>
+    <div class="accordion-content">
+		<p>No existe un plan de inversión diseñado aún...</p>
+      <button class="design-plan-button">
+        <span class="plus-icon">+</span> DISEÑAR PLAN DE INVERSIÓN
+      </button>
+    </div>
+  </div>
 
-        <div class="accordion-card">
-          <div class="accordion-header">
-            <span class="accordion-title">2023</span>
-            <span class="accordion-icon">&#9660;</span>
-          </div>
-          <div class="accordion-content">
-            <p>Planes de inversión de 2023 (detalle).</p>
-          </div>
-        </div>
-      </div>
+  } @else { @for (plan of servicioVG.vistaGestionObject?.planes; track $index) {
+  <div class="accordion-card active">
+    <div class="accordion-header">
+      <span class="accordion-title">{{plan.planAnio}}</span>
+      <span class="accordion-icon">&#9660;</span>
+    </div>
+    <div class="accordion-content">
+      @if (!servicioVG.listaPeriodos.length) {
+      <p>Aún no existen planes de inversión para este periodo</p>
+      } @else {
 
+      <ul>
+        @for (periodo of servicioVG.listaPeriodos; track $index) {
 
+        <li>
+          <h1>Periodo del mes: {{periodo.periodoMes}}</h1>
+          <p>Estado del periodo: {{periodo.periodoStatus}}</p>
+        </li>
 
-	  <!---  CREACION DE LÓGICA PARA ITERACIÓN DE PLANES DE INVERSIÓN -->
+        <hr />
+        }
+      </ul>
+      }
+    </div>
+  </div>
+  } }
+</div>
 
-	  
+<!---  CREACION DE LÓGICA PARA ITERACIÓN DE PLANES DE INVERSIÓN -->
