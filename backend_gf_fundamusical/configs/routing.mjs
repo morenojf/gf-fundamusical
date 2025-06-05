@@ -11,8 +11,8 @@ import { soporteController } from '../components/soportes/controller/soporteCont
 
 
 import { datosArticulos } from '../services/mysql-db/articlesDesignData.mjs' // DATOS CREAR ARTICULO
-import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs' // DATOS DISEÑO PI
-import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEÑO SOLICITUD
+import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs' // DATOS DISEniO PI
+import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEniO SOLICITUD
 const datosPI = datosFormulario
 const solicitudData = datosSolicitud
 const datosArticles = datosArticulos
@@ -25,7 +25,7 @@ routing.get('/dashboard', dashboardController.getAll) // DASHBOARD
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 
 routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
-routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEÑAR PLAN DE INVERSION
+routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEniAR PLAN DE INVERSION
 
 routing.get(
   '/gestion/modal/plancuenta-subcategoria/:id',
