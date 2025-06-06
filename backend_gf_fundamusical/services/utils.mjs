@@ -8,3 +8,25 @@ const require = createRequire(import.meta.url)
 
 // EXPORTACION FUNCION PARA LEER JSON
 export const readJSON = (path) => require(path)
+
+export function monthConvertion(periodoMes) {
+
+	const nombresMesesObjeto = {
+  1: "Enero",
+  2: "Febrero",
+  3: "Marzo",
+  4: "Abril",
+  5: "Mayo",
+  6: "Junio",
+  7: "Julio",
+  8: "Agosto",
+  9: "Septiembre",
+  10: "Octubre",
+  11: "Noviembre",
+  12: "Diciembre"
+};
+
+const numeroMes = periodoMes;
+const nombreMes = nombresMesesObjeto[numeroMes]
+return nombreMes
+}

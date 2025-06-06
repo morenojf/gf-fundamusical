@@ -8,7 +8,6 @@ export class planInversionModel {
     if (!planes.length) {
       return console.log('No existen Planes de Inversión creados')
     }
-    console.log('Planes de Inversión:', planes)
     return planes
   }
 
