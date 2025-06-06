@@ -3,5 +3,6 @@ export default interface Periodos {
 	periodoAño: number,
 	periodoMes: number,
 	periodoStatus: string,
-	planInversionId: number
+	planInversionId: number,
+	nombreMes: string
 }
