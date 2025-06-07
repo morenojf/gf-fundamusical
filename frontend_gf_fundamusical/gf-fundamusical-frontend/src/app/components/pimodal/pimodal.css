@@ -1,0 +1,117 @@
+.NoInfo{
+	margin-top: 0px;
+}
+
+/* Estilos para el botón "DISEÑAR PLAN DE INVERSIÓN" */
+.design-plan-button {
+  display: inline-flex; /* Para alinear el + y el texto */
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #f9196a; /* El color rosa de tu barra superior */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  margin-top: 10px; /* Espacio sobre el botón */
+}
+
+.design-plan-button:hover {
+  background-color: #e6005c; /* Un rosa más oscuro al pasar el ratón */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.design-plan-button .plus-icon {
+  font-size: 1.2em;
+  margin-right: 8px; /* Espacio entre el + y el texto */
+}
+
+/*MODAL STYLES*/ 
+
+.dialog {
+	display: flex;
+	position: relative;
+	flex-direction:  column;
+	background-color: rgba(255, 255, 255, 0.979);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+	padding: 30px;
+	border-radius: 4px;
+	min-width: 150px;
+	max-width: 600px;
+}
+
+/* Estilos para el botón de cerrar (la 'x') */
+/* Botón X de cerrar modal */
+.close-modal-x {
+  position: static; /* O simplemente elimina la propiedad position */
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ff3366;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 0 0 0 1rem;
+}
+
+
+.close-modal-x:hover {
+  color: #d81b60; /* Un tono más oscuro al pasar el mouse */
+}
+
+
+/* Estilos para el botón "Crear" */
+.btn-crear {
+  background-color: #ff007f; /* Color rosado/magenta, ajusta si es diferente */
+  color: white;             /* Texto blanco */
+  border: none;             /* Sin borde */
+  border-radius: 20px;      /* Esquinas redondeadas, ajusta el valor */
+  padding: 10px 20px;       /* Relleno interno para darle tamaño */
+  font-size: 16px;          /* Tamaño de la fuente */
+  font-weight: bold;        /* Texto en negrita */
+  text-transform: uppercase; /* Todo el texto en mayúsculas */
+  cursor: pointer;          /* Indica que es clickeable */
+  display: flex;            /* Para alinear el "+" y el texto */
+  align-items: center;      /* Centra verticalmente los elementos */
+  justify-content: center;  /* Centra horizontalmente el contenido */
+  gap: 5px;                 /* Espacio entre el "+" y el texto */
+  transition: background-color 0.2s ease-in-out; /* Suaviza el cambio de color */
+}
+
+/* Si el "+" es un elemento separado dentro del botón (recomendado): */
+.btn-crear::before {
+  content: '+'; /* El contenido del "+" */
+  font-size: 20px; /* Tamaño un poco más grande para el "+" */
+  line-height: 1; /* Alineación vertical */
+  margin-right: 5px; /* Espacio a la derecha del "+" */
+}
+/* O si usas un ícono de librería como Font Awesome, no necesitarías ::before */
+
+
+.btn-crear:hover {
+  background-color: #e0006f; /* Un tono más oscuro de rosado/magenta al pasar el ratón */
+}
+
+.btn-crear:active {
+  background-color: #c0005f; /* Un tono aún más oscuro al hacer clic */
+  transform: translateY(1px); /* Efecto ligero de "presionado" */
+}
+
+
+.modal-header {
+  display: flex;
+  align-items: center;      /* Centra verticalmente */
+  justify-content: space-between; /* Título a la izquierda, X a la derecha */
+  border-radius: 4px 4px 0 0;
+  margin-bottom: 1rem;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}

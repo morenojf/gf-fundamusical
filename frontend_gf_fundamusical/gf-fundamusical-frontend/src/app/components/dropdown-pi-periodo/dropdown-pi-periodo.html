@@ -1,5 +1,5 @@
 <div class="investment-plans-section">
-  @if (!servicioVG.vistaGestionObject?.planes?.length) {
+  @if (!servicioVG.listaPlanes.length) {
   <div class="accordion-card active">
     <div class="accordion-header">
       <span class="accordion-title">{{currentYear}}</span>
@@ -28,10 +28,9 @@
     </div>
     <div class="accordion-content">
       @if (!servicioVG.listaPeriodos.length) {
-      <p>No existe un plan de inversión diseñado...</p>
-      <button class="design-plan-button">
-        <span class="plus-icon">+</span> DISEÑAR PLAN DE INVERSIÓN
-      </button>
+
+		<app-pimodal></app-pimodal>
+
       } @else {
 
       <ul>

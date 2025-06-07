@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { ServicioVG } from '../../../services/vista-gestion/servicio-vg';
 import Planes from '../../Models/Planes';
 import { NgClass } from '@angular/common';
+import { PImodal } from '../pimodal/pimodal';
 
 @Component({
   selector: 'app-dropdown-pi-periodo',
-  imports: [NgClass],
+  imports: [NgClass, PImodal],
   templateUrl: './dropdown-pi-periodo.html',
   styleUrl: './dropdown-pi-periodo.css',
 })
 export class DropdownPIPeriodo implements OnInit {
-  // Variable para controlar qué tarjeta del acordeón está activa
 
   currentYear: number;
   id: number;
 
-  // Acordeon
-  activeAccordion: string | null = '2025'; // '2025' para que inicie abierta, o null para iniciar todos cerrados
-
+  // ACORDEON
   acoordionCard!: any;
   acoordionHeader!: any;
 
-  constructor(public servicioVG: ServicioVG) {
+
+  // CONSTRUCTOR
+  constructor(public servicioVG: ServicioVG) {  //, public modalComponent: PImodal
 
 	this.id = 1
 
@@ -29,7 +29,8 @@ export class DropdownPIPeriodo implements OnInit {
     this.getInfo();
   }
 
-  ngOnInit(): any {}
+  ngOnInit(): any {
+  }
 
   // LOGICA ACORDEON
   // AL HACER CLICK EN HEADER
@@ -46,8 +47,6 @@ export class DropdownPIPeriodo implements OnInit {
 
 	plan.isActive = !plan.isActive
 	const activeId = plan.isActive ?  planInversionId: null;
-
-	console.log('estoy pasando este id', planInversionId)
 
 	this.id = planInversionId;
 	this.getInfo(activeId !== null ? activeId: undefined);
@@ -71,20 +70,6 @@ export class DropdownPIPeriodo implements OnInit {
 
         // Envio data lista Periodos
         this.servicioVG.listaPeriodos = data.periodos;
-
-        // Tests de informacion
-        console.log(
-		  'esta esta en listaPlanes', 
-		  this.servicioVG.listaPlanes
-		);
-        console.log(
-          'esto está en listaPeriodos ',
-          this.servicioVG.listaPeriodos
-        );
-        console.log(
-          'esto está en vistaGestion ',
-          this.servicioVG.vistaGestionObject
-        );
       },
       error: (e) => {
         console.log(e);

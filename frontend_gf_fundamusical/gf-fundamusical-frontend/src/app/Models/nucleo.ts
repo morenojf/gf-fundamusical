@@ -1,5 +1,5 @@
 export default interface NucleoModel {
-	nucleoName: string,
 	nucleoCoordinador: string,
-	nucleoDirector: string
+	nucleoDirector: string,
+	nucleoName: string
 }
