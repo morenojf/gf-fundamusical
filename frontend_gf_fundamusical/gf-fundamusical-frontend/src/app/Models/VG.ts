@@ -1,6 +1,6 @@
 import NucleoModel from "./nucleo";
 import Periodos from "./periodos";
-import Planes from "./Planes";
+import Planes from "./PlanesInversion";
 
 export default interface VistaGestion {
 	nucleoInfo: NucleoModel[],

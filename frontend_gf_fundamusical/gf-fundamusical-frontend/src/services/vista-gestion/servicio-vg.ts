@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import VistaGestion from '../../app/Models/VG';
 import Periodos from '../../app/Models/periodos';
-import Planes from '../../app/Models/Planes';
+import Planes from '../../app/Models/PlanesInversion';
 import NucleoModel from '../../app/Models/nucleo';
 
 @Injectable({

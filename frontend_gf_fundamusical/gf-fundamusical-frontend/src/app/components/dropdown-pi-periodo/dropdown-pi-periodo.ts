@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { ServicioVG } from '../../../services/vista-gestion/servicio-vg';
-import Planes from '../../Models/Planes';
+import Planes from '../../Models/PlanesInversion';
 import { NgClass } from '@angular/common';
 import { PImodal } from '../pimodal/pimodal';
 

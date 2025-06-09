@@ -1,5 +1,5 @@
 <p class="NoInfo">No existe un plan de inversión diseñado...</p>
-<button class="design-plan-button" (click)="openDialog()">
+<button class="design-plan-button" (click)="genTrigger()">
   <span class="plus-icon">+</span> DISEÑAR PLAN DE INVERSIÓN
 </button>
 
@@ -9,12 +9,61 @@
       <h3 class="modal-title">DISEÑO PLAN DE INVERSIÓN</h3>
       <button class="close-modal-x" closeModal>x</button>
     </div>
-    <p>
-      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus ratione
-      impedit vero praesentium excepturi quae ullam ipsam eos hic, neque
-      assumenda exercitationem, qui, facere obcaecati maiores quos illum soluta
-      optio.
-    </p>
+    <div>
+      <div class="container">
+        <div class="content">
+          <p class="instruction">Seleccione un Plan de Cuentas (Max. 7)</p>
+          <div class="plan-list">
+            <!-- Fila de plan de cuenta y subcategoría -->
+            <div class="plan-row">
+              <!--Must be dinamic depending on how many planes de cuenta were selected-->
+              <span class="item-number">1.-</span>
+              <div class="dropdown-wrapper">
+                <select
+                  class="main-category-dropdown"
+                  (change)="onPlanCuentaChange($event)"
+                >
+                  @for (plan of servicePi.planesCuenta; track plan.planCuentaId)
+                  {
+                  <option [value]="plan.planCuentaId">
+                    {{plan.planCuentaName}} - Code: {{plan.planCuentaCode}}
+                  </option>
+                  }
+                </select>
+              </div>
+              <span class="divider"><div></div></span>
+              <!--Must be dinamic depending on how many subcategories were selected-->
+              @if (!servicePi.subCategorias.length) {
+              <p>
+                No existe subcategorías para el plan de inversión seleccionado
+              </p>
+              } @else {
+
+              <span class="sub-category-letter">a)</span>
+              <div class="dropdown-wrapper">
+                <select class="sub-category-dropdown">
+                  @for (subcategoria of servicePi.subCategorias; track
+                  subcategoria.subcategoriaId) {
+                  <option>{{ subcategoria.subcategoriaName }}</option>
+                  }
+                </select>
+              </div>
+
+              <div class="add-sub-category-inline">
+                <div class="add-sub-category-tooltip">
+                  Añadir Sub-categoría (Máx. 5)
+                </div>
+                <button class="add-button-icon">+</button>
+              </div>
+
+              }
+            </div>
+            <!-- Más filas .plan-row aquí si es necesario -->
+            <button class="add-plan-button">Agregar Plan de Cuenta</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <button class="btn-crear">CREAR</button>
   </div>
 </ng-template>
