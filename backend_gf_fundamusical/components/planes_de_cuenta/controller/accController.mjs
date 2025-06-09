@@ -7,6 +7,7 @@ import { planCuentaModel } from '../model/planCuentaModel.mjs'
 export class planCuentaController {
   // OBTIENE PLANES DE CUENTA PARA CREACION DE PLANES DE INVERSION
   static async getAll (req, res) {
+	res.header('Access-Control-Allow-Origin', '*')
     const planesCuenta = await planCuentaModel.getAll()
     return res.status(200).json(planesCuenta)
   }

@@ -17,6 +17,6 @@ export class subcategoriaModel {
     )
     if (!filteredCategory.length) {
       return console.log('No existen subcategorias para este plan de cuentas')
-    } else return [filteredCategory]
+    } else return filteredCategory
   }
 }
