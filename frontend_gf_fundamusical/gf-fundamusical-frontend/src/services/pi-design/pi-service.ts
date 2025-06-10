@@ -12,7 +12,7 @@ export class PiService {
     'http://localhost:3128/api/gestion/modal/plancuenta-subcategoria';
   readonly API_URL = 'http://localhost:3128/api/gestion-modal'; // OBTIENE TODOS LOS PLANES DE CUENTA DISPONIBLES PARA SELECCIONAR
   planesCuenta!: PlanCuenta[];
-  subCategorias!: SubCategoria[];
+  subCategorias!: SubCategoria[] | null;
 
   constructor(private http: HttpClient) {}
 

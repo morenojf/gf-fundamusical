@@ -1,11 +1,12 @@
 import {
 	ChangeDetectorRef,
-  Component,
-  inject,
-  OnInit,
-  TemplateRef,
-  viewChild,
-  ViewContainerRef,
+	Component,
+	inject,
+	OnInit,
+	TemplateRef,
+	viewChild,
+	ViewContainerRef,
+	NgModule
 } from '@angular/core';
 import { ModalService } from '../../../services/modal/modal-service';
 import { closeModalDirective } from '../../DIrectives/close-modal.directive';
@@ -14,24 +15,59 @@ import PiObject from '../../Models/PiObject';
 import { PiService } from '../../../services/pi-design/pi-service';
 
 @Component({
-  selector: 'app-pimodal',
-  imports: [closeModalDirective, ReactiveFormsModule, FormsModule],
-  templateUrl: './pimodal.html',
-  styleUrl: './pimodal.css',
+	selector: 'app-pimodal',
+	imports: [closeModalDirective, ReactiveFormsModule, FormsModule],
+	templateUrl: './pimodal.html',
+	styleUrl: './pimodal.css',
 })
 export class PImodal implements OnInit {
+	
+	id!: number;
+	
+	// Declaracion variable grupoFormulario SC
+	public formSC!: FormGroup;
+	// Campo del formulario
+	public selectedSC!: FormControl;
+	// Declaracion array para guardar los id de SC
+	public scValues: number[] = []; 
 
-id!: number;
-resultGetSC!: any;
+	// Declaración variable grupoFormulario planRow
+	public formPR!: FormGroup;
+	// Campo formulario plan Cuenta
+	public selectedPC!: FormControl;
+	// Objeto a pushear en el array final
+	public planRowObject: object = {}
+
+	// Array de objetos para fetch al backend
+	public designedPI: any[];
+
+	// SubFields
+	 
+
+	
+	// CONSTRUCTOR -----------------------------------------------------------
 
   constructor(public servicePi: PiService, private cdr: ChangeDetectorRef) {
+	  // planInversion ID por defecto para encontrar subcategorias
 	  this.id = 1
 
-	// planInversion ID para encontrar subcategorias
+	  this.designedPI = [];
+
   }
 
-  ngOnInit(): void {
 
+  // ON INIT ---------------------------------------------------------------
+  ngOnInit(): void {
+	this.selectedSC = new FormControl()
+	this.selectedPC = new FormControl()
+
+	this.formSC = new FormGroup({
+		selectedId: this.selectedSC
+	});
+
+	this.formPR = new FormGroup({
+		selectedPC: this.selectedPC
+	});
 
   }
 
@@ -39,6 +75,10 @@ resultGetSC!: any;
 	this.getSC();
 	this.getPC();
 	this.openDialog();
+
+	// Inicializar el formulario de SC con trigger --------
+
+
   }
 
   onPlanCuentaChange(event: Event) {
@@ -53,15 +93,20 @@ getSC() {
 this.servicePi.getInfoSC(this.id).subscribe({
   next: (data) => {
 	this.servicePi.subCategorias = data
-	console.log(Array.isArray(this.servicePi.subCategorias)); // Debe ser true
-	console.log('te muestro lo que se guarda en la variable de SC', this.servicePi.subCategorias)
 	this.cdr.detectChanges();
+	// Asigna el primer valor solo si aún no hay uno seleccionado
+    if (data.length > 0) {
+        this.selectedSC.setValue(data[0].subcategoriaId);
+      } else {
+		this.selectedSC.setValue(null);
+	  }
 },
   error: (e) => {
 	if (e){	
 		console.log('No existen Subcategorias para este plan de inversión: error: ',e);
-		this.servicePi.subCategorias = []
+		this.servicePi.subCategorias = null;
 		// Se hace un array vacio para mostrarlo en el html
+		this.selectedSC.setValue(null);
 	}
   },
 });
@@ -70,16 +115,18 @@ this.servicePi.getInfoSC(this.id).subscribe({
 // OBTENER PLANES DE CUENTA DISPONIBLES
 
   getPC() {
-    this.servicePi.getInfoPC().subscribe({
-      next: (data) => {
-		this.servicePi.planesCuenta = data
-	  },
-      error: (e) => {
-        console.log(e);
-      },
-    });
+  this.servicePi.getInfoPC().subscribe({
+    next: (data) => {
+      this.servicePi.planesCuenta = data;
+      // Asigna el primer valor solo si aún no hay uno seleccionado
+      if (!this.selectedPC.value && data.length > 0) {
+        this.selectedPC.setValue(data[0].planCuentaId);
+      }
+    },
+    error: (e) => { console.log(e); }
+  });
   }
-
+  // --------------------------------------------------------------------
 
   // MODAL --------------------------------------------------------------
 
@@ -94,4 +141,36 @@ this.servicePi.getInfoSC(this.id).subscribe({
   }
 
   // --------------------------------------------------------------------
+
+  // FORM DATA ----------------------------------------------------------
+
+
+  addSC(): void {
+	if (this.formSC.value.selectedId === null) {
+		console.log('Aqui no pasarán valores nulos, pendejo')
+		return
+	} else {
+		console.log('este es el que se pushea', this.formSC.value)
+		this.scValues.push(this.formSC.value.selectedId)
+		console.log('esto es lo que tienes dentro del array', this.scValues)
+	}
+  };
+
+  addPR(): void {
+	console.log('llegué hasta aqui y tome el siguiente valor del formulario para el plan de cuentas', this.formPR.value)
+	this.planRowObject = {planCuentaId: this.formPR.value.selectedPC, subcategorias: this.scValues}
+	
+	console.log('asi es como va mi ojeto', this.planRowObject)
+	
+	this.designedPI.push(this.planRowObject)
+	console.log('asi es como va mi array de objetos para el post', this.designedPI)
+
+	this.scValues = []
+	return
+  }
+
+
+
+  // --------------------------------------------------------------------
+
 }

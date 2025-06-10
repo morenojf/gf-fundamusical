@@ -5,65 +5,86 @@
 
 <ng-template #template>
   <div class="dialog">
-    <div class="modal-header">
-      <h3 class="modal-title">DISEÑO PLAN DE INVERSIÓN</h3>
-      <button class="close-modal-x" closeModal>x</button>
-    </div>
-    <div>
-      <div class="container">
-        <div class="content">
-          <p class="instruction">Seleccione un Plan de Cuentas (Max. 7)</p>
-          <div class="plan-list">
-            <!-- Fila de plan de cuenta y subcategoría -->
-            <div class="plan-row">
-              <!--Must be dinamic depending on how many planes de cuenta were selected-->
-              <span class="item-number">1.-</span>
-              <div class="dropdown-wrapper">
-                <select
-                  class="main-category-dropdown"
-                  (change)="onPlanCuentaChange($event)"
-                >
-                  @for (plan of servicePi.planesCuenta; track plan.planCuentaId)
-                  {
-                  <option [value]="plan.planCuentaId">
-                    {{plan.planCuentaName}} - Code: {{plan.planCuentaCode}}
-                  </option>
-                  }
-                </select>
-              </div>
-              <span class="divider"><div></div></span>
-              <!--Must be dinamic depending on how many subcategories were selected-->
-              @if (!servicePi.subCategorias.length) {
-              <p>
-                No existe subcategorías para el plan de inversión seleccionado
-              </p>
-              } @else {
+    <!-- Inicio formulario crear plan de inversion -->
+    <form action="">
+      <div class="modal-header">
+        <h3 class="modal-title">DISEÑO PLAN DE INVERSIÓN</h3>
+        <button class="close-modal-x" closeModal>x</button>
+      </div>
+      <div>
+        <div class="container">
+          <div class="content">
+            <p class="instruction">Seleccione un Plan de Cuentas (Max. 7)</p>
+            <div class="plan-list">
+              <!-- Inicio formulario añadir plan cuenta-->
+              <form [formGroup]="formPR" (submit)="addPR()">
+                <!-- Inicio contenedor Plan Row -->
+                <div class="plan-row">
+                  <!--Must be dinamic depending on how many planes de cuenta were selected-->
+                  <span class="item-number">1.-</span>
+                  <div class="dropdown-wrapper">
+                    <select
+                      class="main-category-dropdown"
+                      (change)="onPlanCuentaChange($event)"
+                      formControlName="selectedPC"
+                    >
+                      @for (plan of servicePi.planesCuenta; track
+                      plan.planCuentaId) {
+                      <option [value]="plan.planCuentaId">
+                        {{plan.planCuentaName}} - Code: {{plan.planCuentaCode}}
+                      </option>
+                      }
+                    </select>
+                  </div>
+                  <span class="divider"></span>
+                  <!--Must be dinamic depending on how many subcategories were selected-->
+                  @if (servicePi.subCategorias === null) {
+                  <p>
+                    No existe subcategorías para el plan de inversión
+                    seleccionado
+                  </p>
+                  } @else {
 
-              <span class="sub-category-letter">a)</span>
-              <div class="dropdown-wrapper">
-                <select class="sub-category-dropdown">
-                  @for (subcategoria of servicePi.subCategorias; track
-                  subcategoria.subcategoriaId) {
-                  <option>{{ subcategoria.subcategoriaName }}</option>
-                  }
-                </select>
-              </div>
 
-              <div class="add-sub-category-inline">
-                <div class="add-sub-category-tooltip">
-                  Añadir Sub-categoría (Máx. 5)
+                  <!--INICIO formulario para categorias -->
+                  <span class="sub-category-letter">a)</span>
+                  <form
+                    class="subcat-form"
+                    [formGroup]="formSC"
+                    (submit)="addSC()"
+                  > 
+                    <div class="dropdown-wrapper">
+                      <select
+                        class="sub-category-dropdown"
+                        formControlName="selectedId"
+                      >
+                        @for (subcategoria of servicePi.subCategorias; track
+                        subcategoria.subcategoriaId) {
+                        <option [value]="subcategoria.subcategoriaId">
+                          {{ subcategoria.subcategoriaName }}
+                        </option>
+                        }
+                      </select>
+                    </div>
+                    <div class="add-sub-category-inline">
+                      <div class="add-sub-category-tooltip">
+                        Añadir Sub-categoría (Máx. 5)
+                      </div>
+                      <button class="add-button-icon">+</button>
+					  <!-- @if () {} -->
+                    </div>
+                  </form>
+                  <!-- FIN formulario categorias -->
+                  }
                 </div>
-                <button class="add-button-icon">+</button>
-              </div>
-
-              }
+                <!-- Final Plan row -->
+                <button class="add-plan-button">Agregar Plan de Cuenta</button>
+              </form>
             </div>
-            <!-- Más filas .plan-row aquí si es necesario -->
-            <button class="add-plan-button">Agregar Plan de Cuenta</button>
           </div>
         </div>
       </div>
-    </div>
-    <button class="btn-crear">CREAR</button>
+      <button class="btn-crear" type="submit">CREAR</button>
+    </form>
   </div>
 </ng-template>
