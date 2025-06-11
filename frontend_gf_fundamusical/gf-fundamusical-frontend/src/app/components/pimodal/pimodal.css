@@ -1,3 +1,38 @@
+ol{
+	padding-left: 15px;
+}
+
+#pc{
+	margin-top: 1px;
+	margin-bottom: 1px;
+	font-size: 20px;
+}
+
+#subcat{
+	margin-top: 1px;
+	margin-bottom: 1px;
+	font-size: 18px;
+
+}
+
+.chip {
+  display: inline-block;
+  background: #f9196a22;
+  color: #d81b60;
+  border-radius: 16px;
+  padding: 3px 12px;
+  margin: 2px 4px 2px 0;
+  font-size: 0.98em;
+  font-weight: 500;
+  border: 1px solid #f9196a55;
+  vertical-align: middle;
+}
+
+.selectedInfo{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .subcat-form {
   display: flex;
   align-items: center;
@@ -51,7 +86,8 @@
   padding: 30px;
   border-radius: 4px;
   min-width: 150px;
-  max-width: 600px;
+  max-width: 95vw;
+  width: auto;
 }
 
 /* Estilos para el botón de cerrar (la 'x') */
@@ -142,6 +178,11 @@
   gap: 12px;
   margin-bottom: 5px;
   min-height: 48px;
+
+  
+  /*cosas nuevas*/
+  flex-wrap: nowrap; /* Permite que los elementos bajen a la siguiente línea */
+  max-width: 100%;
 }
 
 /* Número del plan */
@@ -192,6 +233,9 @@
   color: #333;
   height: 38px;
   box-sizing: border-box;
+
+  min-width: 160px;
+  max-width: 220px;
 }
 
 /* Flecha personalizada para el select */
@@ -250,6 +294,9 @@
   cursor: pointer;
   margin-left: 5px;
   flex-shrink: 0;
+
+  min-width: 28px;
+  max-width: 32px;
 }
 
 /* --------------------------------------------------------- */
