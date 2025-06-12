@@ -11,9 +11,7 @@ import { soporteController } from '../components/soportes/controller/soporteCont
 
 
 import { datosArticulos } from '../services/mysql-db/articlesDesignData.mjs' // DATOS CREAR ARTICULO
-import { datosFormulario } from '../services/mysql-db/PlanInversionDesignData.mjs' // DATOS DISEniO PI
 import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEniO SOLICITUD
-const datosPI = datosFormulario
 const solicitudData = datosSolicitud
 const datosArticles = datosArticulos
 
@@ -34,10 +32,6 @@ routing.get(
 
 routing.post(
   '/gestion/modal/plan-inversion',
-  (req, res, next) => {
-    req.body = datosPI
-    next()
-  },
   PIcontroller.createNewPI
 ) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
 

@@ -7,8 +7,9 @@ export class PIcontroller {
       const PIdata = req.body
       await PImodel.createPI(PIdata) // esto no retorna nada
 
-      res.status(200).send('Plan de Inversión creado satisfactoriamente')
+      res.status(200).send({message: 'Plan de Inversión creado satisfactoriamente'})
     } catch (err) {
+		console.log('esto estas enviando', req.body)
       return res.status(500).send('Error al crear el nuevo plan de inversion ', err)
     }
   }

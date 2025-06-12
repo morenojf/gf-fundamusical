@@ -2,7 +2,6 @@
 import express, { json } from 'express'
 const app = express()
 app.use(json()) // Middleware para parsear el body de la peticion a json
-
 const PORT = process.env.PORT || 3128
 
 export { app, PORT } // Exporto el servidor y el puerto para poder usarlos en otros archivos
