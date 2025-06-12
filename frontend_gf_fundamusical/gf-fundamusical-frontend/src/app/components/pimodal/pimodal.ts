@@ -83,7 +83,7 @@ export class PImodal implements OnInit {
     });
   }
 
-  genTrigger() {
+  public genTrigger() {
     this.getSC();
     this.getPC();
     this.openDialog();
@@ -206,7 +206,7 @@ export class PImodal implements OnInit {
     this.pcValues.push(Number(this.formPR.value.selectedPC));
     this.planRowObject = {
       planCuentaId: Number(this.formPR.value.selectedPC),
-      subcategorias: this.scValues,
+      subcategoriasSeleccionadas: this.scValues,
     };
 
     console.log('asi es como va mi ojeto', this.planRowObject);
@@ -247,4 +247,56 @@ export class PImodal implements OnInit {
   }
 
   // --------------------------------------------------------------------
+  designPI() {
+
+	// crear nuevo PI period
+    this.createPIPeriod();
+
+	
+
+  }
+
+
+  // Llamada al servicio para crear un nuevo plan de inversion y un nuevo periodo
+  createPIPeriod(){
+    this.servicePi.newPeriodPI().subscribe({
+      next: (data) => {
+        // 	data returns [
+        // 	{message: "Nuevo plan inversion creado", planInversionId: number},
+        // 	{
+		//  message: "Periodo Inicial creado", periodoId: 
+		//  [{periodoAnio: 2025, periodoId: 1, periodoMes: 6, periodoStatus: "En Curso", planInversionId: 1}]
+		//  }
+        //  ]
+		// Esto guarda el plan de inversion Id recientemente creado tipo number
+		this.servicePi.planInversionId = data[0].planInversionId
+		// PUSHEAR EL PLAN DE INVERSION ID A CADA OBJETO PARA COMPLETAR EL OBJETO Y PODER ENVIARLO AL BACKEND PARA DISENIAR EL NUEVO PI
+		for (let index = 0; index < this.designedPI.length; index++) {
+			this.designedPI[index] = {...this.designedPI[index], planInversionId: this.servicePi.planInversionId}	
+		}
+		this.servicePi.designedPi = this.designedPI
+		// Ejecutamos la creacion del plan inversion diseniado
+		this.sendFormInfo();
+		window.location.reload();
+
+
+      },
+      error: (e) => {
+        console.log('Error al crear el nuevo PI', e);
+      },
+    });
+
+  }
+
+  sendFormInfo(){
+	this.servicePi.PiDesign().subscribe({
+		next: (data) => {
+			console.log(data) // returns message: 'Plan de Inversión creado satisfactoriamente'
+		},
+		error: (e) => {
+			console.log(e)
+		}
+	})
+  }
+
 }

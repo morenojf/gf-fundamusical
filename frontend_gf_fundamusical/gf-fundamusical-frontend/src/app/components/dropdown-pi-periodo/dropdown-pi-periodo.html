@@ -7,10 +7,7 @@
     </div>
 
     <div class="accordion-content">
-      <p>No existe un plan de inversión diseñado...</p>
-      <button class="design-plan-button">
-        <span class="plus-icon">+</span> DISEÑAR PLAN DE INVERSIÓN
-      </button>
+   <app-pimodal></app-pimodal>
     </div>
   </div>
 
@@ -35,7 +32,7 @@
 
       <ul>
         @for (periodo of servicioVG.listaPeriodos; track $index) {
-        <a href="">
+        <a [routerLink]="['/solicitudes-list/', periodo.periodoId]">
           <div class="list-item">
             <li>
               <strong><p class="list-month">{{periodo.nombreMes}}</p></strong>

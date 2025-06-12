@@ -6,7 +6,7 @@
 <ng-template #template>
   <div class="dialog">
     <!-- Inicio formulario crear plan de inversion -->
-    <form action="">
+    <form (submit)="designPI()">
       <div class="modal-header">
         <h3 class="modal-title">DISEÑO PLAN DE INVERSIÓN</h3>
         <button class="close-modal-x" closeModal>x</button>
@@ -121,7 +121,7 @@
           </div>
         </div>
       </div>
-      <button class="btn-crear" type="submit">CREAR</button>
+      <button class="btn-crear" >CREAR</button>
     </form>
   </div>
 </ng-template>

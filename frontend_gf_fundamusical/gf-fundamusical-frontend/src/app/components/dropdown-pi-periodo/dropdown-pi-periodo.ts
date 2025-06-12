@@ -3,10 +3,11 @@ import { ServicioVG } from '../../../services/vista-gestion/servicio-vg';
 import Planes from '../../Models/PlanesInversion';
 import { NgClass } from '@angular/common';
 import { PImodal } from '../pimodal/pimodal';
+import { RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dropdown-pi-periodo',
-  imports: [NgClass, PImodal],
+  imports: [NgClass, PImodal, RouterLink, RouterModule],
   templateUrl: './dropdown-pi-periodo.html',
   styleUrl: './dropdown-pi-periodo.css',
 })
@@ -29,7 +30,13 @@ export class DropdownPIPeriodo implements OnInit {
     this.getInfo();
   }
 
+
+  // OnInit
   ngOnInit(): any {
+  }
+
+  hola(){
+	console.log('estas tocando un boton quemado')
   }
 
   // LOGICA ACORDEON

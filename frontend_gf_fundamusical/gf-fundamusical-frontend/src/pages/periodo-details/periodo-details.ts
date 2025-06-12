@@ -3,10 +3,11 @@ import { NucleoInfo } from '../../app/components/nucleo-info/nucleo-info';
 import { AsideBar } from '../../app/components/aside-bar/aside-bar';
 import { Header } from '../../app/components/header/header';
 import { ActivatedRoute } from '@angular/router';
+import { SolicitudList } from '../../app/components/solicitud-list/solicitud-list';
 
 @Component({
   selector: 'app-periodo-details',
-  imports: [Header, AsideBar, NucleoInfo ],
+  imports: [Header, AsideBar, NucleoInfo, SolicitudList],
   templateUrl: './periodo-details.html',
   styleUrl: './periodo-details.css'
 })
