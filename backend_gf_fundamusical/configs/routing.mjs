@@ -72,3 +72,6 @@ routing.post('/periodo/solicitud-soporte/:id', soporteController.addSoporte)
 
 routing.get('/periodo/solicitud-soporte/:id', soporteController.getSoporteInfo)
 //OBTENER INFORMACION DEL SOPORTE SEGÚN LA SOLICITUD ESPECIFICA
+
+// OBTENER UN PC SEGUN EL PIPC
+routing.get('/periodo/solicitud-pc/:id', planCuentaController.getPCnameByPIPC)

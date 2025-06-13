@@ -25,6 +25,9 @@ GET http://localhost:3128/api/periodo-SolicitudesList/1
 ### OBTENER DENTRO DEL MODAL LOS PLANES DE CUENTA SEGUN EL PIPC PARA CREAR UNA SOLICITUD
 GET http://localhost:3128/api/periodo/solicitud
 
+### OBTENER PC Name de una SOLICITUD
+GET http://localhost:3128/api/periodo/solicitud-pc/1
+
 ### CREAR SOLICITUD
 POST http://localhost:3128/api/periodo/solicitud-crearsolicitud
 

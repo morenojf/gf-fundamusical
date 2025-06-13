@@ -29,4 +29,14 @@ export class planCuentaController {
         )
     }
   }
+
+  static async getPCnameByPIPC (req, res) {
+	const { id } = req.params
+	const PC = await planCuentaModel.getPCnameByPIPC(id)
+	if (PC) {
+	  return res.status(200).send(PC)
+	} else {
+	  return res.status(204).send('No existe un plan de cuenta para este PIPC')
+	}
+  }
 }
