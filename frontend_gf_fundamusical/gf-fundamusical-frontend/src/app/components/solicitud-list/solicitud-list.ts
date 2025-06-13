@@ -1,31 +1,129 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  inject,
+  TemplateRef,
+  viewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { SolicitudService } from '../../../services/solicitudes/solicitud-service';
+import { CommonModule } from '@angular/common';
 
+import { ModalService } from '../../../services/modal/modal-service';
+import { closeModalDirective } from '../../DIrectives/close-modal.directive';
+import Solicitud from '../../Models/SolicitudModel';
+import { ArticulosForm } from '../articulos-form/articulos-form';
 
 @Component({
   selector: 'app-solicitud-list',
-  imports: [],
+  imports: [CommonModule, closeModalDirective, ArticulosForm],
   templateUrl: './solicitud-list.html',
-  styleUrl: './solicitud-list.css'
+  styleUrl: './solicitud-list.css',
 })
-export class SolicitudList implements OnInit{
-	periodId: number;
+export class SolicitudList implements OnInit {
+  periodId: number;
+
+  // Se trabaja con un array de solicitudes donde se depositan las solicitudes de la api para luego 
+  // modificarlas y aniadirles el nombre de plan de cuenta
+  solicitudes!: Solicitud[];
+
+  // Modal
+  modalService = inject(ModalService);
+
+  detailsModal = viewChild(TemplateRef);
+  detailsModalRef = viewChild('detailsModal', { read: ViewContainerRef });
+
+  showDetails(solicitud: Solicitud) {
+    this.modalService.openDialog(
+      this.detailsModal()!,
+      this.detailsModalRef()!,
+	  { $implicit: solicitud }
+    );
+  }
+
+  
 
 
-	constructor(private route: ActivatedRoute, public solicitudService: SolicitudService){
-		this.periodId = this.route.snapshot.params['id']
-		console.log('Te muestro el id del periodo segun me renderizo', this.periodId)
-	}
 
-	ngOnInit(): void {
-		
-		this.getSolicitudes()
-	}
+  // CONSTRUCTOR -----------------------------------------------------------
+  constructor(private route: ActivatedRoute, public solicitudService: SolicitudService) 
+  {
+    this.periodId = this.route.snapshot.params['id'];
+    console.log(
+      'Te muestro el id del periodo segun me renderizo',
+      this.periodId
+    );
+	this.getSolicitudes();
+	
+}
+
+// NGONINIT -----------------------------------------------------------
+ngOnInit(): void {
+
+  }
+
+  // Method to fetch solicitudes based on periodId
+  getSolicitudes() {
+    this.solicitudService.getSolicitudes(this.periodId).subscribe({
+      next: (data) => {
+        this.solicitudService.solicitudes = data;
+
+		this.solicitudes = this.solicitudService.solicitudes;
+		// Fetch PC names for each solicitud
+		this.solicitudes.forEach((solicitud) => {
+		this.findPC(solicitud.planInversionPlanCuentaId)})
+
+      },
+      error: (error) => {
+        console.error('Error al obtener las solicitudes:', error);
+      },
+    });
+  }
 
 
-	getSolicitudes(){
-		this.solicitudService.getSolicitudes(this.periodId)
-	}
+findPC(PIPCid: number): void {
+  this.solicitudService.getPCnameByPIPCid(PIPCid).subscribe({
+    next: (data) => {
+      // Busca la solicitud correspondiente y actualiza su propiedad
+      const solicitud = this.solicitudes.find(s => s.planInversionPlanCuentaId === PIPCid);
+      if (solicitud) {
+        solicitud.planCuentaName = data[0].planCuentaName;
+      }
+    },
+    error: (e) => {
+      console.log('Error al obtener Planes de Cuenta:', e);
+    }
+  });
+}
+
+  // Helper methods to get status text and class based on status code
+
+  getStatusText(status: number): string {
+    switch (status) {
+      case 1:
+        return 'En Proceso';
+      case 2:
+        return 'Anulado';
+      case 3:
+        return 'Finalizado';
+      default:
+        return 'Desconocido';
+    }
+  }
+
+  getStatusClass(status: number): string {
+    switch (status) {
+      case 1:
+        return 'estado-proceso proceso';
+      case 2:
+        return 'estado-proceso anulado';
+      case 3:
+        return 'estado-proceso finalizado';
+      default:
+        return 'estado-proceso';
+    }
+  }
+
+  //---------------------------------------------------
 }

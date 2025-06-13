@@ -14,13 +14,15 @@ export class ModalService {
   private overlayRef!: OverlayRef
 
 
-  openDialog<T = unknown>(template: TemplateRef<T>, viewContainerRef: ViewContainerRef) {
+  openDialog<T = unknown>(template: TemplateRef<T>, viewContainerRef: ViewContainerRef, context?: any) {
 	const config = this.getOverlayConfig();
 	const overlayRef = this.overlay.create(config);
 	this.overlayRef  = overlayRef
-	const portal = new TemplatePortal(template, viewContainerRef);
-	overlayRef.attach(portal);
-	this.overlayDetachment(overlayRef)
+	const portal = context
+    ? new TemplatePortal(template, viewContainerRef, context)
+    : new TemplatePortal(template, viewContainerRef);
+  overlayRef.attach(portal);
+  this.overlayDetachment(overlayRef);
 
   }
 

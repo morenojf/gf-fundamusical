@@ -1,0 +1,58 @@
+<ng-template #articleForm>
+  <!--MODAL FORM AÑADIR ARTICULOS -->
+  <div class="modal">
+    <div class="modal-header">
+      Añadir articulos a la solicitud ID: #0{{ solicitud.solicitudId }}<br> Plan de Cuentas asociado: {{ solicitud.planCuentaName}}
+      <button class="close-modal-x" closeModal>x</button>
+    </div>
+    <div class="modal-content">
+      <form>
+    
+          <legend class="visually-hidden">Artículos a solicitar</legend>
+          <div class="articulos-grid">
+            <div class="articulos-col articulos-descripcion">
+              <label class="articulos-label"
+                ><strong>Describa el artículo a solicitar</strong></label
+              >
+              <ul class="articulos-list">
+                <li>
+                  <input
+                    class="articulo-input"
+                    type="text"
+                    placeholder="Ingrese el artículo..."
+                  />
+                </li>
+              </ul>
+              <button type="button" class="add-articulos-btn">
+                <span style="font-weight: bold; font-size: 1.2em">+</span>
+                Añadir Artículo
+              </button>
+            </div>
+            <div class="articulos-col articulos-cantidad">
+              <label class="articulos-label"
+                ><strong>Especifique la Cantidad</strong></label
+              >
+              <ul class="articulos-list">
+                <li>
+                  <div class="cantidad-control">
+                    <button type="button" class="cantidad-btn" (click)="minusOne()">-</button>
+                    <span class="cantidad-num">{{articuloQuantity}}</span>
+                    <button type="button" class="cantidad-btn" (click)="plusOne()">+</button>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <div class="articulos-footer">
+          <button type="submit" class="btn-crear-solicitud">
+            <span class="plus-icon">+</span> Añadir Artículos a solicitud
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<button class="add-articulos-btn" (click)="articlesForm()">
+  + AÑADIR ARTÍCULOS
+</button>

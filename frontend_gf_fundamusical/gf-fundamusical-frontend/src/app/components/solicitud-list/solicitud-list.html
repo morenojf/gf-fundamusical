@@ -1,3 +1,106 @@
 <div class="main-content">
-	<p>holi desde el componente solicitudes list</p>
+  <table class="solicitud-table">
+    <thead>
+      <tr>
+        <th>N° de Solicitud</th>
+        <th>Plan de Cuentas</th>
+        <th>Artículos listados</th>
+        <th>Cantidad total de artículos</th>
+        <th>Estado de solicitud</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <ng-template #detailsModal let-solicitud>
+		<!--MODAL DETALLES DE SOLICITUD -->
+        <div class="modal">
+          <div class="modal-header">
+            DETALLES SOLICITUD ID: #{{solicitud.solicitudId}}
+            <button class="close-modal-x" closeModal>x</button>
+          </div>
+          <div class="modal-content">
+            <table
+              style="
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0 10px;
+              "
+            >
+			  <tr>
+                <td><strong>Plan de Cuentas asociado:</strong></td>
+                <td>{{ solicitud.planCuentaName }}</td>
+              </tr>
+              <tr>
+                <td><strong>Motivo de solicitud:</strong></td>
+                <td>{{ solicitud.solicitudMotivo }}</td>
+              </tr>
+              <tr>
+                <td><strong>Fecha de creación:</strong></td>
+                <td>{{ solicitud.solicitudCreatedAt | date:'dd/MM/yyyy' }}</td>
+              </tr>
+              <tr>
+                <td><strong>Estado:</strong></td>
+                <td>
+                  <span
+                    
+                  >
+                    {{ getStatusText(solicitud.solicitudStatus) }}
+                  </span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </ng-template>
+
+
+      @if (!solicitudService.solicitudes.length) {
+      <tr>
+        <td colspan="6">No existen solicitudes creadas para este periodo</td>
+      </tr>
+      } @else { @for (solicitud of solicitudes; track $index) {
+      <tr>
+        <td>
+          <!--ID-->
+          <a class="solicitud-link" (click)="showDetails(solicitud)"
+            >#{{ solicitud.solicitudId | number:'2.0' }}</a
+          >
+        </td>
+        <!--PC info -->
+        <td>{{ solicitud.planCuentaName }}</td>
+        <td>
+          <!--Articulos info -->
+		<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+        </td>
+        <td>tbd</td>
+        <!--Articulos cantidades -->
+        <td>
+          <!--Estado de solicitud -->
+          <span
+            class="estado-proceso"
+            [ngClass]="getStatusClass(solicitud.solicitudStatus)"
+            >{{ getStatusText(solicitud.solicitudStatus) }}</span
+          >
+        </td>
+        <td class="acciones-cell">
+          <!--Acciones -->
+          <div class="acciones-btn-group">
+            <button class="accion-btn aprobar" title="Aprobar solicitud">
+              &#10003;
+            </button>
+            <button class="accion-btn anular" title="Anular solicitud">
+              X
+            </button>
+          </div>
+        </td>
+      </tr>
+      } }
+    </tbody>
+  </table>
+  <div class="crear-solicitud-container">
+    <button class="btn-crear-solicitud">
+      <span class="plus-icon">+</span> CREAR NUEVA SOLICITUD
+    </button>
+  </div>
 </div>
