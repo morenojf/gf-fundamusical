@@ -1,3 +1,5 @@
+import ArticuloModel from "./articuloModel"
+
   export default interface Solicitud {
     solicitudId: number,
     userId: number,
@@ -6,5 +8,8 @@
     solicitudMotivo: string,
     solicitudStatus: number,
     solicitudCreatedAt: Date,
-	planCuentaName?: string
+	planCuentaName?: string,
+	articulosSolicitud?: ArticuloModel[]
   }
+
+  // solicitud.solicitudActualData.

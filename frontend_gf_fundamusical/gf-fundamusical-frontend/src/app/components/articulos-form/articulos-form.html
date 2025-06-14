@@ -2,65 +2,98 @@
   <!--MODAL FORM AÑADIR ARTICULOS -->
   <div class="modal">
     <div class="modal-header">
-      Añadir articulos a la solicitud ID: #0{{ solicitud.solicitudId }}<br> Plan de Cuentas asociado: {{ solicitud.planCuentaName}}
+      Añadir articulos a la solicitud ID: #0{{ solicitud.solicitudId }}<br />
+      Plan de Cuentas asociado: {{ solicitud.planCuentaName}}
       <button class="close-modal-x" closeModal>x</button>
     </div>
     <div class="modal-content">
-	<!-- formulario general -->
+      <!-- formulario general -->
       <form [formGroup]="articulosForm" (submit)="addValues()">
-		<div class="articulos-header">
-		  <h3 class="articulos-title">Añadir Artículos a Solicitud</h3>
-		  <p class="articulos-subtitle">
-			Por favor, ingrese los artículos que desea solicitar.
-		  </p>
-		</div>
-		<!-- DESCRIPCIÓN ARTICULOS -->
-          <legend class="visually-hidden">Artículos a solicitar</legend>
-          <div class="articulos-grid">
-            <div class="articulos-col articulos-descripcion">
-			@for (articulo of articuloList; track $index) {
-				<p>{{articulo.articuloName}}</p><p>{{articulo.articuloQuantity}}</p>
-			}
-              <label class="articulos-label"
-                ><strong>Describa el artículo a solicitar</strong></label
-              >
-              <ul class="articulos-list">
-                <li>
-                  <input
-                    class="articulo-input"
-                    type="text"
-                    placeholder="Ingrese el artículo..."
-					formControlName="articuloName"
-                  />
-                </li>
-              </ul>
-              <button type="button" class="add-articulos-btn" type="submit">
-                <span style="font-weight: bold; font-size: 1.2em">+</span>
-                Añadir Artículo
-              </button>
-            </div>
-			<!-- CANTIDADES -->
-            <div class="articulos-col articulos-cantidad">
-              <label class="articulos-label"
-                ><strong>Especifique la Cantidad</strong></label
-              >
-              <ul class="articulos-list">
-                <li>
-                  <div class="cantidad-control">
-                    <button type="button" class="cantidad-btn" (click)="minusOne()">-</button>
-                    <input class="articulo-input readonly-like" formControlName="articuloQuantity" [value]="articuloQ" readonly>
-                    <button type="button" class="cantidad-btn" (click)="plusOne()">+</button>
-                  </div>
-                </li>
-              </ul>
-            </div>
+        <!-- DESCRIPCIÓN ARTICULOS -->
+        <legend class="visually-hidden">Artículos a solicitar</legend>
+        <div class="articulos-grid">
+          <div class="articulos-col articulos-descripcion">
+            @if (articuloList.length) {
+            <p>Descripción articulos</p>
+            <hr />
+            } @for (articulo of articuloList; track $index) {
+            <ul class="articulos-list">
+              <li>
+                <p>{{articulo.nombre}}</p>
+              </li>
+            </ul>
+            } @if (articuloList.length < 5) {
+            <label class="articulos-label"
+              ><strong>Describa el artículo a solicitar</strong></label
+            >
+            <ul class="articulos-list">
+              <li>
+                <input
+                  class="articulo-input"
+                  type="text"
+                  placeholder="Ingrese el artículo..."
+                  formControlName="nombre"
+                />
+              </li>
+            </ul>
+            <button type="button" class="add-articulos-btn" type="submit">
+              <span style="font-weight: bold; font-size: 1.2em">+</span>
+              Añadir Artículo
+            </button>
+            } @else {
+			<p class="articulos-limit">
+			  Ha alcanzado el límite de artículos a solicitar.}
           </div>
-		</form>
-        <div class="articulos-footer">
-          <button type="submit" class="btn-crear-solicitud">
-            <span class="plus-icon">+</span> Añadir Artículos a solicitud
-          </button>
+          <!-- CANTIDADES -->
+          <div class="articulos-col articulos-cantidad">
+            @if (articuloList.length) {
+            <p>Cantidad artículos</p>
+            <hr />
+            } @for (articulo of articuloList; track $index) {
+            <ul class="articulos-list">
+              <li>
+                <p>{{articulo.cantidad}}</p>
+              </li>
+            </ul>
+            } @if (articuloList.length < 5) {
+            <label class="articulos-label"
+              ><strong>Especifique la Cantidad</strong></label
+            >
+            <ul class="articulos-list">
+              <li>
+                <div class="cantidad-control">
+                  <button
+                    type="button"
+                    class="cantidad-btn"
+                    (click)="minusOne()"
+                  >
+                    -
+                  </button>
+                  <input
+                    class="articulo-input readonly-like"
+                    formControlName="cantidad"
+                    [value]="articuloQ"
+                    readonly
+                  />
+                  <button
+                    type="button"
+                    class="cantidad-btn"
+                    (click)="plusOne()"
+                  >
+                    +
+                  </button>
+                </div>
+              </li>
+            </ul>
+            }
+          </div>
         </div>
+      </form>
+      <div class="articulos-footer">
+        <button type="submit" class="btn-crear-solicitud" (click)="postArticles()">
+          <span class="plus-icon">+</span> Añadir Artículos a solicitud
+        </button>
+      </div>
     </div>
   </div>
 </ng-template>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import Solicitud from '../../app/Models/SolicitudModel';
+import Solicitud from '../../app/Models/SolicitudOrigin';
 
 @Injectable({
   providedIn: 'root',
@@ -11,12 +11,14 @@ export class SolicitudService {
   readonly PCNAME_URL = 'http://localhost:3128/api/periodo/solicitud-pc';
   userId: number;
   solicitudes!: Solicitud[];
+;
 
   constructor(private http: HttpClient) {
     this.userId = 1; // dato quemado
   }
 
-  getSolicitudes(periodId: number) {
+ 
+  getSolicitudes(periodId: number){
     return this.http.get<Solicitud[]>(`${this.SOLICITUDES_URL}/${periodId}`);
   }
 

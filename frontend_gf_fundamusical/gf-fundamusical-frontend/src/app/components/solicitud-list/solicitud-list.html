@@ -49,6 +49,25 @@
                   </span>
                 </td>
               </tr>
+			  <td>
+				  <strong>Articulos solicitados:</strong>
+			  </td>
+			  @if (!solicitud.articulosSolicitud?.length) {
+				<td>
+					Aun no existen artículos solicitados para esta solicitud.
+				</td>
+			  } @else {
+				<td>
+					<ul>
+						@for (articulo of solicitud.articulosSolicitud; track $index) {
+							<li class="articulo-item">
+								{{$index +1}}.- {{articulo.Nombre}} (Cantidad: {{articulo.Cantidad}})
+							</li>
+						}
+					</ul>
+				</td>
+			  }
+			  <tr><td></td></tr>
             </table>
           </div>
         </div>
@@ -71,10 +90,33 @@
         <td>{{ solicitud.planCuentaName }}</td>
         <td>
           <!--Articulos info -->
-		<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+		  @if (!solicitud.articulosSolicitud?.length) {
+			<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+		  } @else {
+			<ul>
+				@for (articulo of solicitud.articulosSolicitud; track $index) {
+					<li class="articulo-item">
+						{{$index +1}}.- {{articulo.Nombre}}
+					</li>
+				}
+			</ul>
+		  }
         </td>
-        <td>tbd</td>
         <!--Articulos cantidades -->
+        <td>
+			@if (!solicitud.articulosSolicitud?.length) {
+
+			} @else {
+				<ul>
+				@for (articulo of solicitud.articulosSolicitud; track $index) {
+					<li class="articulo-item">
+						{{$index +1}}.- Cantidad: {{articulo.Cantidad}}
+					</li>
+				}
+			</ul>
+			}
+
+		</td>
         <td>
           <!--Estado de solicitud -->
           <span

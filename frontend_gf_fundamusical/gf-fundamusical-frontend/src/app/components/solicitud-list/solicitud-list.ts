@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 
 import { ModalService } from '../../../services/modal/modal-service';
 import { closeModalDirective } from '../../DIrectives/close-modal.directive';
-import Solicitud from '../../Models/SolicitudModel';
+import Solicitud from '../../Models/SolicitudOrigin';
 import { ArticulosForm } from '../articulos-form/articulos-form';
 
 @Component({
@@ -42,8 +42,6 @@ export class SolicitudList implements OnInit {
     );
   }
 
-  
-
 
 
   // CONSTRUCTOR -----------------------------------------------------------
@@ -68,11 +66,15 @@ ngOnInit(): void {
     this.solicitudService.getSolicitudes(this.periodId).subscribe({
       next: (data) => {
         this.solicitudService.solicitudes = data;
-
+		console.log('Solicitudes obtenidas:', this.solicitudService.solicitudes);
+		// Hasta aqui todo bien, se obtienen las solicitudes segun el tipo
 		this.solicitudes = this.solicitudService.solicitudes;
 		// Fetch PC names for each solicitud
 		this.solicitudes.forEach((solicitud) => {
-		this.findPC(solicitud.planInversionPlanCuentaId)})
+      if ('planInversionPlanCuentaId' in solicitud) {
+        this.findPC(solicitud.planInversionPlanCuentaId);
+      }
+    });
 
       },
       error: (error) => {

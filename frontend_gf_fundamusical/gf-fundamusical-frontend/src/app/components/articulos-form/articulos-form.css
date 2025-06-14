@@ -84,6 +84,13 @@
 }
 
 /* ARTICULO FORM CONTENT */
+.articulos-limit {
+  color: #f44336;
+  font-weight: bold;
+  margin-top: 16px;
+  text-align: center;
+}
+
 
 
 .articulos-grid {
