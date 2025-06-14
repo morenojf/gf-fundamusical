@@ -26,7 +26,7 @@ GET http://localhost:3128/api/periodo-SolicitudesList/1
 GET http://localhost:3128/api/periodo/solicitud
 
 ### OBTENER PC Name de una SOLICITUD
-GET http://localhost:3128/api/periodo/solicitud-pc/1
+GET http://localhost:3128/api/periodo/solicitud-pc/3
 
 ### CREAR SOLICITUD
 POST http://localhost:3128/api/periodo/solicitud-crearsolicitud

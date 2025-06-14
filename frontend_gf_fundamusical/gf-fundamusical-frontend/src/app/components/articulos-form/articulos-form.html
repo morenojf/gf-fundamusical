@@ -6,11 +6,21 @@
       <button class="close-modal-x" closeModal>x</button>
     </div>
     <div class="modal-content">
-      <form>
-    
+	<!-- formulario general -->
+      <form [formGroup]="articulosForm" (submit)="addValues()">
+		<div class="articulos-header">
+		  <h3 class="articulos-title">Añadir Artículos a Solicitud</h3>
+		  <p class="articulos-subtitle">
+			Por favor, ingrese los artículos que desea solicitar.
+		  </p>
+		</div>
+		<!-- DESCRIPCIÓN ARTICULOS -->
           <legend class="visually-hidden">Artículos a solicitar</legend>
           <div class="articulos-grid">
             <div class="articulos-col articulos-descripcion">
+			@for (articulo of articuloList; track $index) {
+				<p>{{articulo.articuloName}}</p><p>{{articulo.articuloQuantity}}</p>
+			}
               <label class="articulos-label"
                 ><strong>Describa el artículo a solicitar</strong></label
               >
@@ -20,14 +30,16 @@
                     class="articulo-input"
                     type="text"
                     placeholder="Ingrese el artículo..."
+					formControlName="articuloName"
                   />
                 </li>
               </ul>
-              <button type="button" class="add-articulos-btn">
+              <button type="button" class="add-articulos-btn" type="submit">
                 <span style="font-weight: bold; font-size: 1.2em">+</span>
                 Añadir Artículo
               </button>
             </div>
+			<!-- CANTIDADES -->
             <div class="articulos-col articulos-cantidad">
               <label class="articulos-label"
                 ><strong>Especifique la Cantidad</strong></label
@@ -36,23 +48,23 @@
                 <li>
                   <div class="cantidad-control">
                     <button type="button" class="cantidad-btn" (click)="minusOne()">-</button>
-                    <span class="cantidad-num">{{articuloQuantity}}</span>
+                    <input class="articulo-input readonly-like" formControlName="articuloQuantity" [value]="articuloQ" readonly>
                     <button type="button" class="cantidad-btn" (click)="plusOne()">+</button>
                   </div>
                 </li>
               </ul>
             </div>
           </div>
+		</form>
         <div class="articulos-footer">
           <button type="submit" class="btn-crear-solicitud">
             <span class="plus-icon">+</span> Añadir Artículos a solicitud
           </button>
         </div>
-      </form>
     </div>
   </div>
 </ng-template>
 
-<button class="add-articulos-btn" (click)="articlesForm()">
+<button class="add-articulos-btn" (click)="articlesModal()">
   + AÑADIR ARTÍCULOS
 </button>

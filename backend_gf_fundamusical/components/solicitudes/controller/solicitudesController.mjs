@@ -10,13 +10,11 @@ export class solicitudController {
       const solicitudList = await solicitudModel.getByPeriod(userId, periodId) // RETURN ALL SOLICITUDES BY SELECTED PERIOD
 
 	  	console.log(solicitudList)
-		console.log('aun no entro')
 
       const updatedSolicitudList = await solicitudModel.addArticulos(
         solicitudList
       )
 
-	  	console.log('RETORNO DE UPDATED SOLICITUD', updatedSolicitudList)
 
       if (solicitudList.length === 0) {
         return res

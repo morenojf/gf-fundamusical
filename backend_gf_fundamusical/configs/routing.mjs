@@ -10,10 +10,8 @@ import { articulosController } from '../components/articulos/controller/articulo
 import { soporteController } from '../components/soportes/controller/soporteController.mjs'
 
 
-import { datosArticulos } from '../services/mysql-db/articlesDesignData.mjs' // DATOS CREAR ARTICULO
 import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEniO SOLICITUD
 const solicitudData = datosSolicitud
-const datosArticles = datosArticulos
 
 export const routing = Router()
 
@@ -51,14 +49,7 @@ routing.post(
 // needs userId, periodId, planInversionplanCuentaId, Motivo
 // periodoId obtenido dinámicamente al hacer una consulta la DB llamando al modelo periodo
 
-routing.post(
-  '/periodo/solicitud-addArticle/:id',
-  (req, res, next) => {
-    req.body = datosArticles
-    next()
-  },
-  articulosController.addToSolicitud
-)
+routing.post('/periodo/solicitud-addArticle/:id', articulosController.addToSolicitud)
 // EL ObjectArray ENVIADO DE FRONT TIENE ArticuloName PARA LA TABLA articulo
 // y cantidadSolicitada PARA LA TABLA solicitud_Articulo
 

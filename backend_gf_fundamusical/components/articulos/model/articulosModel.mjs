@@ -1,8 +1,6 @@
 import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 const connectionDB = connection
 
-import { datosArticulos } from '../../../services/mysql-db/articlesDesignData.mjs'
-
 export class articulosModel {
   static async createArticle(articleData) {
     const createdArticles = []

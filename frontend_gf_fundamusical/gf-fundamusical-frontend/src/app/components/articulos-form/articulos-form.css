@@ -119,7 +119,21 @@
   padding: 5px 8px;
   border-radius: 4px;
   font-size: 1em;
-  margin-left: 6px;
+}
+
+.articulo-input.readonly-like {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  outline: none;
+  color: inherit;
+  font-size: 1em;
+  font-family: inherit;
+  padding: 0;
+  margin: 0;
+  width: 20px;
+  min-width: 0;
+  pointer-events: none; /* Opcional: evita el foco/click */
 }
 
 .cantidad-control {

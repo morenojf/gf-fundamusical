@@ -15,7 +15,6 @@ export class solicitudModel {
     if (solicitudList.length === 0) {
       return null
     } else {
-      console.log('EVALUANDO SI EXISTEN ARTICULOS')
       const [comprobacionArticle] = await connectionDB.query(
         'SELECT * FROM articulo'
       )
@@ -42,7 +41,7 @@ export class solicitudModel {
 			articulosSolicitud.push({Articulo: articuloActual.articuloId, Nombre: nombreArticulo[0].articuloName, Cantidad: articuloCantidad[0].cantidadSolicitada})
 		  }
 
-		  updatedSolicitud.push({solicitudActualData: solicitudActual, articulosSolicitud: articulosSolicitud})
+		  updatedSolicitud.push({...solicitudActual, articulosSolicitud: articulosSolicitud})
         }
 		return updatedSolicitud
       }
