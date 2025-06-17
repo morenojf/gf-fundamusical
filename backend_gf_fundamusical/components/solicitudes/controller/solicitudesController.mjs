@@ -9,12 +9,11 @@ export class solicitudController {
     try {
       const solicitudList = await solicitudModel.getByPeriod(userId, periodId) // RETURN ALL SOLICITUDES BY SELECTED PERIOD
 
-	  	console.log(solicitudList)
+      console.log(solicitudList)
 
       const updatedSolicitudList = await solicitudModel.addArticulos(
         solicitudList
       )
-
 
       if (solicitudList.length === 0) {
         return res
@@ -22,7 +21,7 @@ export class solicitudController {
           .send('No hay solicitudes creadas para este periodo')
       }
       if (updatedSolicitudList === null) {
-		return res.status(200).json(solicitudList)
+        return res.status(200).json(solicitudList)
       } else {
         return res.status(200).json(updatedSolicitudList)
       }
@@ -52,5 +51,52 @@ export class solicitudController {
       console.log(error)
       return res.status(500).send('Fallo al crear la solicitud')
     }
+  }
+
+  static async createMotivoAnulacion(req, res) {
+    const solicitudId = req.params.id
+    const motivoText = req.body.motivoAnulacion
+    try {
+      const solicitudAnulada = await solicitudModel.createMotivoAnulacion(
+        solicitudId,
+        motivoText
+      )
+      if (solicitudAnulada) {
+        return res.status(200).json({
+          message: 'Solicitud anulada con éxito',
+          solicitudId
+        })
+      } else {
+        return res.status(500).send('Error al anular la solicitud')
+      }
+    } catch (error) {
+      console.error('Error al crear motivo de anulación:', error)
+    }
+  }
+
+  static async changeStatus(req, res) {
+    const solicitudId = req.params.id
+    const newStatus = req.body.newStatus
+    console.log('esto estas pasando como nuevo estado', newStatus)
+    try {
+      const statusChanged = await solicitudModel.changeStatus(
+        solicitudId,
+        newStatus
+      )
+      return res.status(200).json({
+        message: 'Estado cambiado'
+      })
+    } catch (error) {
+      console.log({ error: error })
+    }
+  }
+
+  static async getMotivosAnulacion(req, res) {
+    try {
+      const motivosAnulacion = await solicitudModel.getMotivosAnulacion()
+      return res.status(200).send(motivosAnulacion)
+    } catch (error) {
+		console.log({message: error})
+	}
   }
 }

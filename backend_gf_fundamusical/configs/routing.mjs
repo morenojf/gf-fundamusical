@@ -64,5 +64,19 @@ routing.post('/periodo/solicitud-soporte/:id', soporteController.addSoporte)
 routing.get('/periodo/solicitud-soporte/:id', soporteController.getSoporteInfo)
 //OBTENER INFORMACION DEL SOPORTE SEGÚN LA SOLICITUD ESPECIFICA
 
+
+// Metodos especiales: ---------------------------------------------
 // OBTENER UN PC SEGUN EL PIPC
 routing.get('/periodo/solicitud-pc/:id', planCuentaController.getPCnameByPIPC)
+
+
+// -----------------------------------------------------------------
+// CREAR UN MOTIVO DE ANULACIÓN
+routing.post('/periodo/solicitud-anular/:id', solicitudController.createMotivoAnulacion)
+// needs solicitudId (req.params.id), motivoText (req.body.motivoAnulacion)
+
+// CAMBIAR ESTADO DE SOLICITUD A ANULADO
+routing.patch('/periodo/solicitud-statusChange/:id', solicitudController.changeStatus)
+
+// OBTENER VALORES DE TABLA motivoAnulacion
+routing.get('/periodo/solicitud-anular', solicitudController.getMotivosAnulacion)

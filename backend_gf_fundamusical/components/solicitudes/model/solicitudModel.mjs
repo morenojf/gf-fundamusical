@@ -85,11 +85,11 @@ export class solicitudModel {
   }
 
 
-  static async changeStatus (solicitudId){
-	const targetId = solicitudId
-	const statusChanged = await connectionDB.query('UPDATE solicitud SET solicitudStatus = 3 WHERE solicitudId = ?', [targetId])
-	return console.log('Estado de solicitudID: #',targetId , ' actualizado como finalizado.')
-  }
+  static async changeStatus (solicitudId, newStatus){
+	const [statusChanged] = await connectionDB.query('UPDATE solicitud SET solicitudStatus = ? WHERE solicitudId = ?', [newStatus, solicitudId])
+	console.log('Estado de solicitudID: #',solicitudId , ' actualizado como: ', newStatus)
+	return statusChanged
+}
 
   static async createSolicitud(solicitudData, periodoId, PCname) {
     const userId = solicitudData[0].userId
@@ -104,5 +104,15 @@ export class solicitudModel {
     )
 
     return createdSolicitudId[0].insertId
+  }
+
+  static async createMotivoAnulacion(solicitudId, motivoText) {
+	const createAnulacion = await connectionDB.query('INSERT INTO motivoAnulacion (solicitudId, motivoText) VALUES (?, ?)', [solicitudId, motivoText])
+	return true
+  }
+
+  static async getMotivosAnulacion(){
+	const [motivosAnulacion] = await connectionDB.query('SELECT * FROM motivoAnulacion')
+	return motivosAnulacion
   }
 }
