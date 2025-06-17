@@ -1,0 +1,145 @@
+
+/* Trigger button styles */
+.accion-btn {
+  background: #fff;
+  border: 2px solid #222;
+  border-radius: 4px;
+  font-size: 1.3em;
+  margin: 0 2px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+  transition: background 0.2s;
+}
+
+.accion-btn.anular {
+  color: #f9196a;
+  border-color: #f9196a;
+}
+
+.accion-btn:hover {
+  background: #f2f2f2;
+}
+
+/* MODAL STYLES */
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 4px rgba(249,25,106,0.08);
+  padding: 32px 36px 28px 36px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: auto;
+  margin: 40px auto;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  animation: modalFadeIn 0.25s;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+  font-size: 1.25em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-modal-x {
+  background: #f9196a11;
+  border: none;
+  color: #f9196a;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close-modal-x:hover {
+  background: #f9196a22;
+  color: #fff;
+}
+
+.modal-content {
+  font-size: 1.08em;
+  color: #222;
+  line-height: 1.6;
+}
+
+.modal-content p {
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content strong {
+  font-weight: 600;
+  margin-right: 6px;
+  min-width: 140px;
+  display: inline-block;
+}
+
+/* Modal content styles */
+
+textarea {
+  width: 100%;
+  min-width: 400px;
+  min-height: 100px;
+  max-height: 250px;
+  padding: 14px 16px;
+  font-size: 1.05rem;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #222;
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  outline: none;
+  resize: both;
+}
+
+textarea:focus {
+  border-color: #f9196a;
+  box-shadow: 0 0 0 2px #f9196a22;
+  background: #fff;
+}
+
+/* Modal footer */
+
+.confirmar-anulacion-btn {
+  background: #f9196a;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 22px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s, box-shadow 0.18s;
+  box-shadow: 0 2px 8px rgba(249,25,106,0.08);
+  margin-top: 16px;
+  letter-spacing: 0.5px;
+}
+
+.confirmar-anulacion-btn:hover,
+.confirmar-anulacion-btn:focus {
+  background: #c91556;
+  box-shadow: 0 4px 16px rgba(249,25,106,0.13);
+  outline: none;
+}

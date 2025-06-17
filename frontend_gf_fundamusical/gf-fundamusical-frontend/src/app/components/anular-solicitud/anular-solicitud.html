@@ -1,0 +1,25 @@
+<ng-template #anulacionModal let-solicitud>
+  <!--MODAL DETALLES DE SOLICITUD -->
+  <div class="modal">
+	<div class="modal-header">
+	  ANULACIÓN DE SOLICITUD ID: #0{{solicitud.solicitudId}}
+	  <button class="close-modal-x" closeModal>x</button>
+	</div>
+	<div class="modal-content">
+		<textarea rows="4" cols="50" placeholder="Describa el motivo de anulación" [(ngModel)]="motivoAnulacion"></textarea>
+	</div>
+	<div class="modal-footer">
+		<button class="confirmar-anulacion-btn" (click)="cofirmarAnulacion(motivoAnulacion)">
+		Confirmar anulación
+		</button>
+	</div>
+  </div>
+</ng-template>
+
+<button
+  class="accion-btn anular"
+  title="Anular solicitud"
+  (click)="openModal()"
+>
+  X
+</button>

@@ -11,22 +11,36 @@ import { SolicitudService } from '../../../services/solicitudes/solicitud-servic
 import { CommonModule } from '@angular/common';
 
 import { ModalService } from '../../../services/modal/modal-service';
-import { closeModalDirective } from '../../DIrectives/close-modal.directive';
+import { closeModalDirective } from '../../Directives/close-modal.directive';
 import Solicitud from '../../Models/SolicitudOrigin';
 import { ArticulosForm } from '../articulos-form/articulos-form';
+import { AnularSolicitud } from '../anular-solicitud/anular-solicitud';
+import MotivosAnulacion from '../../Models/motivosAnulacion';
+import { MotivoAnularModal } from '../motivo-anular-modal/motivo-anular-modal';
+import { SoporteModal } from '../soporte-modal/soporte-modal';
 
 @Component({
   selector: 'app-solicitud-list',
-  imports: [CommonModule, closeModalDirective, ArticulosForm],
+  imports: [
+    CommonModule,
+    closeModalDirective,
+    ArticulosForm,
+    AnularSolicitud,
+    MotivoAnularModal,
+	SoporteModal
+  ],
   templateUrl: './solicitud-list.html',
   styleUrl: './solicitud-list.css',
 })
 export class SolicitudList implements OnInit {
   periodId: number;
 
-  // Se trabaja con un array de solicitudes donde se depositan las solicitudes de la api para luego 
+  // Se trabaja con un array de solicitudes donde se depositan las solicitudes de la api para luego
   // modificarlas y aniadirles el nombre de plan de cuenta
   solicitudes!: Solicitud[];
+
+  //Motivos de anulacion de las solicitudes
+  motivosAnulacion!: MotivosAnulacion[];
 
   // Modal
   modalService = inject(ModalService);
@@ -38,27 +52,26 @@ export class SolicitudList implements OnInit {
     this.modalService.openDialog(
       this.detailsModal()!,
       this.detailsModalRef()!,
-	  { $implicit: solicitud }
+      { $implicit: solicitud }
     );
   }
 
-
-
   // CONSTRUCTOR -----------------------------------------------------------
-  constructor(private route: ActivatedRoute, public solicitudService: SolicitudService) 
-  {
+  constructor(
+    private route: ActivatedRoute,
+    public solicitudService: SolicitudService
+  ) {
     this.periodId = this.route.snapshot.params['id'];
     console.log(
       'Te muestro el id del periodo segun me renderizo',
       this.periodId
     );
-	this.getSolicitudes();
-	
-}
+    this.getSolicitudes();
+    this.getMotivosAnulacion();
+  }
 
-// NGONINIT -----------------------------------------------------------
-ngOnInit(): void {
-
+  // NGONINIT -----------------------------------------------------------
+  ngOnInit(): void {
   }
 
   // Method to fetch solicitudes based on periodId
@@ -66,16 +79,18 @@ ngOnInit(): void {
     this.solicitudService.getSolicitudes(this.periodId).subscribe({
       next: (data) => {
         this.solicitudService.solicitudes = data;
-		console.log('Solicitudes obtenidas:', this.solicitudService.solicitudes);
-		// Hasta aqui todo bien, se obtienen las solicitudes segun el tipo
-		this.solicitudes = this.solicitudService.solicitudes;
-		// Fetch PC names for each solicitud
-		this.solicitudes.forEach((solicitud) => {
-      if ('planInversionPlanCuentaId' in solicitud) {
-        this.findPC(solicitud.planInversionPlanCuentaId);
-      }
-    });
-
+        console.log(
+          'Solicitudes obtenidas:',
+          this.solicitudService.solicitudes
+        );
+        // Hasta aqui todo bien, se obtienen las solicitudes segun el tipo
+        this.solicitudes = this.solicitudService.solicitudes;
+        // Fetch PC names for each solicitud
+        this.solicitudes.forEach((solicitud) => {
+          if ('planInversionPlanCuentaId' in solicitud) {
+            this.findPC(solicitud.planInversionPlanCuentaId);
+          }
+        });
       },
       error: (error) => {
         console.error('Error al obtener las solicitudes:', error);
@@ -83,21 +98,34 @@ ngOnInit(): void {
     });
   }
 
+  findPC(PIPCid: number): void {
+    this.solicitudService.getPCnameByPIPCid(PIPCid).subscribe({
+      next: (data) => {
+        // Busca la solicitud correspondiente y actualiza su propiedad
+        const solicitud = this.solicitudes.find(
+          (s) => s.planInversionPlanCuentaId === PIPCid
+        );
+        if (solicitud) {
+          solicitud.planCuentaName = data[0].planCuentaName;
+        }
+      },
+      error: (e) => {
+        console.log('Error al obtener Planes de Cuenta:', e);
+      },
+    });
+  }
 
-findPC(PIPCid: number): void {
-  this.solicitudService.getPCnameByPIPCid(PIPCid).subscribe({
-    next: (data) => {
-      // Busca la solicitud correspondiente y actualiza su propiedad
-      const solicitud = this.solicitudes.find(s => s.planInversionPlanCuentaId === PIPCid);
-      if (solicitud) {
-        solicitud.planCuentaName = data[0].planCuentaName;
-      }
-    },
-    error: (e) => {
-      console.log('Error al obtener Planes de Cuenta:', e);
-    }
-  });
-}
+  // Metodo para obtener todos los motivos de solicitud
+  getMotivosAnulacion() {
+    this.solicitudService.getMotivosAnulacion().subscribe({
+      next: (data) => {
+        this.motivosAnulacion = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   // Helper methods to get status text and class based on status code
 

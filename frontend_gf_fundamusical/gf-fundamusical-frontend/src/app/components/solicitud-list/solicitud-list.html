@@ -1,3 +1,58 @@
+<ng-template #detailsModal let-solicitud>
+  <!--MODAL DETALLES DE SOLICITUD -->
+  <div class="modal">
+    <div class="modal-header">
+      DETALLES SOLICITUD ID: #{{solicitud.solicitudId}}
+      <button class="close-modal-x" closeModal>x</button>
+    </div>
+    <div class="modal-content">
+      <table
+        style="width: 100%; border-collapse: separate; border-spacing: 0 10px"
+      >
+        <tr>
+          <td><strong>Plan de Cuentas asociado:</strong></td>
+          <td>{{ solicitud.planCuentaName }}</td>
+        </tr>
+        <tr>
+          <td><strong>Motivo de solicitud:</strong></td>
+          <td>{{ solicitud.solicitudMotivo }}</td>
+        </tr>
+        <tr>
+          <td><strong>Fecha de creación:</strong></td>
+          <td>{{ solicitud.solicitudCreatedAt | date:'dd/MM/yyyy' }}</td>
+        </tr>
+        <tr>
+          <td><strong>Estado:</strong></td>
+          <td>
+            <span> {{ getStatusText(solicitud.solicitudStatus) }} </span>
+          </td>
+        </tr>
+        <td>
+          <strong>Articulos solicitados:</strong>
+        </td>
+        @if (!solicitud.articulosSolicitud?.length) {
+        <td>Aun no existen artículos solicitados para esta solicitud.</td>
+        } @else {
+        <td>
+          <ul>
+            @for (articulo of solicitud.articulosSolicitud ?? []; track $index)
+            {
+            <li class="articulo-item">
+              {{$index +1}}.- {{articulo.Nombre}} (Cantidad:
+              {{articulo.Cantidad}})
+            </li>
+            }
+          </ul>
+        </td>
+        }
+        <tr>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</ng-template>
+
 <div class="main-content">
   <table class="solicitud-table">
     <thead>
@@ -11,70 +66,8 @@
       </tr>
     </thead>
     <tbody>
-
-      <ng-template #detailsModal let-solicitud>
-		<!--MODAL DETALLES DE SOLICITUD -->
-        <div class="modal">
-          <div class="modal-header">
-            DETALLES SOLICITUD ID: #{{solicitud.solicitudId}}
-            <button class="close-modal-x" closeModal>x</button>
-          </div>
-          <div class="modal-content">
-            <table
-              style="
-                width: 100%;
-                border-collapse: separate;
-                border-spacing: 0 10px;
-              "
-            >
-			  <tr>
-                <td><strong>Plan de Cuentas asociado:</strong></td>
-                <td>{{ solicitud.planCuentaName }}</td>
-              </tr>
-              <tr>
-                <td><strong>Motivo de solicitud:</strong></td>
-                <td>{{ solicitud.solicitudMotivo }}</td>
-              </tr>
-              <tr>
-                <td><strong>Fecha de creación:</strong></td>
-                <td>{{ solicitud.solicitudCreatedAt | date:'dd/MM/yyyy' }}</td>
-              </tr>
-              <tr>
-                <td><strong>Estado:</strong></td>
-                <td>
-                  <span
-                    
-                  >
-                    {{ getStatusText(solicitud.solicitudStatus) }}
-                  </span>
-                </td>
-              </tr>
-			  <td>
-				  <strong>Articulos solicitados:</strong>
-			  </td>
-			  @if (!solicitud.articulosSolicitud?.length) {
-				<td>
-					Aun no existen artículos solicitados para esta solicitud.
-				</td>
-			  } @else {
-				<td>
-					<ul>
-						@for (articulo of solicitud.articulosSolicitud; track $index) {
-							<li class="articulo-item">
-								{{$index +1}}.- {{articulo.Nombre}} (Cantidad: {{articulo.Cantidad}})
-							</li>
-						}
-					</ul>
-				</td>
-			  }
-			  <tr><td></td></tr>
-            </table>
-          </div>
-        </div>
-      </ng-template>
-
-
-      @if (!solicitudService.solicitudes.length) {
+      @if (solicitudService.solicitudes && !solicitudService.solicitudes.length)
+      {
       <tr>
         <td colspan="6">No existen solicitudes creadas para este periodo</td>
       </tr>
@@ -90,33 +83,28 @@
         <td>{{ solicitud.planCuentaName }}</td>
         <td>
           <!--Articulos info -->
-		  @if (!solicitud.articulosSolicitud?.length) {
-			<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
-		  } @else {
-			<ul>
-				@for (articulo of solicitud.articulosSolicitud; track $index) {
-					<li class="articulo-item">
-						{{$index +1}}.- {{articulo.Nombre}}
-					</li>
-				}
-			</ul>
-		  }
+          @if (!solicitud.articulosSolicitud?.length) {
+          <app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+          } @else {
+          <ul>
+            @for (articulo of solicitud.articulosSolicitud; track $index) {
+            <li class="articulo-item">{{$index +1}}.- {{articulo.Nombre}}</li>
+            }
+          </ul>
+          }
         </td>
         <!--Articulos cantidades -->
         <td>
-			@if (!solicitud.articulosSolicitud?.length) {
-
-			} @else {
-				<ul>
-				@for (articulo of solicitud.articulosSolicitud; track $index) {
-					<li class="articulo-item">
-						{{$index +1}}.- Cantidad: {{articulo.Cantidad}}
-					</li>
-				}
-			</ul>
-			}
-
-		</td>
+          @if (!solicitud.articulosSolicitud?.length) { } @else {
+          <ul>
+            @for (articulo of solicitud.articulosSolicitud; track $index) {
+            <li class="articulo-item">
+              {{$index +1}}.- Cantidad: {{articulo.Cantidad}}
+            </li>
+            }
+          </ul>
+          }
+        </td>
         <td>
           <!--Estado de solicitud -->
           <span
@@ -125,24 +113,46 @@
             >{{ getStatusText(solicitud.solicitudStatus) }}</span
           >
         </td>
+        <!-- ACCIONES -->
+        @switch (solicitud.solicitudStatus) {
+        <!-- En proceso -->
+        @case (1) {
         <td class="acciones-cell">
-          <!--Acciones -->
           <div class="acciones-btn-group">
-            <button class="accion-btn aprobar" title="Aprobar solicitud">
-              &#10003;
-            </button>
-            <button class="accion-btn anular" title="Anular solicitud">
-              X
-            </button>
+            <app-aprobar-solicitud
+			[solicitud]="solicitud"
+			></app-aprobar-solicitud>
+            <app-anular-solicitud
+              [solicitud]="solicitud"
+            ></app-anular-solicitud>
           </div>
         </td>
+        }
+        <!-- Anulacion -->
+        @case (2) {
+        <td class="acciones-cell">
+          <p>Fecha y hora de anulacion:</p>
+          <app-motivo-anular-modal
+            [solicitud]="solicitud"
+          ></app-motivo-anular-modal>
+        </td>
+        }
+        <!-- Finalizacion -->
+        @case (3) {
+        <td class="acciones-cell">
+          <p>Fecha de finalizacion:</p>
+          <p>"Fecha de finalizacion"</p>
+          <a href="">Visualizar soporte</a>
+        </td>
+        } }
       </tr>
       } }
     </tbody>
   </table>
-  <div class="crear-solicitud-container">
-    <button class="btn-crear-solicitud">
-      <span class="plus-icon">+</span> CREAR NUEVA SOLICITUD
-    </button>
-  </div>
+</div>
+
+<div class="crear-solicitud-container">
+  <button class="btn-crear-solicitud">
+    <span class="plus-icon">+</span> CREAR NUEVA SOLICITUD
+  </button>
 </div>

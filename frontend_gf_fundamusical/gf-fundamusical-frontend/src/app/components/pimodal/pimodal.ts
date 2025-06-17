@@ -9,7 +9,7 @@ import {
   NgModule,
 } from '@angular/core';
 import { ModalService } from '../../../services/modal/modal-service';
-import { closeModalDirective } from '../../DIrectives/close-modal.directive';
+import { closeModalDirective } from '../../Directives/close-modal.directive';
 import {
   ReactiveFormsModule,
   FormControl,

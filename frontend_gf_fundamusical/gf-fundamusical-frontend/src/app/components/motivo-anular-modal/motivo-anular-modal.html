@@ -1,0 +1,17 @@
+<ng-template #motivoAnulacionModal >
+  <!--MODAL DETALLES DE SOLICITUD -->
+  <div class="modal">
+	<div class="modal-header">
+	  Motivo de anulación de la solicitud ID #{{solicitud.solicitudId}}
+	  <button class="close-modal-x" closeModal>x</button>
+	</div>
+	<div class="modal-content">
+		<p>{{motivoAnulacionActual?.motivoText}}</p>
+	</div>
+	<div class="modal-footer">
+	</div>
+  </div>
+</ng-template>
+
+<p>{{ motivoAnulacionActual?.motivoCreatedAt | date:'dd/MM/yyyy HH:mm' }}</p>
+<a (click)="openModal()">Visualizar motivo</a>

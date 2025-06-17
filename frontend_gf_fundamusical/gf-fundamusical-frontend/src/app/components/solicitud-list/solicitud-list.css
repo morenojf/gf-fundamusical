@@ -1,10 +1,36 @@
 .main-content {
   background-color: white;
-  padding: 25px;
+  padding: 0px;
   border-radius: 8px;
   margin-bottom: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+  max-height: 45vh; /* Ajusta el alto según lo que necesites */
+  overflow-y: auto;
+  background: white;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
+
+.solicitud-table td a {
+  display: inline-block;
+  margin-bottom: 12px;
+  margin-top: 6px;
+}
+
+.solicitud-table thead th {
+  position: sticky;
+  top: 0;
+  background: #f9196a;
+  color: #fff;
+  z-index: 2;
+}
+
+.solicitud-table th, .solicitud-table td {
+  min-width: 150px; /* Ajusta según tu contenido */
+  word-break: break-word;
+}
+
 
 ul{
 	padding-left: 0px;
@@ -86,9 +112,15 @@ ul{
 
 .solicitud-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
   margin-bottom: 30px;
   background: #fff;
+
+  table-layout: fixed; /* Importante para que sticky funcione bien */
+
+
+  border-spacing: 0;
+  min-width: 800px; /* Ajusta según tu contenido */
 }
 
 .solicitud-table th, .solicitud-table td {
@@ -165,7 +197,7 @@ ul{
 
 .crear-solicitud-container {
   text-align: right;
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .btn-crear-solicitud {

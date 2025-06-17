@@ -1,5 +1,7 @@
 <div class="content-header">
-  <h1 class="nucleo-title">{{servicioVG.nucleoInfo.nucleoName}}</h1>
-  <p class="coordinator">Coordinador(a): {{servicioVG.nucleoInfo.nucleoCoordinador}}<span></span></p>
-  <p class="director">Director de núcleo: {{servicioVG.nucleoInfo.nucleoDirector}}<span></span></p>
+@if (servicioVG.nucleoInfo) {
+	<h1 class="nucleo-title">{{servicioVG.nucleoInfo.nucleoName}}</h1>
+	<p class="coordinator">Coordinador(a): {{servicioVG.nucleoInfo.nucleoCoordinador}}<span></span></p>
+	<p class="director">Director de núcleo: {{servicioVG.nucleoInfo.nucleoDirector}}<span></span></p>
+} @else {No hay información del núcleo disponible.}
 </div>

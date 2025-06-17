@@ -1,0 +1,90 @@
+
+/* MODAL STYLES */
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 1.5px 4px rgba(249,25,106,0.08);
+  padding: 32px 36px 28px 36px;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: auto;
+  margin: 40px auto;
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  animation: modalFadeIn 0.25s;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.modal-header {
+  font-size: 1.25em;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-modal-x {
+  background: #f9196a11;
+  border: none;
+  color: #f9196a;
+  font-size: 1.2em;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close-modal-x:hover {
+  background: #f9196a22;
+  color: #fff;
+}
+
+.modal-content {
+  font-size: 1.08em;
+  color: #222;
+  line-height: 1.6;
+}
+
+.modal-content p {
+  margin: 0 0 14px 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal-content strong {
+  font-weight: 600;
+  margin-right: 6px;
+  min-width: 140px;
+  display: inline-block;
+}
+
+
+/* Modal body */
+
+a {
+  color: #1565c0;         /* Azul */
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+
+   display: inline-block;
+  margin-bottom: 14px; /* Ajusta el valor según lo que necesites */
+  margin-top: 6px;
+}
+
+a:hover {
+  color: #0d47a1;         /* Azul más oscuro al pasar el mouse */
+}

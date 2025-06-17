@@ -8,7 +8,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { ModalService } from '../../../services/modal/modal-service';
-import { closeModalDirective } from '../../DIrectives/close-modal.directive';
+import { closeModalDirective } from '../../Directives/close-modal.directive';
 import Solicitud from '../../Models/SolicitudOrigin';
 import {
   FormControl,
@@ -95,7 +95,7 @@ export class ArticulosForm implements OnInit {
   addValues() {
     this.articuloQuantity.setValue(this.articuloQ);
 
-    if (this.articulosForm.value.articuloName === null) {
+    if (this.articulosForm.value.articuloName == null) {
       alert('Debe ingresar un nombre para el artículo.');
       return;
     } else {
