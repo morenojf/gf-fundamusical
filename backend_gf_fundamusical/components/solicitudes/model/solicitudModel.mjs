@@ -107,8 +107,13 @@ export class solicitudModel {
   }
 
   static async createMotivoAnulacion(solicitudId, motivoText) {
-	const createAnulacion = await connectionDB.query('INSERT INTO motivoAnulacion (solicitudId, motivoText) VALUES (?, ?)', [solicitudId, motivoText])
-	return true
+	try {
+		await connectionDB.query('INSERT INTO motivoAnulacion (solicitudId, motivoText) VALUES (?, ?)', [solicitudId, motivoText])
+		return true
+	} catch (error) {
+		console.log('error al crear el motivo de anulacion', error)
+	} 
+	
   }
 
   static async getMotivosAnulacion(){

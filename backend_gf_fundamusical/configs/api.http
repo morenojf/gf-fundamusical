@@ -34,19 +34,6 @@ POST http://localhost:3128/api/periodo/solicitud-crearsolicitud
 ### CREAR ARTICULOS Y ADJUNTARLO A SOLICITUD
 POST http://localhost:3128/api/periodo/solicitud-addArticle/2
 
-### AÑADIR SOPORTE INFO A SOLICITUD
-POST http://localhost:3128/api/periodo/solicitud-soporte/2
-Content-Type: application/json
 
-{
- "FacturaURL": "https://drive.google.com/file/d/1OE--pZ_7vBmybSNFtsbP6MzZFFCiCpqB/view?usp=drive_link", 
-
- "CartaPyRURL":  "https://drive.google.com/file/d/1EZDqKklBYat6jQe4PEldS7klcw3VwPPe/view?usp=drive_link",
-
- "MontoFactura": 1687.20,
-
- "TipoMoneda": 2
- }
-
-### OBTENER SOPORTE INFO DE SOLICITUD
-GET http://localhost:3128/api/periodo/solicitud-soporte/2
+### OBTENER SOPORTE INFO
+GET http://localhost:3128/api/periodo/solicitud-soporte

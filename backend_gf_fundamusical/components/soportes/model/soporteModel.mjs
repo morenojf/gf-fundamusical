@@ -2,20 +2,21 @@ import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 const connectionDB = connection
 
 export class soporteModel {
-  static async addSoporte(data, userId, solicitudId) {
+  static async addSoporte(solicitudId, soporteData, rutaFactura, rutaCartaPyR) {
     const targetId = solicitudId
-    const soporteInfo = data
-    const usuario = userId
+    const soporteInfo = soporteData
+	const facturaPath = rutaFactura
+	const cartaPath = rutaCartaPyR
 
     const [soporteAttached] = await connectionDB.query(
-      'INSERT INTO soporte (userId, solicitudId, soporteInvoice, soporteLetter, soporteMonto, soporteMoneda) VALUES (?, ?, ?, ?, ?, ?)',
+      'INSERT INTO soporte (referenciaOperacion, solicitudId, soporteInvoice, soporteLetter, soporteMonto, soporteMoneda) VALUES (?, ?, ?, ?, ?, ?)',
       [
-        usuario,
-        targetId,
-        soporteInfo.FacturaURL,
-        soporteInfo.CartaPyRURL,
-        soporteInfo.MontoFactura,
-        soporteInfo.TipoMoneda
+        soporteInfo.referenciaOperacion,
+		targetId,
+        facturaPath,
+        cartaPath,
+        soporteInfo.monto,
+        Number(soporteInfo.tipoMoneda)
       ]
     )
 
@@ -23,10 +24,8 @@ export class soporteModel {
 	return createdSoporte
   }
 
-  static async getSoporte (solicitudId) {
-	const targetId = solicitudId
-	const [soporteInfo] = await connectionDB.query('SELECT * FROM soporte WHERE solicitudId = ?', [targetId])
-
+  static async getSoporte () {
+	const [soporteInfo] = await connectionDB.query('SELECT * FROM soporte')
 	return soporteInfo
 
   }

@@ -21,9 +21,9 @@ export class planInversionController {
             message: 'Periodo inicial creado',
             periodoId: createdInitialPeriod
           }
-        ])
+        ]) 
     } catch (err) {
-      return res.status(500).send('ERROR AL CREAR NUEVO PLAN DE INVERSIÓN')
+      return res.status(500).send('ERROR AL CREAR NUEVO PLAN DE INVERSIÓN', err)
     }
   }
 }

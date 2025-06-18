@@ -8,6 +8,7 @@ import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
 import { articulosController } from '../components/articulos/controller/articulosController.mjs'
 import { soporteController } from '../components/soportes/controller/soporteController.mjs'
+import { upload } from '../middlewares/multerMiddleware.mjs'
 
 
 import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEniO SOLICITUD
@@ -57,12 +58,19 @@ routing.post('/periodo/solicitud-addArticle/:id', articulosController.addToSolic
 // 2.- SE TOMA EL ID DE LOS ARTICULOS ENVIADOS
 // 3.- SE COLOCAN EN LA TABLA INTERMEDIA SOLICITUD ARTICULO PARA RELACIONAR LOS ARTICULOS CON LA SOLICITUD EN ESPECIFICO
 
-routing.post('/periodo/solicitud-soporte/:id', soporteController.addSoporte)
+
+
+// IMPORTANTE, ESTO DA ERROR CUANDO LOS DOS ARCHIVOS SON CREADOS EXACTAMENTE AL MISMO TIEMPO POR LO QUE EL NOMBRE ES IGUAL Y DA ERROR.
+routing.post('/periodo/solicitud-soporte/:id', upload.fields([
+  { name: 'rutaFactura', maxCount: 1 },
+  { name: 'rutaCartaPyR', maxCount: 1 }
+]),
+soporteController.addSoporte)
 // CREAR EL SOPORTE DE LA SOLICITUD ESPECIFICA
 // needs userId (JWT), solicitudId (req.params.id), URL googleDrive de la factura, URL googleDrive Cartas PyR, Monto, TIPO DE MONEDA 1 =BS 2 =USD (default 1)}
 
-routing.get('/periodo/solicitud-soporte/:id', soporteController.getSoporteInfo)
-//OBTENER INFORMACION DEL SOPORTE SEGÚN LA SOLICITUD ESPECIFICA
+routing.get('/periodo/solicitud-soporte', soporteController.getSoporteInfo)
+//OBTENER INFORMACION DE LOS SOPORTES
 
 
 // Metodos especiales: ---------------------------------------------

@@ -26,7 +26,7 @@ export class solicitudController {
         return res.status(200).json(updatedSolicitudList)
       }
     } catch (error) {
-      res.status(500).send('Unexpected error')
+      res.status(500).send('Unexpected error', error)
     }
   }
 
@@ -84,7 +84,8 @@ export class solicitudController {
         newStatus
       )
       return res.status(200).json({
-        message: 'Estado cambiado'
+        message: 'Estado cambiado',
+		statusChanged
       })
     } catch (error) {
       console.log({ error: error })

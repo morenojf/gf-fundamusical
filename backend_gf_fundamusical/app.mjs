@@ -1,7 +1,9 @@
 // Este es el archivo principal de la aplicacion, donde se inicializa el servidor y se configuran las rutas y middlewares, adenas de llamar a la base de datos.
 import cors from 'cors'
+import express from 'express'
 import { app, PORT } from './configs/server.mjs' // Importo el servidor y el puerto desde el archivo server.mjs
 import { routing } from './configs/routing.mjs' // Importo las rutas desde el archivo routes.mjs
+
 // import { corsMiddleware } from './middlewares/middlewares.mjs'
 
 // app.use(corsMiddleware) // Uso el middleware de cors para permitir el acceso a la API desde cualquier origen
@@ -19,6 +21,10 @@ app.listen(PORT, () => {
 //   allowedHeaders: ['Content-Type', 'Authorization'],
 // }));
 app.use(cors())
+
+// Esto permite acceder a los archivos guardados dentro de la carpeta public mediante el endpoint de la api 
+// http://localhost:${PORT}/nombreArchivo.extension
+app.use(express.static('./public'))
 
 // Esto dirige al archivo de rutas cualquier peticion que se haga a /api
 app.use('/api', routing)
