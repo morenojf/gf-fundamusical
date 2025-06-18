@@ -1,0 +1,15 @@
+a {
+  color: #1565c0;         /* Azul */
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  transition: color 0.2s;
+
+   display: inline-block;
+  margin-bottom: 14px; /* Ajusta el valor según lo que necesites */
+  margin-top: 6px;
+}
+
+a:hover {
+  color: #0d47a1;         /* Azul más oscuro al pasar el mouse */
+}

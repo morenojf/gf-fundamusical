@@ -81,11 +81,17 @@
         </td>
         <!--PC info -->
         <td>{{ solicitud.planCuentaName }}</td>
+		
+		<!--Articulos info -->
         <td>
-          <!--Articulos info -->
-          @if (!solicitud.articulosSolicitud?.length) {
-          <app-articulos-form [solicitud]="solicitud"></app-articulos-form>
-          } @else {
+		@if (solicitud.solicitudStatus !==2 && solicitud.solicitudStatus !==3) {
+			<!-- No hay articulos -->
+			@if (!solicitud.articulosSolicitud?.length) {
+			<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+			} 
+		}
+		  <!-- Sí hay articulos -->
+		  @else {
           <ul>
             @for (articulo of solicitud.articulosSolicitud; track $index) {
             <li class="articulo-item">{{$index +1}}.- {{articulo.Nombre}}</li>
@@ -93,6 +99,7 @@
           </ul>
           }
         </td>
+
         <!--Articulos cantidades -->
         <td>
           @if (!solicitud.articulosSolicitud?.length) { } @else {
@@ -141,8 +148,7 @@
         @case (3) {
         <td class="acciones-cell">
           <p>Fecha de finalizacion:</p>
-          <p>"Fecha de finalizacion"</p>
-          <a href="">Visualizar soporte</a>
+		  <app-visualizar-soporte [solicitud]="solicitud"></app-visualizar-soporte>
         </td>
         } }
       </tr>

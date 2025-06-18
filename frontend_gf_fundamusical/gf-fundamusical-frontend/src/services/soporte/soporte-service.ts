@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import Soporte from '../../app/Models/soporteModel';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +10,15 @@ export class SoporteService {
 
   // URL
   readonly SOPORTE_URL =
-    'http://localhost:3128/api/periodo/solicitud-soporte/:id';
+    'http://localhost:3128/api/periodo/solicitud-soporte';
   // Recibe:  {FacturaURL: string", CartaPyRURL: string, "MontoFactura": 1687.20, "TipoMoneda": 2}
 
 
-//   attachedSoporteSolicitud(){
-// 	this.http.post(`${this.SOPORTE_URL}/${solicitudId}`, {soporteData})
-//   }
+  attachedSoporteSolicitud(solicitudId: number, soporteData: FormData) {
+	return this.http.post<any>(`${this.SOPORTE_URL}/${solicitudId}`, soporteData)
+  }
 
-//   getSoporteBySolicitudId(){
-// 	this.http.get<any[]>(`${this.SOPORTE_URL}/${solicitudId}`)
-//   }
+  getSoportesInfo(){
+	return this.http.get<Soporte[]>(this.SOPORTE_URL)
+  }
 }

@@ -6,7 +6,7 @@
       <button class="close-modal-x" closeModal>x</button>
     </div>
     <div class="modal-content">
-      <form [formGroup]="soporteForm">
+      <form [formGroup]="soporteForm" (submit)="postFormValues()">
         <div class="soporte-form-row">
           <div class="soporte-form-col">
             <label for="referencia" class="soporte-label"
@@ -19,9 +19,10 @@
               formControlName="referenciaOperacion"
             />
           </div>
+
           <div class="soporte-form-col">
             <label for="monto" class="soporte-label"
-              >Especifique el monto (sin comas)</label
+              >Especifique el monto (usar solo comas para decimales)</label
             >
             <input
               id="monto"
@@ -47,35 +48,63 @@
           la carta recibida por el comite de padres y representantes.
         </div>
 
-		<!-- Botones de adjunte -->
+        <!-- Botones de adjunte -->
         <div class="soporte-form-row">
           <div class="soporte-form-col">
-
-			<!-- Adjuntar factura -->
-            <button type="button" class="soporte-upload-btn" (click)="fileInput.click()">
-			<input type="file" #fileInput style="display: none" (change)="onFacturaSelected($event)" />
+            <!-- Adjuntar factura -->
+            <button
+              type="button"
+              class="soporte-upload-btn"
+              (click)="facturaInput.click()"
+            >
+              <input
+                type="file"
+                #facturaInput
+                style="display: none"
+                (change)="onFacturaSelected($event)"
+              />
               Adjuntar Factura <b style="color: red">*</b>
               <span class="soporte-icon">&#8593;</span>
             </button>
-			<!-- Contenido de adjuntado (si existe) -->
+            <!-- Contenido de adjunto (si existe) -->
+            @if (facturaName !== '') {
+            <div class="soporte-file-info">
+              <span class="soporte-file-none">{{facturaName}}</span>
+            </div>
+            } @else {
             <div class="soporte-file-info">
               <span class="soporte-file-none">Sin archivos adjuntos</span>
             </div>
+            }
           </div>
 
-		  <!-- Adjuntar Carta comite PyR -->
+          <!-- Adjuntar Carta comite PyR -->
           <div class="soporte-form-col">
-            <button type="button" class="soporte-upload-btn" (click)="fileInput.click()">
-			<input type="file" #fileInput style="display: none" (change)="onCartaSelected($event)" />
+            <button
+              type="button"
+              class="soporte-upload-btn"
+              (click)="cartaInput.click()"
+            >
+              <input
+                type="file"
+                #cartaInput
+                style="display: none"
+                (change)="onCartaSelected($event)"
+              />
               Adjuntar Carta Comite PyR <b style="color: red">*</b
               ><span class="soporte-icon">&#8593;</span>
             </button>
-			<!-- Contenido de adjuntado (si existe) -->
+            <!-- Contenido de adjunto (si existe) -->
+            @if (cartaName !== '') {
+            <div class="soporte-file-info">
+              <span class="soporte-file-none">{{cartaName}}</span>
+            </div>
+            } @else {
             <div class="soporte-file-info">
               <span class="soporte-file-none">Sin archivos adjuntos</span>
             </div>
+            }
           </div>
-
         </div>
         <div class="soporte-confirmar-row">
           <button type="submit" class="soporte-confirmar-btn">CONFIRMAR</button>

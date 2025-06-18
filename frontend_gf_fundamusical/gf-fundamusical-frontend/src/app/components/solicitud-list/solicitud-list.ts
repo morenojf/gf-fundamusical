@@ -18,6 +18,7 @@ import { AnularSolicitud } from '../anular-solicitud/anular-solicitud';
 import MotivosAnulacion from '../../Models/motivosAnulacion';
 import { MotivoAnularModal } from '../motivo-anular-modal/motivo-anular-modal';
 import { SoporteModal } from '../soporte-modal/soporte-modal';
+import { VisualizarSoporte } from '../visualSoporte/visualizar-soporte/visualizar-soporte';
 
 @Component({
   selector: 'app-solicitud-list',
@@ -27,7 +28,8 @@ import { SoporteModal } from '../soporte-modal/soporte-modal';
     ArticulosForm,
     AnularSolicitud,
     MotivoAnularModal,
-	SoporteModal
+	SoporteModal,
+	VisualizarSoporte
   ],
   templateUrl: './solicitud-list.html',
   styleUrl: './solicitud-list.css',
@@ -67,7 +69,6 @@ export class SolicitudList implements OnInit {
       this.periodId
     );
     this.getSolicitudes();
-    this.getMotivosAnulacion();
   }
 
   // NGONINIT -----------------------------------------------------------
@@ -115,17 +116,6 @@ export class SolicitudList implements OnInit {
     });
   }
 
-  // Metodo para obtener todos los motivos de solicitud
-  getMotivosAnulacion() {
-    this.solicitudService.getMotivosAnulacion().subscribe({
-      next: (data) => {
-        this.motivosAnulacion = data;
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
-  }
 
   // Helper methods to get status text and class based on status code
 
