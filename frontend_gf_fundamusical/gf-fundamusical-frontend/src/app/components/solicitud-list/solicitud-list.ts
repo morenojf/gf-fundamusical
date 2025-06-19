@@ -19,6 +19,7 @@ import MotivosAnulacion from '../../Models/motivosAnulacion';
 import { MotivoAnularModal } from '../motivo-anular-modal/motivo-anular-modal';
 import { SoporteModal } from '../soporte-modal/soporte-modal';
 import { VisualizarSoporte } from '../visualSoporte/visualizar-soporte/visualizar-soporte';
+import { CrearSolicitud } from '../crear-solicitud/crear-solicitud';
 
 @Component({
   selector: 'app-solicitud-list',
@@ -29,7 +30,8 @@ import { VisualizarSoporte } from '../visualSoporte/visualizar-soporte/visualiza
     AnularSolicitud,
     MotivoAnularModal,
 	SoporteModal,
-	VisualizarSoporte
+	VisualizarSoporte,
+	CrearSolicitud
   ],
   templateUrl: './solicitud-list.html',
   styleUrl: './solicitud-list.css',

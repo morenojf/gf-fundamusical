@@ -12,6 +12,7 @@ import NucleoModel from '../../app/Models/nucleo';
 export class ServicioVG {
 
 	readonly API_URL = "http://localhost:3128/api/gestion"
+	readonly PERIODO_INFO_URL = "http://localhost:3128/api/periodo"
 	vistaGestionObject!:VistaGestion;
 	listaPeriodos!: Periodos [];
 	listaPlanes!: Planes[];
@@ -19,10 +20,16 @@ export class ServicioVG {
 
 
   constructor(private http: HttpClient) {
+	this.listaPlanes = []
+	this.listaPeriodos = []
   }
 
   getInfoVG(id: number) {
 	return this.http.get<VistaGestion>(`${this.API_URL}/${id}`)
+  }
+
+  getPeriodoInfo(periodoId: number) {
+	return this.http.get<Periodos>(`${this.PERIODO_INFO_URL}/${periodoId}`)
   }
 
 }

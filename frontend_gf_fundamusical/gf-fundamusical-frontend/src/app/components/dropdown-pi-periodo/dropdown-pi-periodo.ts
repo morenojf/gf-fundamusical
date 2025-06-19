@@ -19,13 +19,13 @@ export class DropdownPIPeriodo implements OnInit {
   // ACORDEON
   acoordionCard!: any;
   acoordionHeader!: any;
-
+  
 
   // CONSTRUCTOR
   constructor(public servicioVG: ServicioVG) {  //, public modalComponent: PImodal
 
 	this.id = 1
-
+	
     this.currentYear = new Date().getFullYear();
     this.getInfo();
   }
@@ -33,10 +33,6 @@ export class DropdownPIPeriodo implements OnInit {
 
   // OnInit
   ngOnInit(): any {
-  }
-
-  hola(){
-	console.log('estas tocando un boton quemado')
   }
 
   // LOGICA ACORDEON

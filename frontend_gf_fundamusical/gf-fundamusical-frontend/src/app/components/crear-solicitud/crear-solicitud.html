@@ -1,0 +1,48 @@
+<ng-template #createSolicitudModal>
+  <!--MODAL FORM AÑADIR ARTICULOS -->
+  <div class="modal">
+    <div class="modal-header">
+      CREACIÓN DE SOLICITUD
+      <button class="close-modal-x" closeModal>&#10005;</button>
+    </div>
+    <div class="modal-content">
+      <form [formGroup]="solicitudForm" (submit)="createSolicitud()">
+        <div class="crear-solicitud-form-box">
+          <label class="crear-solicitud-label">
+            Seleccione un Plan de Cuentas según el Plan de Inversión
+          </label>
+          <select
+            class="crear-solicitud-select"
+            (change)="onPlanCuentaChange($event)"
+			formControlName="solicitudPIPC"
+          >
+            @for (PC of availablePC; track $index) {
+            <option [value]="PC.PIPCid">{{PC.Nombre}}</option>
+            }
+          </select>
+          <div class="crear-solicitud-lista">
+            <p id="BENDITASUBCATEGORIA"><b>Subcategorias:</b></p>
+            @if (!currentPC?.subcategorias?.length) {
+            <div>
+              No existen subcategorias seleccionadas en este plan de cuentas
+            </div>
+            } @else { @for (sc of currentPC?.subcategorias; track $index) {
+            <div><b>{{getLetter($index)}})</b> {{sc.subcategoriaName}}</div>
+            } }
+          </div>
+          <label class="crear-solicitud-label" style="margin-top: 18px">
+            Describir Motivo (Opcional)
+          </label>
+          <textarea class="crear-solicitud-textarea" formControlName="solicitudMotivo"></textarea>
+        </div>
+        <button type="submit" class="btn-confirmar-crear">
+          <span class="plus-icon">+</span> CREAR
+        </button>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+<button class="btn-crear-solicitud" (click)="trigger()">
+  <span class="plus-icon">+</span> CREAR NUEVA SOLICITUD
+</button>

@@ -315,10 +315,9 @@ ol{
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
+  width: 220px;
 
   /* Botón Agregar Plan de Cuenta alineado con el primer dropdown */
-  margin-left: 46px; /* 32px (item-number) + 12px (gap) + 20px (aprox. padding) */
   margin-top: 0;
   margin-bottom: 16px;
 

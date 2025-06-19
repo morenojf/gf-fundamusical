@@ -13,10 +13,20 @@
           <td><strong>Plan de Cuentas asociado:</strong></td>
           <td>{{ solicitud.planCuentaName }}</td>
         </tr>
+
+        <!-- Opcional puesto que no siempre tendran motivos adjuntos -->
+        @if (!solicitud.solicitudMotivo.length) {
+        <tr>
+          <td><strong>Motivo de solicitud:</strong></td>
+          <td>No existe un motivo adjunto a esta solicitud</td>
+        </tr>
+        } @else {
         <tr>
           <td><strong>Motivo de solicitud:</strong></td>
           <td>{{ solicitud.solicitudMotivo }}</td>
         </tr>
+        }
+
         <tr>
           <td><strong>Fecha de creación:</strong></td>
           <td>{{ solicitud.solicitudCreatedAt | date:'dd/MM/yyyy' }}</td>
@@ -66,10 +76,10 @@
       </tr>
     </thead>
     <tbody>
-      @if (solicitudService.solicitudes && !solicitudService.solicitudes.length)
+      @if (!solicitudService.solicitudes.length)
       {
       <tr>
-        <td colspan="6">No existen solicitudes creadas para este periodo</td>
+        <td colspan="6">No existen solicitudes creadas para este periodo...</td>
       </tr>
       } @else { @for (solicitud of solicitudes; track $index) {
       <tr>
@@ -81,17 +91,16 @@
         </td>
         <!--PC info -->
         <td>{{ solicitud.planCuentaName }}</td>
-		
-		<!--Articulos info -->
-        <td>
-		@if (solicitud.solicitudStatus !==2 && solicitud.solicitudStatus !==3) {
-			<!-- No hay articulos -->
-			@if (!solicitud.articulosSolicitud?.length) {
-			<app-articulos-form [solicitud]="solicitud"></app-articulos-form>
-			} 
-		}
-		  <!-- Sí hay articulos -->
-		  @else {
+
+        <!--Articulos info -->
+        <td class="articulos-list">
+          @if (solicitud.solicitudStatus == 1 && !solicitud.articulosSolicitud?.length)
+          {
+          <!-- No hay articulos -->
+          <app-articulos-form [solicitud]="solicitud"></app-articulos-form>
+		  }
+          <!-- Sí hay articulos -->
+          @if (solicitud.articulosSolicitud) {
           <ul>
             @for (articulo of solicitud.articulosSolicitud; track $index) {
             <li class="articulo-item">{{$index +1}}.- {{articulo.Nombre}}</li>
@@ -127,8 +136,8 @@
         <td class="acciones-cell">
           <div class="acciones-btn-group">
             <app-aprobar-solicitud
-			[solicitud]="solicitud"
-			></app-aprobar-solicitud>
+              [solicitud]="solicitud"
+            ></app-aprobar-solicitud>
             <app-anular-solicitud
               [solicitud]="solicitud"
             ></app-anular-solicitud>
@@ -148,7 +157,9 @@
         @case (3) {
         <td class="acciones-cell">
           <p>Fecha de finalizacion:</p>
-		  <app-visualizar-soporte [solicitud]="solicitud"></app-visualizar-soporte>
+          <app-visualizar-soporte
+            [solicitud]="solicitud"
+          ></app-visualizar-soporte>
         </td>
         } }
       </tr>
@@ -158,7 +169,5 @@
 </div>
 
 <div class="crear-solicitud-container">
-  <button class="btn-crear-solicitud">
-    <span class="plus-icon">+</span> CREAR NUEVA SOLICITUD
-  </button>
+  <app-crear-solicitud></app-crear-solicitud>
 </div>

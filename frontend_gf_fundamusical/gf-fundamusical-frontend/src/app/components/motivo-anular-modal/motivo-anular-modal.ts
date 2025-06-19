@@ -61,11 +61,11 @@ export class MotivoAnularModal implements OnInit {
   getMotivosAnulacion() {
     this.solicitudService.getMotivosAnulacion().subscribe({
       next: (data) => {
-        this.motivosAnulacion = data;
+		this.motivosAnulacion = data;
       },
       error: (err) => {
-        console.log(err);
-      },
+		console.log(err)
+	},
     });
   }
 }

@@ -143,6 +143,12 @@ ul{
   cursor: pointer;
 }
 
+td.articulos-list {
+  white-space: nowrap;
+  width: 500px;
+  min-width: 200px;
+}
+
 .articulo-item {
   display: flex;
   align-items: start;
@@ -200,28 +206,6 @@ ul{
   margin-top: 20px;
 }
 
-.btn-crear-solicitud {
-  background: #f9196a;
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 18px 48px;
-  font-size: 1.3em;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  transition: background 0.2s;
-}
-
-.btn-crear-solicitud:hover {
-  background: #e6005c;
-}
-
-.plus-icon {
-  font-size: 1.5em;
-}
 
 .solicitud-table td.acciones-cell {
   padding: 0;

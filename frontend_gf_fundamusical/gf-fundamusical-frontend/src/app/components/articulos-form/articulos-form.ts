@@ -95,7 +95,7 @@ export class ArticulosForm implements OnInit {
   addValues() {
     this.articuloQuantity.setValue(this.articuloQ);
 
-    if (this.articulosForm.value.articuloName == null) {
+    if (this.articulosForm.value.articuloName === null) {
       alert('Debe ingresar un nombre para el artículo.');
       return;
     } else {
