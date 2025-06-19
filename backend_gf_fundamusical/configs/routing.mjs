@@ -15,11 +15,15 @@ export const routing = Router()
 
 // Todas las rutas estan prescedidas por /api/
 
-routing.get('/dashboard', dashboardController.getAll) // DASHBOARD
+routing.get('/dashboard/:id', dashboardController.getAll) // DASHBOARD
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 
 routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
 routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEniAR PLAN DE INVERSION
+
+
+// OBTENER SOLICITUDES SEGUN USER ID
+routing.get('/dashboard/user-solicitudes/:id', solicitudController.getByUserId)
 
 routing.get(
   '/gestion/modal/plancuenta-subcategoria/:id',

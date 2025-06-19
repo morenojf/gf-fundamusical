@@ -7,7 +7,7 @@ import { solicitudModel } from '../solicitudes/model/solicitudModel.mjs'
 export class dashboardController {
   static async getAll (req, res) {
     try {
-      const userId = 1 // ideally this is dynamic and comes from JWT token
+      const userId = req.params.id // ideally this is dynamic and comes from JWT token
 
       const nucleoInfo = await nucleoModel.getPartial(userId)
       const solicitudQ = await solicitudModel.getQuantity(userId)
@@ -23,7 +23,7 @@ export class dashboardController {
         totalActivas: solicitudR
       })
     } catch (err) {
-      return res.status(500).send('ERROR AL OBTENER DATOS DEL DASHBOARD')
+      return res.status(500).send({err: err.message})
     }
   }
 }

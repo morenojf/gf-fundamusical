@@ -3,6 +3,23 @@ import { solicitudModel } from '../model/solicitudModel.mjs'
 // import { planCuentaModel } from '../../planes_de_cuenta/model/planCuentaModel.mjs'
 
 export class solicitudController {
+  static async getByUserId(req, res) {
+    const userId = req.params.id
+    try {
+      const solicitudes = await solicitudModel.getByUserId(userId)
+
+      if (!solicitudes.length) {
+        res
+          .status(404)
+          .send({ result: 'No existen solicitudes creadas por este usuario' })
+      } else {
+        res.status(200).send(solicitudes)
+      }
+    } catch (error) {
+      res.status(400).send({ error: error.message })
+    }
+  }
+
   static async getByPeriod(req, res) {
     const periodId = req.params.id
     const userId = 1 // Ideally dinamic once JWT is configured
@@ -19,19 +36,18 @@ export class solicitudController {
         return res.status(200).json(updatedSolicitudList)
       }
     } catch (error) {
-      res.status(404).send({error: error.message})
+      res.status(404).send({ error: error.message })
     }
   }
 
   static async createSolicitud(req, res) {
     const solicitudData = req.body
 
- // Aliens
+    // Aliens
     // const peticionPC = await planCuentaModel.getPCnameByPIPC(
     //   solicitudData[0].planInversionplanCuentaId
     // )
     // const PCname = peticionPC[0].planCuentaName
-
 
     try {
       const createdSolicitud = await solicitudModel.createSolicitud(
@@ -78,7 +94,7 @@ export class solicitudController {
       )
       return res.status(200).json({
         message: 'Estado cambiado',
-		statusChanged
+        statusChanged
       })
     } catch (error) {
       console.log({ error: error })
@@ -90,7 +106,7 @@ export class solicitudController {
       const motivosAnulacion = await solicitudModel.getMotivosAnulacion()
       return res.status(200).send(motivosAnulacion)
     } catch (error) {
-		console.log({error: error.message})
-	}
+      console.log({ error: error.message })
+    }
   }
 }

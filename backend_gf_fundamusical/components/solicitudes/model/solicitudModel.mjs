@@ -3,6 +3,14 @@ import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
 const connectionDB = connection
 
 export class solicitudModel {
+  static async getByUserId(UserId) {
+    const [solicitudes] = await connectionDB.query(
+      'SELECT * FROM solicitud WHERE userId = ?',
+      [UserId]
+    )
+    return solicitudes
+  }
+
   static async getByPeriod(userId, periodId) {
     const [solicitudes] = await connectionDB.query(
       'SELECT * FROM solicitud WHERE userId = ? AND periodoId = ?',
@@ -121,7 +129,7 @@ export class solicitudModel {
 
   static async createSolicitud(solicitudData) {
     const userId = solicitudData.userId
-	const periodoId = solicitudData.periodoId
+    const periodoId = solicitudData.periodoId
     const PIPCid = solicitudData.solicitudPIPC
     const motivo = solicitudData.solicitudMotivo
     // const planCuentaName = PCname
