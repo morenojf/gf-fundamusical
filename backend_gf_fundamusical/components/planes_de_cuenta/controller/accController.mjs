@@ -1,7 +1,7 @@
 // 1. OBTENER TODOS LOS PLANES DE CUENTA PARA MOSTRARLOS EN EL DROP DOWN SELECT
 // 2. DROP DOWN 2 DINAMICO EL FRONT LE ENVIA EL ID AL BACK DEL PLAN DE CUENTA SELECCIONADO POR URL /gestion/modal/plancuenta-subcategoria/:id PETICION HECHA DENTRO DEL MODAL
 // 3. EL BACKEND FILTRA LA INFORMACIÓN Y REGRESA LAS SUBCATEGORIAS RELACIONADAS
-import { periodoModel } from '../../periodos/model/periodoModel.mjs'
+// import { periodoModel } from '../../periodos/model/periodoModel.mjs'
 import { planCuentaModel } from '../model/planCuentaModel.mjs'
 
 export class planCuentaController {
@@ -14,19 +14,24 @@ export class planCuentaController {
 
   // OBTIENE PLANES DE CUENTA SEGUN EL PLAN DE INVERSION
   static async getByPIPC (req, res) {
-    const currentPIid = await periodoModel.currentPI()
+
+	// ESTO OBTIENE EL ID DEL PLAN DE INVERSION ACTUAL SEGUN LA FECHA
+    // const currentPIid = await periodoModel.currentPI()
+
+	const idPi = req.params.id
 
     // Return ArrayObject con nombre plan cuenta y su Id, disponibles segun el PIPC
-    const availablePC = await planCuentaModel.getByPIPC(currentPIid)
+    const availablePC = await planCuentaModel.getByPIPC(idPi)
 
-    if (availablePC) {
-      res.status(200).json(availablePC)
-    } else {
-      res
-        .status(204)
+    if (!availablePC.length) {
+		res
+        .status(404)
         .send(
           'No hay planes de cuenta seleccionados para este plan de inversion'
         )
+     
+    } else {
+       res.status(200).json(availablePC)
     }
   }
 

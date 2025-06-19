@@ -1,15 +1,13 @@
-// IMPORTA LA BASE DE DATOS LOCAL QUE ES UN JSON
-// import { connection } from '../services/localdb/localdb.mjs'
+import { periodoModel } from '../model/periodoModel.mjs'
 
-// IMPORTA LA BASE DE DATOS MYSQL QUE ES UNA FUNCIÓN
-import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
-
-const connectionDB = connection // esto es para poder usar la conexion a la base de datos mysql en el resto de los archivos
-
-connectionDB.connect(err => {
-  if (err) {
-    console.error('Error connecting to the database:', err)
-    return
+export class periodoController {
+  static async getPeriodById(req, res) {
+    const periodoId = req.params.id
+    try {
+      const periodoInfo = await periodoModel.getPeriodById(periodoId)
+      res.status(200).send(periodoInfo)
+    } catch (error) {
+      res.status(404).send({error: error.message})
+    }
   }
-  console.log('connected to the database')
-})
+}

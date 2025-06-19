@@ -9,10 +9,7 @@ import { solicitudController } from '../components/solicitudes/controller/solici
 import { articulosController } from '../components/articulos/controller/articulosController.mjs'
 import { soporteController } from '../components/soportes/controller/soporteController.mjs'
 import { upload } from '../middlewares/multerMiddleware.mjs'
-
-
-import { datosSolicitud } from '../services/mysql-db/SolicitudDesignData.mjs' // DATOS DISEniO SOLICITUD
-const solicitudData = datosSolicitud
+import { periodoController } from '../components/periodos/controller/periodosController.mjs'
 
 export const routing = Router()
 
@@ -29,26 +26,29 @@ routing.get(
   subcategoriaController.getById
 ) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
 
+
+
+// Llenar tabla planInversionPlanCuenta y planInversionSubcategoria
 routing.post(
   '/gestion/modal/plan-inversion',
   PIcontroller.createNewPI
-) // INTROUCIR VALORES DEL FORMULARIO MODAL PARA LLENAR planInversion_planCuenta / planInversion_subcategoria
+)
 
 routing.get('/periodo-SolicitudesList/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO
 
-// MOSTRAR PLANES DE CUENTAS DISPONIBLES SEGUN EL LOS SELECCIONADOS EN EL PI
-routing.get('/periodo/solicitud', planCuentaController.getByPIPC)
 
-routing.post(
-  '/periodo/solicitud-crearsolicitud', // CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
-  (req, res, next) => {
-    req.body = solicitudData
-    next()
-  },
-  solicitudController.createSolicitud
-)
+
+// MOSTRAR PLANES DE CUENTAS DISPONIBLES SEGUN PI
+routing.get('/periodo/solicitud/:id', planCuentaController.getByPIPC)
+
+
+
+// CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
+routing.post('/periodo/solicitud-crearsolicitud', solicitudController.createSolicitud)
 // needs userId, periodId, planInversionplanCuentaId, Motivo
 // periodoId obtenido dinámicamente al hacer una consulta la DB llamando al modelo periodo
+
+
 
 routing.post('/periodo/solicitud-addArticle/:id', articulosController.addToSolicitud)
 // EL ObjectArray ENVIADO DE FRONT TIENE ArticuloName PARA LA TABLA articulo
@@ -77,6 +77,11 @@ routing.get('/periodo/solicitud-soporte', soporteController.getSoporteInfo)
 // OBTENER UN PC SEGUN EL PIPC
 routing.get('/periodo/solicitud-pc/:id', planCuentaController.getPCnameByPIPC)
 
+// OBTENER PERIODO INFO SEGUN PERIODO ID
+routing.get('/periodo/:id', periodoController.getPeriodById)
+
+// OBTENER TABLA 
+
 
 // -----------------------------------------------------------------
 // CREAR UN MOTIVO DE ANULACIÓN
@@ -87,4 +92,4 @@ routing.post('/periodo/solicitud-anular/:id', solicitudController.createMotivoAn
 routing.patch('/periodo/solicitud-statusChange/:id', solicitudController.changeStatus)
 
 // OBTENER VALORES DE TABLA motivoAnulacion
-routing.get('/periodo/solicitud-anular', solicitudController.getMotivosAnulacion)
+routing.get('/periodo-anulaciones/solicitud-anular', solicitudController.getMotivosAnulacion)

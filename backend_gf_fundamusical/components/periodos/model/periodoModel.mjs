@@ -4,6 +4,24 @@ import { monthConvertion } from '../../../services/utils.mjs'
 const connectionDB = connection
 
 export class periodoModel {
+
+	static async getPeriodById(periodoId){
+		const [periodo] = await connectionDB.query(
+			'SELECT * FROM periodo WHERE periodoId = ?', 
+			[periodoId]
+		)
+
+		if(!periodo.length) {
+			throw new Error('No existen periodos con ese ID');
+			
+		} else {
+			// se envia solo el objeto no un array de objetos
+			return periodo[0]
+		}
+	}
+
+
+
   static async getByCondition(id) {
     const [periodo] = await connectionDB.query(
       'SELECT * FROM periodo WHERE planInversionId = ?',

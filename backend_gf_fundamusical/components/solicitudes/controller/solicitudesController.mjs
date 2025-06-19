@@ -1,6 +1,6 @@
 import { solicitudModel } from '../model/solicitudModel.mjs'
-import { periodoModel } from '../../periodos/model/periodoModel.mjs' // GET CURRENT PERIOD
-import { planCuentaModel } from '../../planes_de_cuenta/model/planCuentaModel.mjs'
+// import { periodoModel } from '../../periodos/model/periodoModel.mjs' // GET CURRENT PERIOD
+// import { planCuentaModel } from '../../planes_de_cuenta/model/planCuentaModel.mjs'
 
 export class solicitudController {
   static async getByPeriod(req, res) {
@@ -9,39 +9,33 @@ export class solicitudController {
     try {
       const solicitudList = await solicitudModel.getByPeriod(userId, periodId) // RETURN ALL SOLICITUDES BY SELECTED PERIOD
 
-      console.log(solicitudList)
-
       const updatedSolicitudList = await solicitudModel.addArticulos(
         solicitudList
       )
 
-      if (solicitudList.length === 0) {
-        return res
-          .status(404)
-          .send('No hay solicitudes creadas para este periodo')
-      }
       if (updatedSolicitudList === null) {
         return res.status(200).json(solicitudList)
       } else {
         return res.status(200).json(updatedSolicitudList)
       }
     } catch (error) {
-      res.status(500).send('Unexpected error', error)
+      res.status(404).send({error: error.message})
     }
   }
 
   static async createSolicitud(req, res) {
     const solicitudData = req.body
-    const currentPeriodoId = await periodoModel.currentPeriod() // RETURN CURRENT PERIOD ID
-    const peticionPC = await planCuentaModel.getPCnameByPIPC(
-      solicitudData[0].planInversionplanCuentaId
-    )
-    const PCname = peticionPC[0].planCuentaName
+
+ // Aliens
+    // const peticionPC = await planCuentaModel.getPCnameByPIPC(
+    //   solicitudData[0].planInversionplanCuentaId
+    // )
+    // const PCname = peticionPC[0].planCuentaName
+
+
     try {
       const createdSolicitud = await solicitudModel.createSolicitud(
-        solicitudData,
-        currentPeriodoId,
-        PCname
+        solicitudData
       )
       return res.status(200).json({
         message: 'Se creó con exito la solicitud ID: ',
@@ -77,7 +71,6 @@ export class solicitudController {
   static async changeStatus(req, res) {
     const solicitudId = req.params.id
     const newStatus = req.body.newStatus
-    console.log('esto estas pasando como nuevo estado', newStatus)
     try {
       const statusChanged = await solicitudModel.changeStatus(
         solicitudId,
@@ -97,7 +90,7 @@ export class solicitudController {
       const motivosAnulacion = await solicitudModel.getMotivosAnulacion()
       return res.status(200).send(motivosAnulacion)
     } catch (error) {
-		console.log({message: error})
+		console.log({error: error.message})
 	}
   }
 }

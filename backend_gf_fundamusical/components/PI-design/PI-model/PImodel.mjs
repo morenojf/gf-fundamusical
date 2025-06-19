@@ -34,5 +34,5 @@ export class PImodel {
         await connectionDB.query(query, [PIPCid, subcategoriaId])
       }
     }
-  }
+  } 
 }
