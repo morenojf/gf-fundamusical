@@ -20,6 +20,7 @@ export class SolicitudService {
 		'http://localhost:3128/api/periodo-anulaciones/solicitud-anular';
 	readonly GET_PC_BY_PI = 'http://localhost:3128/api/periodo/solicitud'
 	readonly CREATE_SOLICITUD_URL = 'http://localhost:3128/api/periodo/solicitud-crearsolicitud'
+	readonly USER_SOLICITUDES_URL = 'http://localhost:3128/api/dashboard/user-solicitudes'
 
 	// VARIABLES
 	userId: number;
@@ -29,6 +30,12 @@ export class SolicitudService {
 		this.solicitudes = []
 	}
 
+	// Obtener all solicitudes segun user ID
+	getSolicitudesByUserID(){
+		return this.http.get<Solicitud[]>(`${this.USER_SOLICITUDES_URL}/${this.userId}`)
+	}
+
+	// Obtener solicitudes segun el periodo ID 
 	getSolicitudes(periodId: number) {
 		return this.http.get<Solicitud[]>(`${this.SOLICITUDES_URL}/${periodId}`);
 	}
@@ -58,10 +65,12 @@ export class SolicitudService {
 		return this.http.get<MotivosAnulacion[]>(this.GET_MOTIVOS_ANULACION_URL);
 	}
 
+	// Obtener el nombre de un plan de cuenta segun el ID del plan de inversion
 	getPCnameByPIid(PIid: number | undefined) {
 		return this.http.get<PCbyPI[]>(`${this.GET_PC_BY_PI}/${PIid}`)
 	}
 
+	// Crear solicitudes
 	createSolicitud(desginedSolcitud: any){
 		return this.http.post<any>(this.CREATE_SOLICITUD_URL, desginedSolcitud)
 	}

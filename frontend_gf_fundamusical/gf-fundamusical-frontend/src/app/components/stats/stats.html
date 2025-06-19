@@ -3,45 +3,23 @@
           <h2 class="card-title">Conteo de solicitudes</h2>
           <div class="stat-item">
             <span class="stat-label">Solicitudes Realizadas (total):</span>
-            <span class="stat-value">40</span>
+            <span class="stat-value">{{dashboardInfo.totalSolicitudes}}</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Solicitudes Finalizadas:</span>
-            <span class="stat-value">20</span>
+            <span class="stat-value">{{dashboardInfo.totalFinalizadas}}</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Solicitudes Anuladas:</span>
-            <span class="stat-value">06</span>
+            <span class="stat-value">{{dashboardInfo.totalAnuladas}}</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Solicitudes En Proceso:</span>
-            <span class="stat-value">14</span>
+            <span class="stat-value">{{dashboardInfo.totalActivas}}</span>
           </div>
         </div>
 
         <div class="chart-card">
-          <h2 class="card-title">Gráfico conteo de solicitudes (Mensual):</h2>
-          <div class="chart-placeholder">
-            <div class="chart-bar-container">
-              <div class="chart-y-axis">
-                <span>14</span>
-                <span>12</span>
-                <span>10</span>
-                <span>8</span>
-                <span>6</span>
-                <span>4</span>
-                <span>2</span>
-                <span>0</span>
-              </div>
-              <div class="chart-bars">
-                <div class="bar" style="height: 57%;"></div> <div class="bar" style="height: 86%;"></div> <div class="bar" style="height: 50%;"></div> <div class="bar" style="height: 93%;"></div> </div>
-            </div>
-            <div class="chart-x-axis">
-              <span>Enero (2025)</span>
-              <span>Febrero (2025)</span>
-              <span>Marzo (2025)</span>
-              <span>Abril (2025)</span>
-            </div>
-          </div>
+			<app-chart [dashboardInfo]="dashboardInfo"></app-chart>
         </div>
       </div>

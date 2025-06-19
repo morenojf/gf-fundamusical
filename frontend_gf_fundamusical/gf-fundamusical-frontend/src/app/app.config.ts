@@ -1,5 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHighcharts } from 'highcharts-angular'
 
 // FUNCIONAMIENTO DE PAGES ROUTES AND ROUTER LINK
 import { routes } from './app.routes';
@@ -11,6 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-	provideHttpClient()
+	provideHttpClient(),
+	provideHighcharts()
   ]
 };

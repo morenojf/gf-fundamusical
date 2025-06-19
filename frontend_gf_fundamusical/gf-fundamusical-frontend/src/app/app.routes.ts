@@ -7,7 +7,7 @@ import { PeriodoDetails } from '../pages/periodo-details/periodo-details';
 export const routes: Routes = [
 
 	{path: '', component: LoginPage},
-	{path: 'dashboard', component: Dashboard},
+	{path: 'dashboard/:id', component: Dashboard},
 	{path: 'vista-gestion', component: VistaGestion},
 	{path: 'solicitudes-list/:id', component: PeriodoDetails}
 ];
