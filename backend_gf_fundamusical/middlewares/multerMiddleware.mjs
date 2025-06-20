@@ -19,7 +19,7 @@ import multer from "multer"
 				// la respuesta va a ser NombreArchivo . extension
 			},
 			destination: function(req, file, cb){
-				cb(null, 'C:/Users/fjmor/OneDrive/Documentos/Francisco/Universidad/TAREAS/10mo semestre/TRABAJO/APIREST GESTION FINANCIERA FUNDAMUSICAL/backend_gf_fundamusical/public')
+				cb(null, 'C:/Users/fjmor/OneDrive/Documentos/Francisco/Universidad/TAREAS/10mo semestre/TRABAJO/APIREST GESTION FINANCIERA FUNDAMUSICAL/backend_gf_fundamusical/public/supports')
 			}
 		}
 	)

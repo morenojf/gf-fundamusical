@@ -15,7 +15,7 @@ export const routing = Router()
 
 // Todas las rutas estan prescedidas por /api/
 
-routing.get('/dashboard/:id', dashboardController.getAll) // DASHBOARD
+routing.get('/dashboard/:id', dashboardController.getAll) // DASHBOARD segun UserID
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
 
 routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.

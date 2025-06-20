@@ -24,7 +24,7 @@ app.use(cors())
 
 // Esto permite acceder a los archivos guardados dentro de la carpeta public mediante el endpoint de la api 
 // http://localhost:${PORT}/nombreArchivo.extension
-app.use(express.static('./public'))
+app.use(express.static('./public/supports'))
 
 // Esto dirige al archivo de rutas cualquier peticion que se haga a /api
 app.use('/api', routing)

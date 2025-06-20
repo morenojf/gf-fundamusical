@@ -1,7 +1,7 @@
 ### AQUI ESTARÁN LOS ENDPOINTS DE LA API PARA RECUPERAR LOS DATOS SEGUN LA URL
 
 ### RECUPERAR EL DASHBOARD
-GET http://localhost:3128/api/dashboard
+GET http://localhost:3128/api/dashboard/1
 
 ### RECUPERAR VISTA GESTION DE PLANES
 ### ESTO VA A OBTENER TODOS LOS PLANES DE INVERSION CREADOS Y AL PASAR EL ID TE DARÁ LOS PERIODOS DE ESE PLAN INVERSION ID
@@ -26,11 +26,17 @@ GET http://localhost:3128/api/periodo/1
 GET http://localhost:3128/api/periodo-SolicitudesList/1
 
 
-### OBTENER SOLICITUDES SEGUN EL USER IS
+### OBTENER SOLICITUDES SEGUN EL USER ID
 GET http://localhost:3128/api/dashboard/user-solicitudes/1
 
+
+
+### ESTE ME SIRVE PARA HACER LA CARTA DE PLANES DE INVERSION
 ### OBTENER DENTRO DEL MODAL LOS PLANES DE CUENTA SEGUN EL PIPC PARA CREAR UNA SOLICITUD
 GET http://localhost:3128/api/periodo/solicitud/1
+
+
+
 
 ### OBTENER TODO DE LA TABLA motivoAnulacion
 GET http://localhost:3128/api/periodo-anulaciones/solicitud-anular
