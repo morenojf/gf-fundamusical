@@ -1,74 +1,45 @@
 import { connection } from '../../../services/mysql-db/dbfundamusical.mjs'
-import { monthConvertion } from '../../../services/utils.mjs'
 
 const connectionDB = connection
 
 export class periodoModel {
 
-	static async getPeriodById(periodoId){
-		const [periodo] = await connectionDB.query(
-			'SELECT * FROM periodo WHERE periodoId = ?', 
-			[periodoId]
-		)
+  static async createPeriodo(periodoInfo) {
+    try {
+      let nucleoId = periodoInfo.find((periodo) => periodo.nucleoId)
+      let periodoYear = periodoInfo.find((periodo) => periodo.selectedYear)
 
-		if(!periodo.length) {
-			throw new Error('No existen periodos con ese ID');
-			
-		} else {
-			// se envia solo el objeto no un array de objetos
-			return periodo[0]
-		}
-	}
-
-
-
-  static async getByCondition(id) {
-    const [periodo] = await connectionDB.query(
-      'SELECT * FROM periodo WHERE planInversionId = ?',
-      [id]
-    )
-    if (!periodo.length) {
-      return console.log('No existen periodos para este Plan de Inversión')
-    } else {
-
-		// This will create the new key nombreMes
-		const mes = "nombreMes"
-
-		// This will insert into the object selected a new pair key:value with key nombreMes and value el nombre del mes using monthConvertion funct
-		for (let index = 0; index < periodo.length; index++) {
-			const element = periodo[index];
-			const nombreMes = monthConvertion(element.periodoMes);
-			element[mes] = nombreMes
-		}
-      return periodo
+      let [createdPeriodoId] = await connection.query(
+        'INSERT INTO periodo (periodoAnio, nucleoId) VALUES (?, ?)',
+        [periodoYear.selectedYear, nucleoId.nucleoId]
+      )
+      return createdPeriodoId.insertId
+    } catch (error) {
+      console.log(error)
     }
   }
 
-  static async createPeriod(planInversionId) {
-    const query = 'INSERT INTO periodo (planInversionId) VALUES (?)'
-    const [result] = await connectionDB.query(query, [planInversionId])
-    const [periodos] = await connectionDB.query(
+  static async getPeriodos(){
+	try {
+		const [periodosArray] = await connection.query('SELECT * FROM periodo')
+		return periodosArray
+	} catch (error) {
+		console.log(error)
+	}
+  }
+
+  static async getPeriodById(periodoId) {
+    const [periodo] = await connectionDB.query(
       'SELECT * FROM periodo WHERE periodoId = ?',
-      [result.insertId]
+      [periodoId]
     )
-    return periodos // Devuelve el objeto del periodo creado
+
+    if (!periodo.length) {
+      throw new Error('No existen periodos con ese ID')
+    } else {
+      // se envia solo el objeto no un array de objetos
+      return periodo[0]
+    }
   }
 
-  static async currentPeriod() {
-    const [currentPeriodId] = await connectionDB.query(
-      'SELECT periodoId FROM periodo WHERE periodoMes = (MONTH(CURRENT_DATE()))'
-    )
-    return currentPeriodId[0].periodoId
-  }
-
-  static async currentPI() {
-    const [currentPeriodId] = await connectionDB.query(
-      'SELECT periodoId FROM periodo WHERE periodoMes = (MONTH(CURRENT_DATE()))'
-    )
-    const [currentPI] = await connectionDB.query(
-      'SELECT planInversionId FROM periodo WHERE planInversionId = (?)',
-      [currentPeriodId[0].periodoId]
-    )
-    return currentPI[0].planInversionId
-  }
 }

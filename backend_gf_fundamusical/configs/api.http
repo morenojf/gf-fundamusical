@@ -54,3 +54,9 @@ POST http://localhost:3128/api/periodo/solicitud-addArticle/2
 
 ### OBTENER SOPORTE INFO
 GET http://localhost:3128/api/periodo/solicitud-soporte
+
+### OBTENER USUARIO
+POST http://localhost:3128/api/login
+
+### OBTENER RECURSOS
+GET http://localhost:3128/api/get-resources

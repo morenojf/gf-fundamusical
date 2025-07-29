@@ -10,8 +10,8 @@ export class solicitudController {
 
       if (!solicitudes.length) {
         res
-          .status(404)
-          .send({ result: 'No existen solicitudes creadas por este usuario' })
+          .status(200)
+          .send([])
       } else {
         res.status(200).send(solicitudes)
       }

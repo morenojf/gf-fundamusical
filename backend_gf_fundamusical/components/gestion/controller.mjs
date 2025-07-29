@@ -9,8 +9,7 @@ export class gestionController {
     try {
       res.header('Access-Control-Allow-Origin', '*')
       const { id } = req.params
-      const userId = 1
-      const nucleoInfo = await nucleoModel.getPartial(userId)
+      const nucleoInfo = await nucleoModel.getPartial(id)
       const planesInversion = await planInversionModel.getAll()
       const periodos = await periodoModel.getByCondition(id)
 
@@ -20,7 +19,7 @@ export class gestionController {
         periodos: periodos || []
       })
     } catch (err) {
-      return res.status(500).send('ERROR AL OBTENER DATOS DE GESTION')
+      return res.status(500).send(err)
     }
   }
 }

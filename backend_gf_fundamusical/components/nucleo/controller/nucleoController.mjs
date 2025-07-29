@@ -2,15 +2,28 @@ import { nucleoModel } from '../model/nucleoModel.mjs'
 
 export class nucleoController {
 // Obtiene todos los nucleos de la base de datos, idealmente para la vista de administrador
-  static getAll (req, res) {
-    // const { genre } = req.query esta es para filtrar por genero pero quiero que me todas las peliculas primero para testear
-    const nucleos = nucleoModel.getAll() // ({ genre }) esto es parte del filtro por genero
-    if (!nucleos) {
-      return res.status(404).json({ error: 'No se encontraron articulos' })
-    } else {
-      return res.json(nucleos).status(200)
-    }
+  static async getAll (req, res) {
+	try {
+		const nucleos = await nucleoModel.getAll()
+		res.status(200).send(nucleos)
+	} catch (error) {
+		res.send(error)
+	}
   }
+
+// Obtiene informacion de un solo nucleo según el id del usuario
+static async getNucleoByUserId (req, res){
+	try {
+		const userId = req.params.id
+		const nucleoInfo = await nucleoModel.getNucleoByUserId(userId)
+		res.status(200).send(nucleoInfo)
+	} catch (error) {
+		res.status(200).send(error)
+	}
+}
+
+
+
 
   // Idealmente se obtiene nombre de nucleo, director y coordinador mediante el id del nuecleo
   static getPartial (req, res) {

@@ -1,8 +1,6 @@
 import { Router } from 'express'
 import { dashboardController } from '../components/dashboard/controller.mjs'
 import { gestionController } from '../components/gestion/controller.mjs'
-import { subcategoriaController } from '../components/subcategorias/controller/subcategoriasController.mjs'
-import { planCuentaController } from '../components/planes_de_cuenta/controller/accController.mjs'
 import { planInversionController } from '../components/plan_inversion/controller/planInversionController.mjs'
 import { PIcontroller } from '../components/PI-design/PI-controller/PIcontroller.mjs'
 import { solicitudController } from '../components/solicitudes/controller/solicitudesController.mjs'
@@ -10,6 +8,11 @@ import { articulosController } from '../components/articulos/controller/articulo
 import { soporteController } from '../components/soportes/controller/soporteController.mjs'
 import { upload } from '../middlewares/multerMiddleware.mjs'
 import { periodoController } from '../components/periodos/controller/periodosController.mjs'
+import { userController } from '../components/user/controller/userController.mjs'
+import { recursosController } from '../components/recursos/recursosController/recursosController.mjs'
+import { nucleoController } from '../components/nucleo/controller/nucleoController.mjs'
+import { partidasController } from '../components/partidas/controller/partidasController.mjs'
+import { operacionController } from '../components/operaciones/controller/operacionesController.mjs'
 
 export const routing = Router()
 
@@ -17,18 +20,46 @@ export const routing = Router()
 
 routing.get('/dashboard/:id', dashboardController.getAll) // DASHBOARD segun UserID
 routing.get('/gestion/:id', gestionController.getAll) // VISTA GESTION
+routing.get('/nucleos-info', nucleoController.getAll) // Obtener la información de todos los núcleos sin condicion
 
 routing.post('/gestion-modal', planInversionController.createNewPI) // CREAR PLAN DE INVERSIÓN AL ABRIR MODAL {req.params.id} es necesario para pasar el user id.
-routing.get('/gestion-modal', planCuentaController.getAll) // MUESTRA PLANES DE CUENTA PARA DISEniAR PLAN DE INVERSION
+
+// OBTENER TODAS LAS PARTIDAS
+routing.get('/get-partidas', partidasController.getAllPartidas)
+
+// CREAR PERIODO
+routing.post('/create-periodo', periodoController.createPeriodo)
+
+// OBTENER PERIODOS
+routing.get('/get-periodos', periodoController.getPeriodos)
+
+// LLENAR TABLA periodo_partidas
+routing.post('/attach-partidas-to-periodo', partidasController.relacionarPeriodoPartidas)
+
+// OBTENER TODOS LOS DATOS TABLA periodo_partida
+routing.get('/get-periodo_partidas-table', partidasController.getAllPeriodoPartidas)
+
+// OBTENER TODAS LAS OPERACIONES 
+routing.get('/get-all-operaciones', operacionController.getAllOperaciones)
+
+// CREAR OPERACION
+routing.post('/post-operacion',  upload.fields([
+  { name: 'facturaRuta', maxCount: 1 },
+  { name: 'soporteCartaRuta', maxCount: 1 }
+]), operacionController.createOperacion)
+
+// BORRAR OPERACION POR ID}
+routing.delete('/delete-operacion/:id', operacionController.deleteOperacionById)
+
+// ACTUALIZAR LOS BALANCES DE UN INGRESO O EGRESO UNA VEZ SE ELIMINA LA OPERACIÓN
+routing.patch('/update-balance', operacionController.adjustBalance)
 
 
-// OBTENER SOLICITUDES SEGUN USER ID
-routing.get('/dashboard/user-solicitudes/:id', solicitudController.getByUserId)
+// -----------------------------------------------------------------
+// OBTENER INFORMACIÓN DEL NUCLEO ASOCIADA AL USUARIO ID
+routing.get('/nucleo-by-user-id/:id', nucleoController.getNucleoByUserId)
 
-routing.get(
-  '/gestion/modal/plancuenta-subcategoria/:id',
-  subcategoriaController.getById
-) // FILTRAR Y OBTENER SUBCATEGORIAS SEGUN EL PLAN DE CUENTA ID
+
 
 
 
@@ -39,12 +70,6 @@ routing.post(
 )
 
 routing.get('/periodo-SolicitudesList/:id', solicitudController.getByPeriod) // OBTENER SOLICITUDES FILTRADAS POR PERIODO Y USUARIO
-
-
-
-// MOSTRAR PLANES DE CUENTAS DISPONIBLES SEGUN PI
-routing.get('/periodo/solicitud/:id', planCuentaController.getByPIPC)
-
 
 
 // CREAR UNA NUEVA SOLICITUD DENTRO DEL PERIODO
@@ -66,8 +91,8 @@ routing.post('/periodo/solicitud-addArticle/:id', articulosController.addToSolic
 
 // IMPORTANTE, ESTO DA ERROR CUANDO LOS DOS ARCHIVOS SON CREADOS EXACTAMENTE AL MISMO TIEMPO POR LO QUE EL NOMBRE ES IGUAL Y DA ERROR.
 routing.post('/periodo/solicitud-soporte/:id', upload.fields([
-  { name: 'rutaFactura', maxCount: 1 },
-  { name: 'rutaCartaPyR', maxCount: 1 }
+  { name: 'facturaRuta', maxCount: 1 },
+  { name: 'soporteCartaRuta', maxCount: 1 }
 ]),
 soporteController.addSoporte)
 // CREAR EL SOPORTE DE LA SOLICITUD ESPECIFICA
@@ -77,14 +102,8 @@ routing.get('/periodo/solicitud-soporte', soporteController.getSoporteInfo)
 //OBTENER INFORMACION DE LOS SOPORTES
 
 
-// Metodos especiales: ---------------------------------------------
-// OBTENER UN PC SEGUN EL PIPC
-routing.get('/periodo/solicitud-pc/:id', planCuentaController.getPCnameByPIPC)
-
 // OBTENER PERIODO INFO SEGUN PERIODO ID
 routing.get('/periodo/:id', periodoController.getPeriodById)
-
-// OBTENER TABLA 
 
 
 // -----------------------------------------------------------------
@@ -97,3 +116,49 @@ routing.patch('/periodo/solicitud-statusChange/:id', solicitudController.changeS
 
 // OBTENER VALORES DE TABLA motivoAnulacion
 routing.get('/periodo-anulaciones/solicitud-anular', solicitudController.getMotivosAnulacion)
+
+// ---------------------------------------------------------------------------
+// END POINT PARA LOGIN 
+
+routing.post('/login', userController.validateUser) 
+// en base a la informacion recibida por el front end, se valida que el pass y el username sea el mismo que la base de datos. 
+// si sí entonces devolvemos true
+// si no devolvemos, usuario no autorizado. 
+
+// ---------------------------------------------------------------------------
+// END POINT PARA VALIDAR SESION 
+
+routing.get('/validate-session', userController.validateSession) 
+// en base a la informacion recibida por el front end, se valida que el pass y el username sea el mismo que la base de datos. 
+// se setea un token en el navegador
+
+// ----------------------------------------------------------------------------
+// END POINT PARA OBTENER TODOS LOS USUARIOS
+routing.get('/get-all-users', userController.getUsersList)
+
+// ---------------------------------------------------------------------------
+// ACTUALIZAR INFORMACIÓN DE USUARIO
+routing.patch('/change-user-info', userController.updateUser)
+
+
+// ----------------------------------------------------------------------------
+// DESACTIVAR UN USUARIO/NUCLEO
+routing.patch('/deactivate-user', userController.deactivateUser)
+
+// ----------------------------------------------------------------------------
+// REACTIVAR UN USUARIO/NUCLEO
+routing.patch('/activate-user', userController.activateUser)
+
+// ----------------------------------------------------------------------------
+// CREAR UN USUARIO/NUCLEO
+routing.post('/create-user', userController.createUser)
+
+// ----------------------------------------------------------------------------
+// LogOut
+routing.get('/log-out', userController.logout)
+
+
+// ---------------------------------------------------------------------------
+// END POINT PARA OBTENER RECURSOS DE public/modelosCartas
+routing.get('/get-resources', recursosController.getResources)
+
