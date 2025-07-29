@@ -1,12 +1,22 @@
+<div class="first-row"><app-header></app-header></div>
+
 <div class="dashboard-container">
-<app-header></app-header>
-
-  <div class="main-content-wrapper">
-  <app-aside-bar></app-aside-bar>
-
-    <main class="content-area">
-<app-nucleo-info></app-nucleo-info>
-<app-stats></app-stats>
-    </main>
+  <div class="content">
+    <app-aside-bar></app-aside-bar>
+    <div class="inner-content">
+      <app-nucleo-info></app-nucleo-info>
+	        <app-stats></app-stats>
+    </div>
   </div>
+
+  @if (userRol === "USER") {
+  <div class="btns">
+    <app-registrar-operacion></app-registrar-operacion>
+    <app-aperturar-periodo></app-aperturar-periodo>
+  </div>
+  }
 </div>
+
+
+
+

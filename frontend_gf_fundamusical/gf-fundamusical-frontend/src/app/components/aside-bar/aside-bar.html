@@ -1,17 +1,53 @@
-    <div class="general-container">
-		<div class="main-content-wrapper">
-	<aside class="sidebar">
+<div class="general-container">
+  <div class="main-content-wrapper">
+    <aside class="sidebar">
       <nav>
         <ul>
-          <li><a routerLink='/dashboard/1' class="sidebar-item"><i class="icon-resumen"></i>Resumen</a></li>
-          <li><a routerLink="/vista-gestion" class="sidebar-item"><i class="icon-gestion"></i>Gestión de Planes</a></li>
-          <li><a  class="sidebar-item"><i class="icon-recursos"></i>Recursos</a></li>
+          @if (userRol === "ADMIN") {
+          <li>
+            <a
+              routerLink="/dashboard/{{selectedNucleo?.userId}}"
+              class="sidebar-item"
+              ><i class="icon-recursos"></i>Dashboard</a
+            >
+          </li>
+          <li>
+            <a routerLink="/informes" class="sidebar-item"
+              ><i class="icon-recursos"></i>Informes</a
+            >
+          </li>
+          } @else {
+          <li>
+            <a
+              routerLink="/dashboard/{{logedInUserInfo?.userId}}"
+              class="sidebar-item"
+              ><i class="icon-resumen"></i>Dashboard</a
+            >
+          </li>
+          <li>
+            <a routerLink="/ingresos" class="sidebar-item"
+              ><i class="icon-gestion"></i>Ingresos</a
+            >
+          </li>
+          <li>
+            <a routerLink="/egresos" class="sidebar-item"
+              ><i class="icon-recursos"></i>Egresos</a
+            >
+          </li>
+          <li>
+            <a routerLink="/informes" class="sidebar-item"
+              ><i class="icon-recursos"></i>Informes</a
+            >
+          </li>
+          }
         </ul>
       </nav>
       <div class="sidebar-bottom">
-        <a routerLink="/" class="sidebar-item"><i class="icon-logout"></i></a>
-        <a routerLink="/" class="sidebar-item"><i class="icon-profile"></i></a>
+        @if (userRol === "ADMIN") {
+        <p class="sidebar-item" (click)="backToAdmin()">Vista general</p>
+        }
+        <p class="sidebar-item" (click)="logOut()">Cerrar sesión</p>
       </div>
     </aside>
-	</div>
-	</div>
+  </div>
+</div>

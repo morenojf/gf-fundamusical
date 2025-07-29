@@ -1,7 +1,17 @@
 <div class="content-header">
-@if (servicioVG.nucleoInfo) {
-	<h1 class="nucleo-title">{{servicioVG.nucleoInfo.nucleoName}}</h1>
-	<p class="coordinator">Coordinador(a): {{servicioVG.nucleoInfo.nucleoCoordinador}}<span></span></p>
-	<p class="director">Director de núcleo: {{servicioVG.nucleoInfo.nucleoDirector}}<span></span></p>
-} @else {No hay información del núcleo disponible.}
+
+@if (userRol === "ADMIN") {
+	<h1 class="nucleo-title">Administrador</h1>
+	<p class="coordinator">{{userInfo.userName}}</p>
+	@if (selectedNucleoInfo) {
+	<p>({{selectedNucleoInfo.nucleoName}})</p>
+	}
+
+} @else {
+	@if (logedInNucleo) {
+		<h1 class="nucleo-title">Núcleo {{logedInNucleo.nucleoName}}</h1>
+		<p class="coordinator"><b>Coordinador(a) de Administración y presupuesto: </b><br>{{logedInNucleo.nucleoCoordinador}}<span></span></p>
+	} @else {No hay información del núcleo disponible.}
+}
+
 </div>

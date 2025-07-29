@@ -1,0 +1,213 @@
+ol {
+  padding-left: 15px;
+}
+
+#pc {
+  margin-top: 1px;
+  margin-bottom: 1px;
+  font-size: 17px;
+}
+
+
+/*MODAL STYLES*/
+
+.main-content {
+	display: flex;
+	position: relative;
+	
+	flex-direction: column;
+	
+	width: 1000px;
+	height: 600px;
+	
+	background: #fff;
+	
+	padding: 30px;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.modal-header {
+	display: flex;
+	justify-content: flex-end; /* Empuja la "x" a la derecha */
+	align-items: center;
+	min-height: 32px; /* Opcional: asegura altura mínima */
+}
+
+.modal-title {
+	font-size: 1.3rem;
+	margin-bottom: 10px;
+	margin-top: 0px;
+}
+
+/* Botón X de cerrar modal */
+.close-modal-x {
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: #ff3366;
+	background: none;
+	border: none;
+	cursor: pointer;
+	transition: color 0.2s;
+}
+
+.close-modal-x:hover {
+	color: #d81b60; /* Un tono más oscuro al pasar el mouse */
+}
+
+.periodo-form {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+	height: 100%; /* Asegura que ocupe todo el alto del modal */
+}
+
+.btn-crear {
+	width: 100%;
+	background-color: #e0e2ec; /* Color rosado/magenta, ajusta si es diferente */
+	color: rgb(0, 0, 0); /* Texto blanco */
+	border: #222 solid 1px; /* Sin borde */
+	border-radius: 20px; /* Esquinas redondeadas, ajusta el valor */
+	padding: 10px 20px; /* Relleno interno para darle tamaño */
+	font-size: 16px; /* Tamaño de la fuente */
+	font-weight: bold; /* Texto en negrita */
+	text-transform: uppercase; /* Todo el texto en mayúsculas */
+	cursor: pointer; /* Indica que es clickeable */
+	display: flex; /* Para alinear el "+" y el texto */
+	align-items: center; /* Centra verticalmente los elementos */
+	justify-content: center; /* Centra horizontalmente el contenido */
+	gap: 5px; /* Espacio entre el "+" y el texto */
+	transition: background-color 0.2s ease-in-out; /* Suaviza el cambio de color */
+	margin-top: auto; /* Empuja el botón al fondo del formulario */
+}
+
+.btn-crear::before {
+	content: "+"; /* El contenido del "+" */
+	font-size: 20px; /* Tamaño un poco más grande para el "+" */
+	line-height: 1; /* Alineación vertical */
+	margin-right: 5px; /* Espacio a la derecha del "+" */
+}
+
+.btn-crear:hover {
+	background-color: #8296fa; /* Un tono más oscuro de rosado/magenta al pasar el ratón */
+}
+
+.btn-crear:active {
+	background-color: #2649f5; /* Un tono aún más oscuro al hacer clic */
+	transform: translateY(1px); /* Efecto ligero de "presionado" */
+}
+
+
+/*FORM STYLES*/
+
+/* Hora Y fecha | Periodo | Tipo de transacción */
+.first-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	height: 70px;
+}
+
+.second-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	height: 90px;
+}
+
+.partidas-periodo{
+	flex-grow: 1;
+	margin: 10px;
+
+}
+
+.descripcion-operacion{
+	flex-grow: 1;
+	margin: 10px;
+
+}
+
+.third-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	height: 70px;
+}
+
+.n-comprobante{
+	margin-left: 10px;
+	margin-right: 10px;
+	flex-grow: 1;
+}
+
+.monto{
+	margin-right: 10px;
+}
+
+.monto input{
+	text-align: right;
+	padding: 0px;
+}
+
+.fourth-row{
+	margin-left: 10px;
+	margin-right: 10px;
+	text-align: justify;
+
+}
+
+.fifth-row{
+	display: flex;
+	flex-direction: column;
+	margin-left: 10px;
+	margin-right: 10px;
+
+}
+
+.invoice-attachment{
+	margin-bottom: 10px;
+}
+
+.letter-attachment{
+	margin-bottom: 10px;
+}
+
+/* Estilos para el botón "APERTURAR PERIODO" */
+.registrar-operacion-button {
+  display: inline-flex; /* Para alinear el + y el texto */
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background-color: #e0e2ec ; /* El color rosa de tu barra superior */
+  color: rgb(0, 0, 0);
+  border: 1px solid;
+  border-radius: 5px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.2s ease;
+  margin: 2px; /* Espacio sobre el botón */
+  width: 300px;
+}
+
+.registrar-operacion-button:hover {
+  background-color: #ffffff; /* Un rosa más oscuro al pasar el ratón */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.registrar-operacion-button .plus-icon {
+  font-size: 1.2em;
+  margin-right: 8px; /* Espacio entre el + y el texto */
+}
+
+/* quitar flechas del input en los navegadores */
+.monto input[type="number"]::-webkit-outer-spin-button,
+.monto input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Firefox */
+.monto input[type="number"] {
+	appearance: textfield;
+  -moz-appearance: textfield;
+}

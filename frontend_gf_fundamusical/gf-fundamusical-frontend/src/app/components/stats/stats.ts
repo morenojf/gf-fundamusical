@@ -1,50 +1,67 @@
 import { Component, OnInit } from '@angular/core';
-import { Dashboard } from '../../../pages/Dashboard/dashboard';
 import { ActivatedRoute, Params } from '@angular/router';
-import { DashboardService } from '../../../services/dashboard/dashboard';
-import DashboardModel from '../../Models/dashboard';
-import { Chart } from '../chart/chart';
 import { CommonModule } from '@angular/common';
+import { ServicioVG } from '../../../services/vista-gestion/servicio-vg';
+import { error } from 'highcharts';
+import { OperacionesService } from '../../../services/operaciones/operaciones-service';
 
 @Component({
   selector: 'app-stats',
-  imports: [Chart, CommonModule],
+  imports: [ CommonModule],
   templateUrl: './stats.html',
   styleUrl: './stats.css'
 })
 export class Stats implements OnInit{
 
 	userId: number;
-	dashboardInfo: DashboardModel;
+	nucleoInfo!: any;
+
+
+	// Todos los arrays estan filtrados siempre por el nucleoID actualmente logueado
+
+	// Cantidad de operaciones total
+	operacionesArray!: any;
+	// Cantidad de operaciones ingreso
+	operacionesIngreso!: any;
+	// Cantidad de operaciones egreso
+	operacionesEgreso!: any;
 
 	// Constructor
-	constructor(public dashboardService: DashboardService, route: ActivatedRoute){
+	constructor(public vistaGestionService: ServicioVG, route: ActivatedRoute, public operacionService: OperacionesService){
 		this.userId = route.snapshot.params['id']
-		this.dashboardInfo = {
-			nucleoInfo: [],
-			totalActivas: 0,
-			totalAnuladas: 0,
-			totalFinalizadas: 0,
-			totalSolicitudes: 0
-		}
+		this.getNucleoInfo(this.userId)
 	}
 
-
-	// OnInit
 	ngOnInit(): void {
-		this.getDashboard()
+
 	}
 
-	getDashboard(){
-		this.dashboardService.getDashboard(this.userId).subscribe({
+	getNucleoInfo(userId: number){
+		this.vistaGestionService.getNucleoInfoByUserId(userId).subscribe({
 			next: (data) => {
-				// data retorna un objeto
-				this.dashboardInfo = data
+				
+				this.nucleoInfo = data
+				this.getAllOperaciones(this.nucleoInfo.nucleoId)
 			},
-			error: (err) => {
-				console.log('Olims', err)
+			error: (error) => {
+				console.log(error)
 			}
 		})
 	}
 
+	getAllOperaciones(nucleoId: any){
+		this.operacionService.getAllOperaciones().subscribe({
+			next: (data) =>{
+
+				this.operacionesArray = data.filter((operacion: any) => operacion.nucleoId == nucleoId)
+				this.operacionesIngreso = data.filter((operacion: any) => operacion.nucleoId == nucleoId && operacion.operacionTipo === "INGRESO")
+				this.operacionesEgreso = data.filter((operacion: any) => operacion.nucleoId == nucleoId && operacion.operacionTipo === "EGRESO")
+
+
+			},
+			error: (error) =>{
+				console.log(error)
+			}
+		})
+	}
 }

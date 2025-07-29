@@ -2,34 +2,34 @@
   <div class="login-page">
     <div class="login-container">
       <div class="logo-section">
-        <img src="../assets/logo.png" alt="El Sistema Logo" class="logo" />
+        <img src="../assets/logoColor.png" alt="El Sistema Logo" class="logo" />
       </div>
-      <h2>Iniciar sesión</h2>
+      <h2>¡Bienvenido!</h2>
 
       <form [formGroup]="loginForm" (submit)="loginEvent()">
         <div class="form-group">
-          <label for="username">Correo electrónico</label>
+          <label for="username"></label>
           <input
             type="text"
             id="username"
-            placeholder="Usuario"
-            formControlName="userName"
+            placeholder="Correo electrónico"
+            formControlName="email"
           /> <!-- insert username -->
           @if (userName.invalid && userName.touched){
-			<p style="color:rgb(255, 255, 255)">Dirección de correo electrónico invalida</p>
+			<p style="color:#5c77fc  ">Dirección de correo electrónico invalida</p>
 		  }
         </div>
 
         <div class="form-group password-group">
-          <label for="password">Contraseña</label>
+          <label for="password"></label>
           <input
-            type="password"
+            [type]="showPassword ? 'text' : 'password'"
             id="password"
             placeholder="Contraseña"
-            formControlName="password"
+            formControlName="userPass"
           />
           <!-- insert password -->
-          <span class="password-toggle">
+          <span class="password-toggle" (click)="togglePassword()">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

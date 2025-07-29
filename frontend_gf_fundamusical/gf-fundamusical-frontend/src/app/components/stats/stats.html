@@ -1,25 +1,59 @@
-      <div class="stats-section">
-        <div class="stats-card">
-          <h2 class="card-title">Conteo de solicitudes</h2>
-          <div class="stat-item">
-            <span class="stat-label">Solicitudes Realizadas (total):</span>
-            <span class="stat-value">{{dashboardInfo.totalSolicitudes}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Solicitudes Finalizadas:</span>
-            <span class="stat-value">{{dashboardInfo.totalFinalizadas}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Solicitudes Anuladas:</span>
-            <span class="stat-value">{{dashboardInfo.totalAnuladas}}</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Solicitudes En Proceso:</span>
-            <span class="stat-value">{{dashboardInfo.totalActivas}}</span>
-          </div>
-        </div>
+<div class="cards-container">
+  <!-- Balance Total -->
+  <div class="stat-card">
+    <h3 class="card-title">Balance Total</h3>
+    <h2 class="card-subtitle">
+      @if (nucleoInfo?.nucleoSaldo === null) {
+      <b>-- Bs.S</b>
+      } @else {
+      <b>{{nucleoInfo?.nucleoSaldo}}</b>
+      }
+    </h2>
+    @if (operacionesArray?.length === 1) {
+    <p class="card-text"><b>{{operacionesArray?.length}} Transacción</b></p>
+    } @else {
+    <p class="card-text"><b>{{operacionesArray?.length}} Transacciones</b></p>
 
-        <div class="chart-card">
-			<app-chart [dashboardInfo]="dashboardInfo"></app-chart>
-        </div>
-      </div>
+    }
+  </div>
+
+  <div class="stat-card">
+    <h3 class="card-title">Ingresos</h3>
+    <h2 class="card-subtitle">
+      @if (nucleoInfo?.nucleoIngresos === null) {
+      <b>-- Bs.S</b>
+      } @else {
+      <b>{{nucleoInfo?.nucleoIngresos}}</b>
+      }
+    </h2>
+    @if (operacionesIngreso?.length === 1) {
+    <p class="card-text"><b>{{operacionesIngreso?.length}} Transacción</b></p>
+
+    } @else {
+    <p class="card-text"><b>{{operacionesIngreso?.length}} Transacciones</b></p>
+
+    }
+  </div>
+
+  <div class="stat-card">
+    <h3 class="card-title">Egresos</h3>
+    <h2 class="card-subtitle">
+      @if (nucleoInfo?.nucleoEgresos === null) {
+      <b>-- Bs.S</b>
+      } @else {
+      <b>{{nucleoInfo?.nucleoEgresos}}</b>
+      }
+    </h2>
+    @if (operacionesEgreso?.length === 1) {
+    <p class="card-text"><b>{{operacionesEgreso?.length}} Transacción</b></p>
+
+    } @else {
+    <p class="card-text"><b>{{operacionesEgreso?.length}} Transacciones</b></p>
+
+    }
+  </div>
+
+  <!-- Ingresos -->
+
+  <!-- Gastos -->
+</div>

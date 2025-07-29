@@ -1,0 +1,65 @@
+<div class="main-content">
+  <h1>Crear Usuario/Núcleo</h1>
+
+  <!-- Inicio de formulario -->
+  <form class="wp-form" [formGroup]="userForm" (submit)="submitForm()">
+    <div class="form-row">
+      <label>Nombre de Usuario<span class="required">*</span></label>
+      <input type="text" required formControlName="userName" />
+    </div>
+    <div class="form-row">
+      <label>Correo electrónico<span class="required">*</span></label>
+      <input type="email" required formControlName="userEmail" />
+    </div>
+    <div class="form-row">
+      <label>Contraseña</label>
+      <input type="text" formControlName="userPassword" />
+    </div>
+    <div class="form-row">
+      <label>Nombre del Núcleo (sin la palabra Núcleo delante).</label>
+      @if (creaAdmin == true) {
+      <input type="text" style="background-color: #a5a6a6" disabled />
+      } @else {
+      <input type="text" formControlName="nucleoName" />
+      }
+    </div>
+    <div class="form-row">
+      <label
+        >Nombre Coordinador del Núcleo<span class="required">*</span></label
+      >
+      @if (creaAdmin == true) {
+      <input type="text" style="background-color: #a5a6a6" disabled />
+      } @else {
+      <input type="text" formControlName="coordinadorName" />
+      }
+    </div>
+    <div class="form-row">
+      <label
+        >Nombre Director Musical del Núcleo<span class="required"
+          >*</span
+        ></label
+      >
+      @if (creaAdmin == true) {
+      <input type="text" style="background-color: #a5a6a6" disabled />
+      } @else {
+      <input type="text" formControlName="directorName" />
+      }
+    </div>
+    <div class="form-row">
+      <label>Rol</label>
+      <select
+        #roles
+        (change)="onSelectChange($event)"
+        formControlName="userRol"
+      >
+        <option value="USER">Usuario</option>
+        <option value="ADMIN">Administrador</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <button type="submit" class="wp-btn" [disabled]="userForm.invalid">
+        Crear
+      </button>
+    </div>
+  </form>
+</div>

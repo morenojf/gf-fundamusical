@@ -1,0 +1,83 @@
+<button class="design-plan-button" (click)="genTrigger()">
+  <span class="plus-icon">+</span> APERTURAR PERIODO
+</button>
+
+<ng-template #template>
+  <div class="main-content">
+    <div class="modal-header">
+      <button class="close-modal-x" closeModal>x</button>
+    </div>
+
+    <h3 class="modal-title">Aperturar periodo</h3>
+
+    <!-- Inicio formulario aperturar un periodo -->
+    <form class="periodo-form" (submit)="submitForm()" [formGroup]="fullForm">
+
+	  <!-- Seleccionar periodo -->
+	    <div class="select-inputs">
+			<mat-form-field>
+				<mat-label>Seleccionar Periodo</mat-label>
+				<mat-select formControlName="selectedYear">
+				  @for (anio of anioList; track $index) {
+					  <mat-option [value]="anio">
+						  {{anio}}
+					  </mat-option>
+				  }
+				</mat-select>
+			</mat-form-field>
+
+        </div>
+		
+<!-- Inicio formulario añadir partidas-->
+      @if ( partidasValues.length <= 6 && filteredPartidas.length !== 0) {
+      <form [formGroup]="formPR">
+        <div class="select-inputs">
+			<mat-form-field>
+				<mat-label>
+					Seleccionar partida
+				</mat-label>
+				<mat-select  (selectionChange)="addPartida()" formControlName="selectedPC">
+					@for (partida of filteredPartidas; track partida.partidaId) {
+						<mat-option [value]="partida.partidaId">
+							{{partida.partidaName}}
+						</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+        </div>
+      </form>
+      }
+
+
+
+      <!-- Validacíon de límite o indisponibilidad -->
+      @if (filteredPartidas.length === 0) {
+      <p class="instruction">
+        Se han seleccionado todas las partidas disponibles
+      </p>
+      } @else if (partidasValues.length >= 6) {
+      <p class="instruction">
+        Se ha alcanzado el máximo de partidas por periodo
+      </p>
+      }
+	  
+<!-- Lista de partidas seleccionadas -->
+	  <div class="designed-pi">
+		<strong><p>Partidas seleccionadas</p></strong>
+		  @if (designedPI.length > 0) {
+			  <ol>
+				  @for (planRow of planRowNames; track $index) {
+					  <li>
+						  <p id="pc">
+							  {{planRow.nombrePlan}}
+							</p>
+						</li>
+					}
+				</ol>
+			}
+		</div>
+
+	 <button class="btn-crear">CREAR</button>
+	</form>
+  </div>
+</ng-template>

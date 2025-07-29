@@ -45,7 +45,7 @@ export class Chart implements OnInit {
         this.actualizarGrafico();
       },
       error: (err) => {
-        console.error('Error al obtener las solicitudes del usuario en el chart', err.message);
+        console.log('Error al obtener solicitudes creadas por el usuario', err.error);
       }
     });
   }

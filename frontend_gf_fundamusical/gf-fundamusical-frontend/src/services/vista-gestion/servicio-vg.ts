@@ -13,6 +13,10 @@ export class ServicioVG {
 
 	readonly API_URL = "http://localhost:3128/api/gestion"
 	readonly PERIODO_INFO_URL = "http://localhost:3128/api/periodo"
+	readonly NUCLEOS_INFO_URL = "http://localhost:3128/api/nucleos-info" // URL para que el adminastrador pueda tener la información de todos los nucleos
+	readonly NUCLEO_INFO_BY_USER_ID = "http://localhost:3128/api/nucleo-by-user-id" // Obtener información del nucleo segun el usuario en sesion
+
+
 	vistaGestionObject!:VistaGestion;
 	listaPeriodos!: Periodos [];
 	listaPlanes!: Planes[];
@@ -32,4 +36,11 @@ export class ServicioVG {
 	return this.http.get<Periodos>(`${this.PERIODO_INFO_URL}/${periodoId}`)
   }
 
+  getAllNucleos() {
+	return this.http.get<any>(this.NUCLEOS_INFO_URL)
+  }
+
+  getNucleoInfoByUserId(userId: number){
+	return this.http.get<any>(`${this.NUCLEO_INFO_BY_USER_ID}/${userId}`)
+  }
 }

@@ -1,0 +1,42 @@
+@if (userInfo?.userRol === "ADMIN") {
+<div class="general-container">
+  <div class="main-content-wrapper">
+    <aside class="sidebar">
+      <nav>
+        <!-- List items del super usuario -->
+        <ul>
+          <!-- Dashboard super usuario -->
+          <div>
+            <li>
+              <a routerLink="/admin-dashboard" class="sidebar-item"
+                ><i class="icon-resumen"></i>Vista General</a
+              >
+            </li>
+          </div>
+          <div>
+            <!-- Sección de usuarios -->
+            <li class="sidebar-dropdown">
+              <button class="sidebar-item dropdown-toggle">Usuarios</button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a routerLink="/users-list" class="dropdown-item"
+                    >Todos los usuarios</a
+                  >
+                </li>
+                <li>
+                  <a routerLink="/crear-usuario" class="dropdown-item"
+                    >Crear Usuario/Nucleo</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </div>
+        </ul>
+      </nav>
+      <div class="sidebar-bottom">
+        <p class="sidebar-item" (click)="logOut()">Cerrar sesión</p>
+      </div>
+    </aside>
+  </div>
+</div>
+}

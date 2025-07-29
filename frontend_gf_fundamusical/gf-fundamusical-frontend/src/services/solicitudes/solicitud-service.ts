@@ -24,7 +24,7 @@ export class SolicitudService {
 
 	// VARIABLES
 	userId: number;
-	solicitudes!: Solicitud[];
+	solicitudes!: Solicitud[] | null;
 	constructor(private http: HttpClient) {
 		this.userId = 1; // dato quemado
 		this.solicitudes = []

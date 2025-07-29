@@ -3,15 +3,15 @@ import { NucleoInfo } from '../../app/components/nucleo-info/nucleo-info';
 import { AsideBar } from '../../app/components/aside-bar/aside-bar';
 import { Header } from '../../app/components/header/header';
 import { ActivatedRoute } from '@angular/router';
-import { SolicitudList } from '../../app/components/solicitud-list/solicitud-list';
+import { IngresosList } from '../../app/components/ingresos-list/ingresos-list';
 
 @Component({
   selector: 'app-periodo-details',
-  imports: [Header, AsideBar, NucleoInfo, SolicitudList],
+  imports: [Header, AsideBar, NucleoInfo, IngresosList],
   templateUrl: './periodo-details.html',
   styleUrl: './periodo-details.css'
 })
-export class PeriodoDetails implements OnInit{
+export class IngresosDetails implements OnInit{
 
 
 	constructor(private route: ActivatedRoute) {

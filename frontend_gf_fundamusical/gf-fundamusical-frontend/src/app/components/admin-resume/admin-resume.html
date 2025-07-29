@@ -1,0 +1,22 @@
+<div class="cards-container">
+  @if (nucleosInfo?.length === 0) { 
+	<div><b>Aún no hay nada que mostrar... :/</b></div>
+  } @else { @for (nucleo of nucleosInfo; track
+  $index) {
+  <div class="nucleo-card">
+    <h2 class="card-title">Núcleo: {{nucleo.nucleoName}}</h2>
+    <h3 class="card-subtitle">
+      <b>Coordinador: </b>{{nucleo.nucleoCoordinador}}
+    </h3>
+    <p class="card-text"><b>Saldo disponible:</b></p>
+    @if (nucleo.nucleoSaldo === null) {
+    <p class="no-balance">No disponible</p>
+    } @else {
+    <p class="balance">{{nucleo.nucleoSaldo}}</p>
+    }
+    <div class="card-links">
+      <a (click)="goToNucleoDetails(nucleo)">Ver detalles</a>
+    </div>
+  </div>
+  } }
+</div>

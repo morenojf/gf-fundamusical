@@ -1,0 +1,16 @@
+@if (userRol === "ADMIN") {
+<div class="dashboard-container">
+  <app-header></app-header>
+
+  <div class="main-content-wrapper">
+    <app-admin-aside-bar></app-admin-aside-bar>
+
+    <main class="content-area">
+      <app-nucleo-info></app-nucleo-info>
+      <app-admin-resume></app-admin-resume>
+    </main>
+  </div>
+</div>
+} @else {
+<div>No autorizado</div>
+}

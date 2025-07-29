@@ -4,10 +4,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 15px 25px;
-  background-color: #f9196a; /* El color rosa/fucsia de la barra superior */
+  background-color: #5c77fc  ; /* El color rosa/fucsia de la barra superior */
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 100px; /* Altura fija para la barra superior */
+  height: 80px; /* Altura fija para la barra superior */
   box-sizing: border-box;
 }
 

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 // FUNCIONAMIENTO DE HTTP
 import { HttpClient } from '@angular/common/http';
+
+// INTERFACES
 import PlanCuenta from '../../app/Models/PCModel';
 import SubCategoria from '../../app/Models/subCategorias';
 import PiObject from '../../app/Models/PiObject';

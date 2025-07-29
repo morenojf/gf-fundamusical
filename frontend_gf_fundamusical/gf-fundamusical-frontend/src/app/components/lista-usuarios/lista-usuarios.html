@@ -1,0 +1,169 @@
+<div class="main-content">
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>User ID</th>
+        <th>Nombre</th>
+        <th>Nucleo</th>
+        <th>Correo electrónico</th>
+        <th>Contraseña</th>
+        <th>Rol</th>
+        <th>Estado</th>
+        <th class="acciones-th">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (usuario of usersList; track $index) {
+
+      <tr>
+        <!--User ID-->
+        <td>
+          <p>{{usuario.userId}}</p>
+        </td>
+        <!--Nombre de Usuario -->
+        <td>
+          @if (editingUserId === usuario.userId) {
+          <span class="input-measure" #measureSpan
+            >{{editData.userName || usuario.userName}}</span
+          >
+
+          <input
+            type="text"
+            [(ngModel)]="editData.userName"
+            [placeholder]="usuario.userName"
+            [style.width.px]="measureSpan.offsetWidth"
+            (input)="onInputResize(measureSpan, editData.userName || usuario.userName)"
+          />
+          } @else {
+          <p>{{usuario.userName}}</p>
+          }
+        </td>
+        <!-- Nucleo del Usuario -->
+        @if (usuario.userNucleo === null) {
+        <td>N/A</td>
+        } @else {
+        <td><p>{{usuario?.userNucleo}}</p></td>
+        }
+        <!-- Correo -->
+        <td>
+          @if (editingUserId === usuario.userId) {
+          <span class="input-measure" #measureSpan
+            >{{editData.email || usuario.email}}</span
+          >
+
+          <input
+            type="email"
+            [(ngModel)]="editData.email"
+            [placeholder]="usuario.email"
+            required="true"
+            [style.width.px]="measureSpan.offsetWidth"
+            (input)="onInputResize(measureSpan, editData.email || usuario.email)"
+          />
+          } @else {
+          <p>{{usuario.email}}</p>
+          }
+        </td>
+        <!--Contraseña -->
+        <td>
+          @if (editingUserId === usuario.userId) {
+          <span class="input-measure" #measureSpan
+            >{{editData.userPass || usuario.userPass}}</span
+          >
+          <input
+            type="text"
+            [(ngModel)]="editData.userPass"
+            [placeholder]="usuario.userPass"
+            [style.width.px]="measureSpan.offsetWidth"
+            (input)="onInputResize(measureSpan, editData.userPass || usuario.userPass)"
+          />
+          } @else {
+          <p>{{usuario.userPass}}</p>
+          }
+        </td>
+        <!-- Rol -->
+        <td>{{usuario.rol}}</td>
+        <!-- Estado -->
+        <td>{{usuario.isActive}}</td>
+        <!-- Acciones -->
+        @if (usuario.rol === 'USER') {
+        <td>
+          <!-- editar button -->
+          @if (editingUserId === usuario.userId) {
+          <!-- Botón check verde -->
+          <button
+            class="action-btn confirm"
+            title="Confirmar"
+            (click)="confirmEdit(usuario)"
+          >
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 13l4 4L19 7"
+                stroke="#28a745"
+                stroke-width="2"
+                fill="none"
+              />
+            </svg>
+          </button>
+          } @else {
+          <!-- Botón lápiz -->
+          <button
+            class="action-btn edit"
+            title="Editar"
+            (click)="startEdit(usuario)"
+          >
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25z"
+                stroke="#0073aa"
+                stroke-width="2"
+              />
+              <path
+                d="M14.06 4.94l3.75 3.75"
+                stroke="#0073aa"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          } @if (usuario.isActive == 'Activo') {
+          <!-- Btn Deshabilitar -->
+          <button class="action-btn disable" title="Deshabilitar" (click)="desactivarUsuario(usuario)">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" stroke="#d63638" stroke-width="2" />
+              <path
+                d="M2 20c0-4 8-6 10-6s10 2 10 6"
+                stroke="#d63638"
+                stroke-width="2"
+              />
+              <line
+                x1="4"
+                y1="20"
+                x2="20"
+                y2="4"
+                stroke="#d63638"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          } @else {
+          <!-- Btn Habilitar -->
+          <button class="action-btn enable" title="Habilitar" (click)="activateUser(usuario)">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="8" r="4" stroke="#d63638" stroke-width="2" />
+              <path
+                d="M2 20c0-4 8-6 10-6s10 2 10 6"
+                stroke="#d63638"
+                stroke-width="2"
+              />
+            </svg>
+          </button>
+          }
+        </td>
+        } @else {
+        <div></div>
+        }
+      </tr>
+
+      }
+    </tbody>
+  </table>
+</div>

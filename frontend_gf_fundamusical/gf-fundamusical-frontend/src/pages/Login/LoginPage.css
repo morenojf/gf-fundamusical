@@ -13,16 +13,14 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image:
-   /* linear-gradient(to right, #4a00e0, #8e2de2, #ee761a), usar solo si no esta disponible la imagen de fondo */
-   url("../../assets/backgroundlogin.png");
+  background-image: linear-gradient(to right, #a4b3ff );
   font-family: sans-serif; /* A common sans-serif font */
   padding: 20px; /* Add some padding for smaller screens */
   box-sizing: border-box; /* Include padding in element's total width and height */
 }
 
 .login-container {
-  background-color: rgba(255, 255, 255, 0.2); /* Semi-transparent white */
+  background-color: rgba(255, 255, 255, 0.877); /* Semi-transparent white */
   backdrop-filter: blur(10px); /* Apply blur effect */
   border-radius: 15px;
   padding: 40px;

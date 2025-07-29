@@ -1,51 +1,100 @@
-<div class="investment-plans-section">
-  @if (!servicioVG.listaPlanes.length) {
-  <div class="accordion-card active">
-    <div class="accordion-header">
-      <span class="accordion-title">{{currentYear}}</span>
-      <span class="accordion-icon">&#9660;</span>
+<ng-template #template let-partidas let-periodo="periodo">
+  <div class="main-content">
+    <div class="modal-header">
+      <button class="close-modal-x" closeModal>x</button>
     </div>
-
-    <div class="accordion-content">
-   <app-pimodal></app-pimodal>
-    </div>
-  </div>
-
-  } @else { @for (plan of servicioVG.listaPlanes; track $index) {
-  <div
-    class="accordion-card"
-    [ngClass]="{'accordion-card': true, active : plan.isActive}"
-  >
-    <div
-      class="accordion-header"
-      (click)="acordionFunc(servicioVG.listaPlanes[$index], servicioVG.listaPlanes[$index].planInversionId)"
-    >
-      <span class="accordion-title">{{plan.planAnio}}</span>
-      <span class="accordion-icon">&#9660;</span>
-    </div>
-    <div class="accordion-content">
-      @if (!servicioVG.listaPeriodos.length) {
-
-		<app-pimodal></app-pimodal>
-
-      } @else {
-
-      <ul>
-        @for (periodo of servicioVG.listaPeriodos; track $index) {
-        <a [routerLink]="['/solicitudes-list/', periodo.periodoId]">
-          <div class="list-item">
-            <li>
-              <strong><p class="list-month">{{periodo.nombreMes}}</p></strong>
-              <p class="list-status">-- {{periodo.periodoStatus}} --</p>
-            </li>
-          </div>
-        </a>
+    <h3 class="modal-title">Plan de Inversión {{periodo.periodoAnio}}</h3>
+    <div class="designed-pi">
+      <strong><p id="description">Partidas presupuestarias:</p></strong>
+      <ol>
+        @for (itemPartida of partidas; track $index) {
+        <li>
+          <p id="pc">{{itemPartida.nombre}}</p>
+        </li>
         }
-      </ul>
-      }
+      </ol>
     </div>
   </div>
-  } }
-</div>
+</ng-template>
 
-<!---  CREACION DE LÓGICA PARA ITERACIÓN DE PLANES DE INVERSIÓN -->
+<!-- ITERACION PERIODOS -->
+@for (periodo of periodosArray; track $index) {
+<div
+  class="accordion-card"
+  [ngClass]="{'accordion-card': true, active : periodo?.isActive}"
+>
+  <div class="accordion-header">
+    <span class="accordion-title" (click)="periodoDetails(periodo)"
+      >{{periodo?.periodoAnio}}</span
+    >
+    <span
+      class="accordion-icon"
+      (click)="acordionFunc(periodo, periodo?.periodoId)"
+      >&#9660;</span
+    >
+  </div>
+  <div class="accordion-content">
+    <ul>
+      @if (!availableMonths.length) {
+      <div class="list-item">
+        <li>
+          <strong
+            ><p class="list-month">
+              No existen registros para este periodo...
+            </p></strong
+          >
+        </li>
+      </div>
+      } @else { @switch (tipoRenderedLista) { @case ('ingresos') { @for (mes of
+      availableMonths; track $index) {
+      <a [routerLink]="['/ingresos-list/', `${mes}${periodo?.periodoAnio}`]">
+        <div class="list-item">
+          <li>
+            <strong
+              ><p
+                class="list-month"
+                (click)="savePeriodoMonthInfo(periodo, mes)"
+              >
+                {{mes}}
+              </p></strong
+            >
+          </li>
+        </div>
+      </a>
+      } } @case ('egresos') { @for (mes of availableMonths; track $index) {
+
+      <a [routerLink]="['/egresos-list/', `${mes}${periodo?.periodoAnio}`]">
+        <div class="list-item">
+          <li>
+            <strong
+              ><p
+                class="list-month"
+                (click)="savePeriodoMonthInfo(periodo, mes)"
+              >
+                {{mes}}
+              </p></strong
+            >
+          </li>
+        </div>
+      </a>
+      } } @case ('informes') { @for (mes of availableMonths; track $index) {
+      <a [routerLink]="['/informes-list/', `${mes}${periodo?.periodoAnio}`]">
+        <div class="list-item">
+          <li>
+            <strong
+              ><p
+                class="list-month"
+                (click)="savePeriodoMonthInfo(periodo, mes)"
+              >
+                {{mes}}
+              </p></strong
+            >
+          </li>
+        </div>
+      </a>
+
+      } } } }
+    </ul>
+  </div>
+</div>
+}

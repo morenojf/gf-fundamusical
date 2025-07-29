@@ -1,33 +1,68 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { UserService } from '../../../services/user-services/user-service';
 
 @Component({
   selector: 'loginForm',
   imports: [ReactiveFormsModule],
   templateUrl: './loginForm.html',
-  styleUrl: './loginForm.css'
+  styleUrl: './loginForm.css',
 })
 export class LoginForm {
+  loginForm: FormGroup;
+  userName: FormControl;
+  password: FormControl;
+  showPassword = false;
+  logedInUser!: any;
 
-	loginForm: FormGroup; 
-	userName: FormControl;
-	password: FormControl;
+  constructor(public userService: UserService, private router: Router) {
+    this.userName = new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]);
+    this.password = new FormControl('', [Validators.required]);
 
-	constructor(){
-		this.userName = new FormControl('', [Validators.required, Validators.email]);
-		this.password = new FormControl('', [Validators.required]);
+    this.loginForm = new FormGroup({
+      email: this.userName,
+      userPass: this.password,
+    });
+  }
 
-		this.loginForm = new FormGroup({
-			userName: this.userName,
-			password: this.password
-		})
-	}
+  // Ocultar contraseña
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
-	loginEvent(): void { // This is working and this way we will get user's creds and compare them with db info
-		console.log(this.loginForm.value)
-		this.loginForm.reset();
-	}
+  // Boton de ingresar -- este metodo envia los datos del formulario al backend
+  // si el usuario existe y la contraseña es correcta lo redirige al dashboard
+  loginEvent(): void {
+    this.logedInUser = this.loginForm.value;
+    this.userService.authUser(this.logedInUser).subscribe({
+      next: (data) => {
 
+        if (data.validUser[0].rol === 'USER') {
+          this.router.navigate(['/dashboard/', data.validUser[0].userId]);
+        } else {
+			this.router.navigate(['/admin-dashboard'])
+        }
+      },
+      error: (error) => {
+        console.log(error);
+        if (error.status === 401) {
+          alert('Usuario o contraseña incorrecto');
+        } else {
+          alert('Ocurrió un error inesperado');
+        }
+      },
+    });
 
+    // resetea los datos del formulario una vez le das al boton login
+    this.loginForm.reset();
+  }
 }
- 
