@@ -1,89 +1,158 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import {
-	FormControl,
-	FormGroup,
-	ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import { UserService } from '../../../services/user-services/user-service';
 
+// Validator
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge } from 'rxjs';
+
+// angular material
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { error } from 'highcharts';
+
+// servicio 
+import { ServicioVG } from '../../../services/vista-gestion/servicio-vg';
+
 
 @Component({
-	selector: 'app-crear-usuario',
-	imports: [ReactiveFormsModule],
-	templateUrl: './crear-usuario.html',
-	styleUrl: './crear-usuario.css'
+  selector: 'app-crear-usuario',
+  imports: [
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatIconModule,
+  ],
+  templateUrl: './crear-usuario.html',
+  styleUrl: './crear-usuario.css',
 })
 export class CrearUsuario {
+  // mensaje de error inputs
+  errorMessage = signal('');
 
-	selectedRol!: string
-	$event!: null
-	creaAdmin!: boolean
+  // Nucleos
+  nucleosArray!: any;
 
-	userForm: FormGroup;
-	userName: FormControl;
-	userEmail: FormControl;
-	userPassword: FormControl;
-	nucleoName: FormControl;
-	coordinadorName: FormControl;
-	directorName: FormControl;
-	userRol: FormControl;
+  selectedRol!: string;
+  $event!: null;
+  creaAdmin!: boolean;
 
-	userInfo!: any;
+  userForm: FormGroup;
+  nombreCoordinador: FormControl;
+  cedulaCoordinador: FormControl;
+  telefonoCoordinador: FormControl;
+  userEmail: FormControl;
+  userPassword: FormControl;
+  nucleoId: FormControl;
+  userRol: FormControl;
 
-	constructor(public userService: UserService) {
-		this.selectedRol = 'USER' // Asignar valor por defecto, siempre usuario
+  userInfo!: any;
 
-		this.userName = new FormControl('');
-		this.userEmail = new FormControl('');
-		this.userPassword = new FormControl('');
-		this.nucleoName = new FormControl('');
-		this.coordinadorName = new FormControl('');
-		this.directorName = new FormControl('');
-		this.userRol = new FormControl('');
+  constructor(
+    public userService: UserService,
+    public nucleoService: ServicioVG
+  ) {
+    this.selectedRol = 'USER'; // Asignar valor por defecto, siempre usuario
+    this.cedulaCoordinador = new FormControl('');
+    this.telefonoCoordinador = new FormControl('');
+    this.nombreCoordinador = new FormControl('');
+    this.userEmail = new FormControl('', [
+      Validators.required,
+      Validators.email,
+    ]);
+    this.userPassword = new FormControl('');
+    this.nombreCoordinador = new FormControl('');
+    this.userRol = new FormControl('');
+    this.nucleoId = new FormControl('');
 
-		this.userForm = new FormGroup({
-			userName: this.userName,
-			userEmail: this.userEmail,
-			userPassword: this.userPassword,
-			nucleoName: this.nucleoName,
-			coordinadorName: this.coordinadorName,
-			directorName: this.directorName,
-			userRol: this.userRol
-		})
-	}
+    this.userForm = new FormGroup({
+      nombreCoordinador: this.nombreCoordinador,
+      cedulaCoordinador: this.cedulaCoordinador,
+      telefonoCoordinador: this.telefonoCoordinador,
+      userEmail: this.userEmail,
+      userPassword: this.userPassword,
+      nucleoId: this.nucleoId,
+      userRol: this.userRol,
+    });
 
-	onSelectChange($event: any) {
-		this.selectedRol = $event.target.value
+    // Validator email sutff
+    merge(this.userEmail.statusChanges, this.userEmail.valueChanges)
+      .pipe(takeUntilDestroyed())
+      .subscribe(() => this.updateErrorMessage());
+    this.getAllNucleos();
+  }
 
-		if (this.selectedRol === 'USER') {
-			this.creaAdmin = false
-		} else {
-			this.creaAdmin = true
+  // Obtener todos los núcleos creados
+  getAllNucleos() {
+    this.nucleoService.getAllNucleos().subscribe({
+      next: (data) => {
+        this.getAvailableNucleos(data)
+      },
+      error: (error) => {
+        console.log(error);
+      },
+    });
+  }
+
+  getAvailableNucleos(nucleos: any){
+	this.nucleoService.getUsuarioNucleo().subscribe({
+		next: (data: any) => {
+			this.nucleosArray = nucleos.filter((nucleo: any) => !data.some((usuarioNucleo: any) => usuarioNucleo.nucleoId === nucleo.nucleoId))
 		}
-
-	}
-
-	submitForm(){
-		this.userInfo = this.userForm.value;
-
-		if(this.creaAdmin){
-			this.userInfo.nucleoName = null
-			this.userInfo.coordinadorName = null
-			this.userInfo.directorName = null
-		} 
-
-		this.userService.createUser(this.userInfo).subscribe({
-			next: (data) => {
-				console.log(data)
-				alert('Usuario creado satisfactoriamente')
-				window.location.reload()
-			},
-			error: (error) => {
-				console.log(error)
-			}
 		})
+  }
 
-	}
+  // error message validator
+  updateErrorMessage() {
+    if (this.userEmail.hasError('required')) {
+      this.errorMessage.set('Obligatorio');
+    } else if (this.userEmail.hasError('email')) {
+      this.errorMessage.set('Correo inválido');
+    } else {
+      this.errorMessage.set('');
+    }
+  }
 
-	// @HostListener('document:')
+  // Desactivar cuando es admin
+  disableSelect = new FormControl(false);
+
+  submitForm() {
+    this.userInfo = this.userForm.value;
+
+    if (this.userForm.value.userRol === 'ADMIN') {
+      this.userInfo.nucleoId = null;
+    }
+
+    if (this.userForm.invalid) {
+      alert('Asegurate de llenar todos los campos');
+    } else {
+      this.userService.createUser(this.userForm.value).subscribe({
+        next: (data) => {
+          alert('Usuario creado con extio');
+          window.location.reload();
+        },
+        error: (error) => {
+			alert('Ocurrio un error inesperado en la creación de usuario')
+
+		},
+      });
+    }
+  }
+
+  // Esconder contraseña
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
 }

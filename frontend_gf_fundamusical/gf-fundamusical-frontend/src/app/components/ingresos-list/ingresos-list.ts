@@ -42,6 +42,9 @@ export class IngresosList implements OnInit{
   nombreMeses!: any;
   allPartidas!: any;
 
+  // información del usuario logeado
+  userInfo!: any;
+
   // Modal de confirmacion
   dialogService = inject(ModalService);
   template = viewChild(TemplateRef);
@@ -49,6 +52,9 @@ export class IngresosList implements OnInit{
 
   // Alamacenar ID de operacion que se desea eliminar
   operacionToDelete!: any;
+
+  // Almacenar informacion usuario seleccionado si eres admin
+  selectedUser!: any;
 
   // tipoPagina para cambiar comportamiento del componente
   tipoPagina!: string;
@@ -92,6 +98,8 @@ export class IngresosList implements OnInit{
   // Tres posibles valores, egresos-list, ingresos-list, informes-list
   ngOnInit(): void {
 	this.tipoPagina = this.route.snapshot.url[0].path
+
+
   }
 
   // Obtener el mes seleccionado del periodo seleccionado que estaba guardado en el ls
@@ -99,8 +107,8 @@ export class IngresosList implements OnInit{
     const periodoJSON = localStorage.getItem('selected-periodo');
     const mes = localStorage.getItem('selected-mes');
     if (periodoJSON && mes) {
-      this.selectedPeriodo = JSON.parse(periodoJSON);
-      this.selectedMes = mes;
+		this.selectedPeriodo = JSON.parse(periodoJSON);
+		this.selectedMes = mes;
     } else {
       this.selectedPeriodo = null;
       console.log('no hay datos almacenados con esas clave');
@@ -111,7 +119,12 @@ export class IngresosList implements OnInit{
   getLogedInUserInfo() {
     this.userService.validateSession().subscribe({
       next: (data) => {
-        this.getNucleoInfoByUserId(data.data.userId);
+      this.userInfo = data.data
+	  if (this.userInfo.userRol) {
+		this.obtenerDato();
+	  } else{
+		  this.getAllOperaciones(this.userInfo);
+	  }
       },
       error: (error) => {
         console.log(error);
@@ -119,24 +132,25 @@ export class IngresosList implements OnInit{
     });
   }
 
-  // Obtener la información de nucleo relacionada al usuario logeado
-  getNucleoInfoByUserId(userId: any) {
-    this.nucleoService.getNucleoInfoByUserId(userId).subscribe({
-      next: (data) => {
-        this.getAllOperaciones(data.nucleoId);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+  	// Si soy admin obtengo mis datos del LS para ver la informacion del usuario
+	  obtenerDato(): void {
+    const datoJSON = localStorage.getItem('nucleoInfo');
+    if (datoJSON) {
+      this.selectedUser = JSON.parse(datoJSON);
+	  this.getAllOperaciones(this.selectedUser)
+    } else {
+      this.selectedUser = null;
+      console.log('no hay datos almacenados con esa clave');
+    }
   }
+
 
   // obtener las operaciones realizadas por el nucleo al que pertenece el usuario
-  getAllOperaciones(nucleoId: any) {
+  getAllOperaciones(userInfo: any) {
     this.operacionesService.getAllOperaciones().subscribe({
       next: (data) => {
         this.filterOperaciones(
-          data.filter((operacion: any) => operacion.nucleoId === nucleoId)
+          data.filter((operacion: any) => operacion.nucleoId === userInfo.nucleoId)
         );
       },
       error: (error) => {
@@ -179,10 +193,10 @@ export class IngresosList implements OnInit{
     if (operacion === null) {
       return;
     } else {
-      const objetoPartidaName = this.allPartidas.find(
+      const objetoPartidaName = this.allPartidas?.find(
         (partida: any) => partida.partidaId === operacion
       );
-      return objetoPartidaName.partidaName;
+      return objetoPartidaName?.partidaName;
     }
   }
   

@@ -1,7 +1,6 @@
 <button class="registrar-operacion-button" (click)="genTrigger()">
-  <span class="plus-icon">+</span> REGISTRAR OPERACION
+  <span class="plus-icon">+</span> REGISTRAR OPERACIÓN
 </button>
-
 
 <ng-template #template>
   <div class="main-content">
@@ -31,6 +30,7 @@
             [min]="minDate"
             [max]="maxDate"
             formControlName="fecha"
+			readonly
           />
           <mat-datepicker #datepicker />
           <mat-datepicker-toggle [for]="datepicker" matIconSuffix>
@@ -131,13 +131,12 @@
         @if (operacionTipo === "INGRESO") {
         <p>
           Para <b>"registrar"</b> la operación debe adjuntar el comprobante de
-          transacción y la carta de entrega de fondos proporcionada por el(los)
-          donador(es) en formato PDF o JPG.
+          transacción en formato PDF o JPG.
         </p>
         } @else {
         <p>
           Para <b>"registrar"</b> la operación debe adjuntar el comprobante de
-          transacción en formato PDF o JPG.
+          transacción y la carta de "Solicitud a Sociedad de Amigos del Sistema" en formato PDF o JPG.
         </p>
         }
       </div>
@@ -170,8 +169,8 @@
           }
         </div>
 
-        <!-- Adjuntar Soporte entrega de fondos -->
-        @if (operacionTipo === "INGRESO") {
+        <!-- Adjuntar carta solicitud a Sociedad Amigos del Sistema de fondos -->
+        @if (operacionTipo === "EGRESO") {
         <div class="letter-attachment">
           <button matButton type="button" (click)="cartaInput.click()">
             <input
@@ -181,7 +180,7 @@
               (change)="onCartaSelected($event)"
               name="soporteCartaRuta"
             />
-            Adjuntar Soporte de entrega de fondos <b style="color: red">*</b
+            Adjuntar Carta de Solicitud a Sociedad de Amigos del Sistema <b style="color: red">*</b
             ><span class="soporte-icon">&#8593;</span>
           </button>
           <!-- Contenido de adjunto (si existe) -->
@@ -200,8 +199,6 @@
 
       <button class="btn-crear">REGISTRAR</button>
     </form>
-	
-	
-</div>
+  </div>
 </ng-template>
 <!-- <mat-form-field></mat-form-field> -->

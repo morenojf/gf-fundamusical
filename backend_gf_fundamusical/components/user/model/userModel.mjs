@@ -17,18 +17,6 @@ export class userModel {
   static async getAllUsers() {
     try {
       const [usersList] = await connection.query('SELECT * FROM user')
-      for (let index = 0; index < usersList.length; index++) {
-        let user = usersList[index]
-        const [userNucleo] = await connection.query(
-          'SELECT nucleoName FROM nucleo WHERE userId = ?',
-          [user.userId]
-        )
-
-        usersList[index] = {
-          ...user,
-          userNucleo: userNucleo[0]?.nucleoName || null
-        }
-      }
       return usersList
     } catch (error) {
       return error
@@ -37,16 +25,20 @@ export class userModel {
 
   static async updateUser(userInfo) {
     const user = userInfo
-    try {
-      const updatedUser = await connection.query(
-        'UPDATE user SET userName = ?, email = ?, userPass = ? WHERE userId = ?',
-        [user.userName, user.email, user.userPass, user.userId]
-      )
-      return [updatedUser]
-    } catch (error) {
-      let errorMssg = error.sqlMessage
-      return errorMssg
-    }
+
+    const updatedUser = await connection.query(
+      'UPDATE user SET nucleoId = ?, nombreCoordinador = ?, cedulaCoordinador = ?, telefonoCoordinador = ?, email = ?, userPass = ? WHERE userId = ?',
+      [
+        parseInt(user.nucleoId),
+        user.nombreCoordinador,
+        user.cedulaCoordinador,
+        user.telefonoCoordinador,
+        user.email,
+        user.userPass,
+        user.userId
+      ]
+    )
+    return [updatedUser]
   }
 
   static async deactivateUser(userInfo) {
@@ -81,39 +73,41 @@ export class userModel {
     // 2 Crear un nucleo en la tabla nucleo con el valor del id del usuario recien creado
     // 3 Crear la relacion nucleo_usuario con los valores ID del nucleo y el usuario recien creado
 
-    try {
-      const user = userInfo
+    const user = userInfo
 
-      if (user.userRol === 'ADMIN') {
-        const [createdUser] = await connection.query(
-          'INSERT INTO `user` (userName, email, userPass, rol) VALUES (?, ?, ?, ?)',
-          [user.userName, user.userEmail, user.userPassword, user.userRol]
-        )
-        return
-      } else {
-        const [createdUser] = await connection.query(
-          'INSERT INTO `user` (userName, email, userPass, rol) VALUES (?, ?, ?, ?)',
-          [user.userName, user.userEmail, user.userPassword, user.userRol]
-        )
+    if (user.userRol === 'ADMIN') {
+      const [createdUser] = await connection.query(
+        'INSERT INTO `user` ( nombreCoordinador, cedulaCoordinador, telefonoCoordinador, email, userPass, rol) VALUES ( ?, ?, ?, ?, ?, ?)',
+        [
+          parseInt(user.nucleoId),
+          user.nombreCoordinador,
+          user.cedulaCoordinador,
+          user.telefonoCoordinador,
+          user.email,
+          user.userPass,
+          user.userRol
+        ]
+      )
+      return createdUser
+    } else {
+      const [createdUser] = await connection.query(
+        'INSERT INTO `user` (nucleoId, nombreCoordinador, cedulaCoordinador, telefonoCoordinador, email, userPass, rol) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [
+          user.nucleoId,
+          user.nombreCoordinador,
+          user.cedulaCoordinador,
+          user.telefonoCoordinador,
+          user.userEmail,
+          user.userPassword,
+          user.userRol
+        ]
+      )
 
-        const [createdNucleo] = await connection.query(
-          'INSERT INTO nucleo (userId, nucleoName, nucleoCoordinador, nucleoDirector) VALUES (?, ?, ?, ?)',
-          [
-            createdUser.insertId,
-            user.nucleoName,
-            user.coordinadorName,
-            user.directorName
-          ]
-        )
-
-        const relacionUsuarioNucleo = await connection.query(
-          'INSERT INTO usuario_Nucleo (userId, nucleoId) VALUES (?, ?)',
-          [createdUser.insertId, createdNucleo.insertId]
-        )
-        return
-      }
-    } catch (error) {
-      console.log(error)
+      const relacionUsuarioNucleo = await connection.query(
+        'INSERT INTO usuario_Nucleo (userId, nucleoId) VALUES (?, ?)',
+        [createdUser.insertId, user.nucleoId]
+      )
+      return relacionUsuarioNucleo
     }
   }
 }

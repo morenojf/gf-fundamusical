@@ -13,7 +13,7 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: linear-gradient(to right, #a4b3ff );
+  background-image: linear-gradient(to right, #00426d );
   font-family: sans-serif; /* A common sans-serif font */
   padding: 20px; /* Add some padding for smaller screens */
   box-sizing: border-box; /* Include padding in element's total width and height */

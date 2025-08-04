@@ -9,6 +9,8 @@ import { UsersList } from '../pages/users-list/users-list';
 import { CrearUsuarioNucleo } from '../pages/crear-usuario-nucleo/crear-usuario-nucleo';
 import { AdminDashboard } from '../pages/admin-dashboard/admin-dashboard';
 import { ModuloInformes } from '../pages/modulo-informes/modulo-informes';
+import { CrearNucleo } from '../pages/crear-nucleo/crear-nucleo';
+import { GestionCg } from '../pages/gestion-cg/gestion-cg';
    
 export const routes: Routes = [
 
@@ -22,5 +24,8 @@ export const routes: Routes = [
 	{path: 'egresos-list/:mes', component: IngresosDetails, canActivate: [AuthGuard]},
 	{path: 'informes-list/:mes', component: IngresosDetails, canActivate: [AuthGuard]},
 	{path: 'users-list', component: UsersList, canActivate: [AuthGuard]},
-	{path: 'crear-usuario', component: CrearUsuarioNucleo, canActivate: [AuthGuard]}
+	{path: 'crear-usuario', component: CrearUsuarioNucleo, canActivate: [AuthGuard]},
+	{path: 'crear-nucleo', component: CrearNucleo, canActivate: [AuthGuard]},
+	{path: 'crear-cg', component: GestionCg, canActivate: [AuthGuard]},
+
 ];

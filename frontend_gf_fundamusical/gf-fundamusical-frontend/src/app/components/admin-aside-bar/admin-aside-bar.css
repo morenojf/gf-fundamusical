@@ -1,32 +1,4 @@
-/* Barra Lateral de Navegación */
-
-/* Globales para el layout */
-.general-container {
-
-  display: flex; 
-  min-height: 100%;
-/*para que la barra ocupe todo el largo de la pagina*/
-}
-
-
-.main-content-wrapper {
-  display: flex;
-  flex: 1; /* Ocupa el espacio restante verticalmente */
-}
-
-.sidebar {
-  width: 170px; /* Ancho de la barra lateral */
-  background-color: #333; /* Color oscuro de la barra lateral */
-  color: white;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* Para empujar los iconos inferiores hacia abajo */
-  align-items: center;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar ul {
+ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -36,22 +8,22 @@
 .sidebar-item {
   display: flex;
   flex-direction: column; /* Para alinear icono y texto verticalmente si se expande */
-  align-items: center;
-  justify-content: center; /* Centrar contenido */
+  align-items: start;
+  justify-content: start; /* Centrar contenido */
   padding: 10px 0;
-  color: rgb(255, 255, 255); /* Color de texto/icono predeterminado */
+  color: rgb(0, 0, 0); /* Color de texto/icono predeterminado */
   text-decoration: none;
-  font-size: 1.0em;
+  font-size: 1em;
   transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 10px;
-  width: 170px;
-
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  padding-left: 24px;
 }
 
-
-.sidebar-item:hover, .sidebar-item.active {
-  background-color: #f9196a; /* Color de fondo al pasar el ratón o si está activo */
-  color: white; /* Color de texto/icono al pasar el ratón o si está activo */
+.sidebar-item:hover,
+.sidebar-item.active {
+  background-color: #a5a5a5; /* Color de fondo al pasar el ratón o si está activo */
 }
 
 /* Iconos de la barra lateral inferior */
@@ -65,7 +37,6 @@
   align-items: center;
 }
 
-
 /* NAV BAR DE SUPER USUARIO */
 
 .sidebar-dropdown {
@@ -76,32 +47,41 @@
   background: none;
   border: none;
   color: inherit;
-  text-align: left;
   cursor: pointer;
 }
 
 .dropdown-menu {
-  display: none;
-  position: absolute;
-  left: 0;
-  top: 100%;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  min-width: 180px;
-  z-index: 10;
-}
-
-.sidebar-dropdown:hover .dropdown-menu {
-  display: block;
+  padding-top: 10px;
+  padding-left: 22px;
 }
 
 .dropdown-item {
+  text-align: start;
   display: block;
-  padding: 10px 16px;
   color: #222;
   text-decoration: none;
+  width: 300px;
+  padding-top: 10px;
 }
 
 .dropdown-item:hover {
   background: #eee;
+}
+
+.nav-footer {
+ position: static;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 640px;
+}
+
+.logout{
+	text-align: center;
+	border-top: 1px solid black;
+}
+
+.logout:hover,
+.logout.active {
+  background-color: #a5a5a5; /* Color de fondo al pasar el ratón o si está activo */
 }

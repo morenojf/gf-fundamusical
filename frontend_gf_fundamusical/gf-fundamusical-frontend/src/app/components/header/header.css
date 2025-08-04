@@ -1,23 +1,6 @@
-/* Barra Superior */
-.top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  background-color: #5c77fc  ; /* El color rosa/fucsia de la barra superior */
-  color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  height: 80px; /* Altura fija para la barra superior */
-  box-sizing: border-box;
-}
-
-.top-bar-left {
-  display: flex;
-  align-items: center;
-}
 
 .top-bar-logo {
   height: 100px; /* Ajusta el tamaño del logo si es necesario */
-  margin-right: 15px;
+  margin: 10px;
   /* filter: brightness(0) invert(0); Si el logo es negro y quieres que sea blanco */
 }

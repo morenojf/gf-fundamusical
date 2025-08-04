@@ -6,7 +6,7 @@
   <div class="nucleo-card">
     <h2 class="card-title">Núcleo: {{nucleo.nucleoName}}</h2>
     <h3 class="card-subtitle">
-      <b>Coordinador: </b>{{nucleo.nucleoCoordinador}}
+      <b>Coordinador: {{getCoordinadorName(nucleo.nucleoId)}}</b>
     </h3>
     <p class="card-text"><b>Saldo disponible:</b></p>
     @if (nucleo.nucleoSaldo === null) {
@@ -15,7 +15,11 @@
     <p class="balance">{{nucleo.nucleoSaldo}}</p>
     }
     <div class="card-links">
-      <a (click)="goToNucleoDetails(nucleo)">Ver detalles</a>
+		@if (getCoordinadorName(nucleo.nucleoId) === 'Sin asignar') {
+			<a style="color: #929292;">No disponible</a>
+		} @else {
+			<a (click)="goToNucleoDetails(getCoordinador(nucleo.nucleoId), nucleo)">Ver detalles</a>
+		}
     </div>
   </div>
   } }

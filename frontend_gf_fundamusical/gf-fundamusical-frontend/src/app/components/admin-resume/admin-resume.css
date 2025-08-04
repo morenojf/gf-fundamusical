@@ -5,7 +5,6 @@
   margin-bottom: 30px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 
-  overflow-y: auto;
   background: white;
   border-radius: 10px;
   box-sizing: border-box;
@@ -21,10 +20,8 @@
   flex-wrap: wrap;
   gap: 30px;
   height: 65vh; /* Ajusta la altura máxima según tu diseño */
-  overflow-y: auto; /* Siempre muestra el scrollbar vertical si hay overflow */
   justify-content: center;
-    align-items: flex-start; /* Centra horizontalmente el contenido */
-
+  align-items: flex-start; /* Centra horizontalmente el contenido */
 }
 
 .nucleo-card {
@@ -63,13 +60,13 @@
 }
 
 .no-balance {
-	margin: 0px;
-	color: #6c757d;
+  margin: 0px;
+  color: #6c757d;
 }
 
 .balance {
-	margin: 0px;
-	color: green;
+  margin: 0px;
+  color: green;
 }
 
 .card-links {

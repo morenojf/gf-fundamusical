@@ -13,11 +13,14 @@ export class NucleoInfo {
   userRol!: string;
   userInfo!: any;
   selectedNucleoInfo!: any;
-  logedInNucleo!: any;
+
+  // obtener todos los nucleos para buscar el nombre del nucleo asignado al usuario logeado
+  allNucleos!: any;
 
   constructor(public servicioVG: ServicioVG, public userService: UserService) {
     this.getUserInfo(); //Obtener los datos del usuario logeado
-	this.obtenerDatoNucleoLS();
+    this.obtenerDatoNucleoLS();
+    this.getAllNucleos();
   }
 
   getUserInfo(): any {
@@ -25,11 +28,10 @@ export class NucleoInfo {
       next: (data) => {
         // data recibe un json con
         // { valid: true,
-        //   data: {userId: 1, userName: "nombreUsuario", userEmail: "email@usuario.com", userPass: "contraseñaUsuario", userRol: "ADMIN"}}
+        //   data: {userId: 1, nombreCoordinador: "nombreUsuario", cedulaCoordinador: "cedulaCoordinador", telefonoCoordinador: "telefono", userEmail: "email@usuario.com", userPass: "contraseñaUsuario", userRol: "ADMIN"}}
         this.userRol = data.data.userRol;
         this.userInfo = data.data;
         this.userId = data.data.userId;
-        this.getNucleoInfoByUserId(this.userId);
       },
       error: (err) => {
         console.log('error', err);
@@ -37,17 +39,25 @@ export class NucleoInfo {
     });
   }
 
-  getNucleoInfoByUserId(idUser: number): void {
-    this.servicioVG.getNucleoInfoByUserId(idUser).subscribe({
+  getAllNucleos() {
+    this.servicioVG.getAllNucleos().subscribe({
       next: (data) => {
-        this.logedInNucleo = data
+        this.allNucleos = data;
       },
-      error(err) {
-        console.log(err);
+      error: (error) => {
+        console.log(error);
       },
     });
   }
 
+  getNucleoName(nucleoId: any): any {
+    const selectedNucleo = this.allNucleos.find(
+      (nucleo: any) => nucleo.nucleoId === nucleoId
+    );
+    return selectedNucleo ? selectedNucleo.nucleoName : 'No Encontrado';
+  }
+
+  // Cuando el administrador selecciona un nucleo entonces obtiene los datos de acá y carga información del nucleo para mostrar en el nucleo Info y tener en su ls
   obtenerDatoNucleoLS(): void {
     const datoJSON = localStorage.getItem('nucleoInfo');
     if (datoJSON) {

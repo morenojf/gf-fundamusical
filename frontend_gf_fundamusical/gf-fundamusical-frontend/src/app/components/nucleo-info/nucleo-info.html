@@ -1,17 +1,27 @@
 <div class="content-header">
+  <!-- Header admin -->
+  @if (userRol === "ADMIN") {
+  <h1 class="nucleo-title">Administrador</h1>
+  <p class="coordinator">{{ userInfo.nombreCoordinador }}</p>
 
-@if (userRol === "ADMIN") {
-	<h1 class="nucleo-title">Administrador</h1>
-	<p class="coordinator">{{userInfo.userName}}</p>
-	@if (selectedNucleoInfo) {
-	<p>({{selectedNucleoInfo.nucleoName}})</p>
-	}
+  @if (userInfo.cedulaCoordinador === null) {
+  <p class="coordinator">Cédula: N/A</p>
+  } @else {
+  <p class="coordinator">Cédula: {{ userInfo.cedulaCoordinador }}</p>
+  } @if (selectedNucleoInfo) {
+  <p>({{ selectedNucleoInfo.nucleoName }})</p>
+  } }
 
-} @else {
-	@if (logedInNucleo) {
-		<h1 class="nucleo-title">Núcleo {{logedInNucleo.nucleoName}}</h1>
-		<p class="coordinator"><b>Coordinador(a) de Administración y presupuesto: </b><br>{{logedInNucleo.nucleoCoordinador}}<span></span></p>
-	} @else {No hay información del núcleo disponible.}
-}
+  <!-- Header usuario -->
+  @else { @if (userInfo) {
+  <h1 class="nucleo-title">Núcleo {{ getNucleoName(userInfo.nucleoId) }}</h1>
+  <p class="coordinator">
+    <b>{{userInfo.nombreCoordinador}}</b>
+    <br />
+  </p>
 
+  <p class="coordinator">Cédula: {{userInfo.cedulaCoordinador}}</p>
+  } @else {
+  <p>No hay información del núcleo disponible.</p>
+  } }
 </div>

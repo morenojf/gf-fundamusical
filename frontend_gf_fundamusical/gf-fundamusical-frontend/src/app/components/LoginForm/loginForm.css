@@ -46,7 +46,7 @@ h2 {
 }
 
 .form-group input:focus {
-  border-color: #5c77fc ;
+  border-color: #00426d ;
 }
 
 .password-group {
@@ -86,7 +86,7 @@ h2 {
 }
 
 .login-button:hover {
-  background-color: #5c77fc ; /* Slightly darker purple on hover */
+  background-color: #00426d ; /* Slightly darker purple on hover */
 }
 
 /* Responsive adjustments */

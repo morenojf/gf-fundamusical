@@ -60,7 +60,22 @@ routing.patch('/update-balance', operacionController.adjustBalance)
 routing.get('/nucleo-by-user-id/:id', nucleoController.getNucleoByUserId)
 
 
+// ------------------------------------------------------------------
+// CREAR PARTIDA
+routing.post('/create-partida', partidasController.createPartida)
 
+// -------------------------------------------------------------------
+// ACTUALIZAR NOMBRE DE PARTIDA 
+routing.patch('/update-partida', partidasController.updatePartida)
+
+// ------------------------------------------------------------------
+// ACTIVAR PARTIDA
+routing.patch('/activate-partida', partidasController.activatePartida)
+
+
+// ------------------------------------------------------------------
+// DESACTIVAR PARTIDA
+routing.patch('/deactivate-partida', partidasController.deactivatePartida)
 
 
 // Llenar tabla planInversionPlanCuenta y planInversionSubcategoria
@@ -127,7 +142,6 @@ routing.post('/login', userController.validateUser)
 
 // ---------------------------------------------------------------------------
 // END POINT PARA VALIDAR SESION 
-
 routing.get('/validate-session', userController.validateSession) 
 // en base a la informacion recibida por el front end, se valida que el pass y el username sea el mismo que la base de datos. 
 // se setea un token en el navegador
@@ -152,6 +166,17 @@ routing.patch('/activate-user', userController.activateUser)
 // ----------------------------------------------------------------------------
 // CREAR UN USUARIO/NUCLEO
 routing.post('/create-user', userController.createUser)
+
+// CREAR SOLO UN NUCLEO
+routing.post('/create-nucleo', nucleoController.createNucleo)
+
+//----------------------------------------------------------------------------
+// ACTUALIZAR NOMBRE DE NUCLEO
+routing.patch('/update-nucleo', nucleoController.updateNucleo)
+
+//-----------------------------------------------------------------------------
+// OBTENER LOS DATOS DE usuario_Nucleo tabla PARA PODER COMPARAR LOS NUCLEOS QUE YA TIENEN USUARIOS ASIGNADOS Y NO MOSTRARLOS 
+routing.get('/get-nucleo-usuario', nucleoController.getNucleoUsuario)
 
 // ----------------------------------------------------------------------------
 // LogOut

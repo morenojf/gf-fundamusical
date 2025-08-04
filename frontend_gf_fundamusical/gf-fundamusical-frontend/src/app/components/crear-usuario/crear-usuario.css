@@ -4,67 +4,40 @@ h1{
  font-size: 25px;
 }
 
+/* Esto pone el formulario en el centro */
+.content-wrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
 .main-content {
   background: #fff;
   padding: 10px 32px 24px 32px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  max-width: 100vh;
-  margin: 0px  auto 100px;
-  overflow-y: auto;
-  overflow-x: auto;
+
 }
 
 .wp-form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 18px;
 }
 
 .form-row {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  margin-top: 20px;
+
 }
 
-label {
-  font-weight: 500;
-  margin-bottom: 2px;
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input, select {
-  padding: 7px 10px;
-  border: 1px solid #ccd0d4;
-  border-radius: 4px;
-  font-size: 1em;
-  background: #f6f7f7;
-  transition: border-color 0.2s;
-}
 
-input:focus, select:focus {
-  border-color: #2271b1;
-  outline: none;
-  background: #fff;
-}
 
-.wp-btn {
-  background: #2271b1;
-  color: #fff;
-  border: none;
-  padding: 10px 0;
-  border-radius: 4px;
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  margin-top: 10px;
-  transition: background 0.2s;
-}
 
-.wp-btn:hover {
-  background: #135e96;
-}
-
-.required {
-  color: #d63638;
-  font-weight: bold;
-}

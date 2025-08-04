@@ -1,23 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from '../../app/components/header/header';
-import { AsideBar } from '../../app/components/aside-bar/aside-bar';
 import { NucleoInfo } from '../../app/components/nucleo-info/nucleo-info';
-import { DropdownPIPeriodo } from '../../app/components/dropdown-pi-periodo/dropdown-pi-periodo';
+
+// Servicio
 import { UserService } from '../../services/user-services/user-service';
-import { RegistrarOperacion } from "../../app/components/registrar-operacion/registrar-operacion";
-import { AperturarPeriodo } from "../../app/components/aperturar-periodo/aperturar-periodo";
+
+// User aside bar (tiene la vista del admin)
+import { AsideBar } from '../../app/components/aside-bar/aside-bar';
+
+// Botones de acción del usuario
+import { RegistrarOperacion } from '../../app/components/registrar-operacion/registrar-operacion';
+import { AperturarPeriodo } from '../../app/components/aperturar-periodo/aperturar-periodo';
+
+// Componente variable
+import { DropdownPIPeriodo } from '../../app/components/dropdown-pi-periodo/dropdown-pi-periodo';
+
+// Angular Material
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modulo-informes',
-  imports: [Header, AsideBar, NucleoInfo, DropdownPIPeriodo, AperturarPeriodo, RegistrarOperacion],
+  imports: [
+    AsideBar,
+    Header,
+    NucleoInfo,
+    RegistrarOperacion,
+    AperturarPeriodo,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    DropdownPIPeriodo,
+  ],
   templateUrl: './modulo-informes.html',
   styleUrl: './modulo-informes.css',
 })
 export class ModuloInformes {
+  // angular material
+  events: string[] = [];
+  opened!: boolean;
+
+  changeState() {
+    this.opened = !this.opened;
+  }
+
   userInfo!: any;
 
-  constructor(public userService: UserService) {
-	this.getUserInfo();
+  constructor(public userService: UserService, public router: Router) {
+    this.getUserInfo();
   }
 
   getUserInfo(): any {
@@ -30,6 +62,19 @@ export class ModuloInformes {
       },
       error: (err) => {
         console.log('error', err);
+      },
+    });
+  }
+
+  logOut() {
+    this.userService.logout().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['/']);
+        localStorage.clear();
+      },
+      error: (error) => {
+        console.log(error);
       },
     });
   }

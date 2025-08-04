@@ -1,0 +1,46 @@
+@if (userRol === "ADMIN") {
+
+<mat-sidenav-container class="dashboard-container">
+  <!-- Contenido dentro de la barra de navegación -->
+  <mat-sidenav [(opened)]="opened" class="sidebar">
+    <app-admin-aside-bar></app-admin-aside-bar>
+  </mat-sidenav>
+
+  <!-- Contenido fuero de la barra de navegación -->
+  <mat-sidenav-content>
+    <div class="top-bar">
+      <app-header></app-header>
+      <!-- Abrir menu / Cerrar sesión -->
+      <div class="actions-btn">
+        <button
+          id="menu-btn"
+          matButton="filled"
+          type="button"
+          (click)="changeState()"
+        >
+          MENU
+          <mat-icon>menu</mat-icon>
+        </button>
+        <button
+          id="logout-btn"
+          matButton="filled"
+          type="button"
+          (click)="logOut()"
+        >
+          Cerrar Sesión
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <app-nucleo-info></app-nucleo-info>
+      <!-- Componente variable -->
+      <app-crear-nucleo-form></app-crear-nucleo-form>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+} @else {
+<div>No autorizado</div>
+}

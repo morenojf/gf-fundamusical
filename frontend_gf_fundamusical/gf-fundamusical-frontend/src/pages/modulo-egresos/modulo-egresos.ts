@@ -1,38 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Header } from '../../app/components/header/header';
-import { AsideBar } from '../../app/components/aside-bar/aside-bar';
 import { NucleoInfo } from '../../app/components/nucleo-info/nucleo-info';
-import { DropdownPIPeriodo } from '../../app/components/dropdown-pi-periodo/dropdown-pi-periodo';
+
+// Servicio
 import { UserService } from '../../services/user-services/user-service';
+
+// User aside bar (tiene la vista del admin)
+import { AsideBar } from '../../app/components/aside-bar/aside-bar';
+
+// Botones de acción del usuario
 import { RegistrarOperacion } from '../../app/components/registrar-operacion/registrar-operacion';
 import { AperturarPeriodo } from '../../app/components/aperturar-periodo/aperturar-periodo';
+
+// Componente variable
+import { DropdownPIPeriodo } from '../../app/components/dropdown-pi-periodo/dropdown-pi-periodo';
+
+// Angular Material
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-modulo-egresos',
   imports: [
-    Header,
     AsideBar,
+    Header,
     NucleoInfo,
-    DropdownPIPeriodo,
-    AperturarPeriodo,
     RegistrarOperacion,
+    AperturarPeriodo,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    DropdownPIPeriodo,
   ],
   templateUrl: './modulo-egresos.html',
   styleUrl: './modulo-egresos.css',
 })
 export class ModuloEgresos {
+  // angular material
+  events: string[] = [];
+  opened!: boolean;
 
-	// loged in user data
-	userInfo!: any;
+    changeState(){
+	this.opened = !this.opened
+  }
 
+  // loged in user data
+  userInfo!: any;
 
-  constructor(public userService: UserService) {
+  constructor(public userService: UserService, public router: Router) {
     this.getUserInfo();
   }
 
-  
-
-  getUserInfo(): any {
+   getUserInfo(): any {
     this.userService.validateSession().subscribe({
       next: (data) => {
         // data recibe un json con
@@ -42,6 +63,19 @@ export class ModuloEgresos {
       },
       error: (err) => {
         console.log('error', err);
+      },
+    });
+  }
+
+      logOut() {
+    this.userService.logout().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.router.navigate(['/']);
+        localStorage.clear();
+      },
+      error: (error) => {
+        console.log(error);
       },
     });
   }

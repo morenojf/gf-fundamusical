@@ -128,8 +128,6 @@ export class RegistrarOperacion implements OnInit {
 
     // Traer información del usuario
     this.getLogedInUserInfo();
-
-
   }
 
   // ON INIT ---------------------------------------------------------------
@@ -152,16 +150,12 @@ export class RegistrarOperacion implements OnInit {
 
   // Obtener Partidas / abrir modal --------
   public genTrigger() {
-
-	if (!this.periodosArray.length) {
-	    alert('POR FAVOR APERTURE UN PERIODO')
-		window.location.reload()
-	} else{
-		this.openDialog();
-
-	}
-
-
+    if (!this.periodosArray.length) {
+      alert('POR FAVOR APERTURE UN PERIODO');
+      window.location.reload();
+    } else {
+      this.openDialog();
+    }
   }
 
   // Obtener id del usuario iniciado
@@ -169,21 +163,8 @@ export class RegistrarOperacion implements OnInit {
     this.userService.validateSession().subscribe({
       next: (data) => {
         this.userInfo = data.data;
-        this.getNucleoInfoByUserId(this.userInfo);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  // OBTENER INFORMACIÓN DEL NUCLEO SEGUN ID DEL USUARIO
-  getNucleoInfoByUserId(userInfo: any) {
-    this.nucleoInfo.getNucleoInfoByUserId(userInfo.userId).subscribe({
-      next: (data) => {
-        this.logedInNucleoInfo = data;
-        this.nucleoId.setValue(this.logedInNucleoInfo.nucleoId);
-        this.getAllPeriodos(this.logedInNucleoInfo);
+        this.nucleoId.setValue(this.userInfo.nucleoId);
+        this.getAllPeriodos(this.userInfo);
       },
       error: (error) => {
         console.log(error);
@@ -192,11 +173,11 @@ export class RegistrarOperacion implements OnInit {
   }
 
   // OBTENER TODOS LOS PERIODOS Y FILTRARLOS POR EL NUCLEO ID
-  getAllPeriodos(nucleoInfo: any) {
+  getAllPeriodos(userInfo: any) {
     this.periodoService.getAllPeriodos().subscribe({
       next: (data) => {
         this.periodosArray = data.filter(
-          (periodo: any) => periodo.nucleoId === nucleoInfo.nucleoId
+          (periodo: any) => periodo.nucleoId === userInfo.nucleoId
         );
       },
       error: (error) => {
@@ -291,7 +272,7 @@ export class RegistrarOperacion implements OnInit {
 
     this.operacionesService.createOperacion(this.soporteData).subscribe({
       next: (data) => {
-        window.location.reload()
+        window.location.reload();
       },
       error: (error) => {
         console.log(error);

@@ -1,42 +1,133 @@
 @if (userInfo?.userRol === "ADMIN") {
-<div class="general-container">
-  <div class="main-content-wrapper">
-    <aside class="sidebar">
-      <nav>
-        <!-- List items del super usuario -->
-        <ul>
-          <!-- Dashboard super usuario -->
-          <div>
-            <li>
-              <a routerLink="/admin-dashboard" class="sidebar-item"
-                ><i class="icon-resumen"></i>Vista General</a
-              >
-            </li>
-          </div>
-          <div>
-            <!-- Sección de usuarios -->
-            <li class="sidebar-dropdown">
-              <button class="sidebar-item dropdown-toggle">Usuarios</button>
-              <ul class="dropdown-menu">
-                <li>
-                  <a routerLink="/users-list" class="dropdown-item"
-                    >Todos los usuarios</a
-                  >
-                </li>
-                <li>
-                  <a routerLink="/crear-usuario" class="dropdown-item"
-                    >Crear Usuario/Nucleo</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </div>
-        </ul>
-      </nav>
-      <div class="sidebar-bottom">
-        <p class="sidebar-item" (click)="logOut()">Cerrar sesión</p>
-      </div>
-    </aside>
+
+<!-- List items del super usuario -->
+<ul>
+  <!-- Vista general -->
+  <div>
+    <li>
+      <a routerLink="/admin-dashboard" class="sidebar-item"
+        ><i class="icon-resumen"></i><b>Vista General</b></a
+      >
+    </li>
   </div>
-</div>
+
+  <!-- Nucleos expansión -->
+  <div>
+    <!-- Sección de Nucleos -->
+    <li>
+      <mat-expansion-panel
+        style="box-shadow: none; background-color: white; margin-bottom: 16px"
+      >
+        <mat-expansion-panel-header
+          style="height: fit-content; font-family: inherit"
+          onmouseover="this.style.backgroundColor='transparent';"
+          onmouseout="this.style.backgroundColor='';"
+        >
+          <mat-panel-title
+            style="margin: 0px; background-color: initial; text-align: left"
+            ><b>Gestión de Núcleos</b></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <ul class="dropdown-menu">
+          @if (!nucleos?.length) {
+          <li>Sin nucleos creados</li>
+          } @else { @for (nucleo of nucleos; track $index) {
+          <li>
+            <a
+              class="dropdown-item"
+              (click)="goToNucleoDetails(nucleo, getSelectedUser(nucleo.nucleoId))"
+              >- {{nucleo.nucleoName}}</a
+            >
+          </li>
+          } }
+        </ul>
+      </mat-expansion-panel>
+    </li>
+  </div>
+
+  <!-- Crear/Editar Nucleo -->
+  <div>
+    <li>
+      <mat-expansion-panel
+        style="box-shadow: none; background-color: white; margin-bottom: 16px"
+      >
+        <mat-expansion-panel-header
+          style="height: fit-content; font-family: inherit"
+          onmouseover="this.style.backgroundColor='transparent';"
+          onmouseout="this.style.backgroundColor='';"
+        >
+          <mat-panel-title
+            style="margin: 0px; background-color: initial; text-align: left"
+            ><b>Núcleo</b></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="/crear-nucleo" class="dropdown-item"
+              >- Crear/Editar</a
+            >
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </li>
+  </div>
+
+  <!-- Usuarios expansion -->
+  <div>
+    <!-- Sección de usuarios -->
+    <li>
+      <mat-expansion-panel
+        style="box-shadow: none; background-color: white; margin-bottom: 16px"
+      >
+        <mat-expansion-panel-header
+          style="height: fit-content; font-family: inherit"
+          onmouseover="this.style.backgroundColor='transparent';"
+          onmouseout="this.style.backgroundColor='';"
+        >
+          <mat-panel-title
+            style="margin: 0px; background-color: initial; text-align: left"
+            ><b>Usuario</b></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="/users-list" class="dropdown-item">- Editar</a>
+          </li>
+          <li>
+            <a routerLink="/crear-usuario" class="dropdown-item">- Crear</a>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </li>
+  </div>
+
+
+    <!-- CG expansion -->
+  <div>
+    <!-- Sección de Conceptos de gastos -->
+    <li>
+      <mat-expansion-panel
+        style="box-shadow: none; background-color: white; margin-bottom: 16px"
+      >
+        <mat-expansion-panel-header
+          style="height: fit-content; font-family: inherit"
+          onmouseover="this.style.backgroundColor='transparent';"
+          onmouseout="this.style.backgroundColor='';"
+        >
+          <mat-panel-title
+            style="margin: 0px; background-color: initial; text-align: left"
+            ><b>Conceptos de Gasto</b></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="/crear-cg" class="dropdown-item">- Crear/Editar</a>
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </li>
+  </div>
+
+  <hr>
+</ul>
 }

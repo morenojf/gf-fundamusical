@@ -3,8 +3,10 @@
     <thead>
       <tr>
         <th>User ID</th>
-        <th>Nombre</th>
-        <th>Nucleo</th>
+        <th>Nombre Coordinador</th>
+        <th>Cédula</th>
+        <th>Nucleo Asignado</th>
+        <th>Teléfono Coordinador</th>
         <th>Correo electrónico</th>
         <th>Contraseña</th>
         <th>Rol</th>
@@ -24,26 +26,81 @@
         <td>
           @if (editingUserId === usuario.userId) {
           <span class="input-measure" #measureSpan
-            >{{editData.userName || usuario.userName}}</span
+            >{{editData.nombreCoordinador || usuario.nombreCoordinador}}</span
           >
 
           <input
             type="text"
-            [(ngModel)]="editData.userName"
-            [placeholder]="usuario.userName"
+            [(ngModel)]="editData.nombreCoordinador"
+            [placeholder]="usuario.nombreCoordinador"
             [style.width.px]="measureSpan.offsetWidth"
-            (input)="onInputResize(measureSpan, editData.userName || usuario.userName)"
+            (input)="onInputResize(measureSpan, editData.nombreCoordinador || usuario.nombreCoordinador)"
           />
           } @else {
-          <p>{{usuario.userName}}</p>
+          <p>{{usuario.nombreCoordinador}}</p>
           }
         </td>
+        <!--Cedula Coordinador -->
+        <td>
+          @if (editingUserId === usuario.userId) {
+          <span class="input-measure" #measureSpan
+            >{{editData.cedula || usuario.cedulaCoordinador}}</span
+          >
+
+          <input
+            type="text"
+            [(ngModel)]="editData.cedula"
+            [placeholder]="usuario.cedulaCoordinador"
+            [style.width.px]="measureSpan.offsetWidth"
+            (input)="onInputResize(measureSpan, editData.cedula || usuario.cedulaCoordinador)"
+          />
+          } @else { @if (usuario.cedulaCoordinador === null) {
+          <p>N/A</p>
+          } @else {
+          <p>{{usuario.cedulaCoordinador}}</p>
+          } }
+        </td>
+
         <!-- Nucleo del Usuario -->
-        @if (usuario.userNucleo === null) {
+        @if (editingUserId === usuario.userId) {
+
+
+        <select name="select" style="font-size: 17px; margin-top: 20px;" (change)="onSelectEvent($event)">
+
+			@if(!availableNucleos?.length){
+				<option value="{{usuario.nucleoId}}" selected>{{usuario.nucleoName}}</option>
+			} @else if(availableNucleos?.length) {
+				@for(nucleo of availableNucleos; track $index) {
+					<option value="{{nucleo.nucleoId}}" >{{nucleo.nucleoName}}</option>
+				}
+			}
+		</select>
+
+        } @else if (usuario.nucleoId === null) {
         <td>N/A</td>
         } @else {
-        <td><p>{{usuario?.userNucleo}}</p></td>
+        <td><p>{{usuario.nucleoName}}</p></td>
         }
+
+        <!-- Telefono coordinador -->
+        <td>
+          @if (editingUserId === usuario.userId) {
+          <span class="input-measure" #measureSpan
+            >{{editData.telefono || usuario.telefonoCoordinador}}</span
+          >
+
+          <input
+            type="email"
+            [(ngModel)]="editData.telefono"
+            [placeholder]="usuario.telefonoCoordinador"
+            required="true"
+            [style.width.px]="measureSpan.offsetWidth"
+            (input)="onInputResize(measureSpan, editData.telefono || usuario.telefonoCoord)"
+          />
+          } @else {
+          <p>{{usuario.telefonoCoordinador}}</p>
+          }
+        </td>
         <!-- Correo -->
         <td>
           @if (editingUserId === usuario.userId) {
@@ -126,7 +183,11 @@
           </button>
           } @if (usuario.isActive == 'Activo') {
           <!-- Btn Deshabilitar -->
-          <button class="action-btn disable" title="Deshabilitar" (click)="desactivarUsuario(usuario)">
+          <button
+            class="action-btn disable"
+            title="Deshabilitar"
+            (click)="desactivarUsuario(usuario)"
+          >
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="8" r="4" stroke="#d63638" stroke-width="2" />
               <path
@@ -146,7 +207,11 @@
           </button>
           } @else {
           <!-- Btn Habilitar -->
-          <button class="action-btn enable" title="Habilitar" (click)="activateUser(usuario)">
+          <button
+            class="action-btn enable"
+            title="Habilitar"
+            (click)="activateUser(usuario)"
+          >
             <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="8" r="4" stroke="#d63638" stroke-width="2" />
               <path

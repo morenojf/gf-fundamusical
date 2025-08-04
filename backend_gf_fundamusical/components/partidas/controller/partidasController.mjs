@@ -35,5 +35,50 @@ export class partidasController {
 		}
 	}
 
+	// CREAR UNA NUEVA PARTIDA
+	static async createPartida(req, res){
+		try {
+			const newPartida = req.body
+			const createdPartida = await partidasModel.createPartida(newPartida)
+			res.status(200).send(createdPartida)
+		} catch (error) {
+			res.status(400).send(error)
+		}		
+	}
+
+	// ACTUALIZAR EL NOMBRE DE UNA PARTIDA
+	static async updatePartida(req, res){
+		try {
+			const newPartida = req.body
+			const updatedPartida = await partidasModel.updatePartida(newPartida)
+			res.status(200).send(updatedPartida)
+		} catch (error) {
+			res.status(400).send(error)
+		}
+	}
+
+	// ACTIVAR PARTIDA
+	static async activatePartida(req, res){
+		try {
+			const partida = req.body
+			const partidaActivated = await partidasModel.activatePartida(partida)
+			res.status(200).send(partidaActivated)
+		} catch (error) {
+			res.status(400).send(error)
+		}
+
+	}
+
+	// DESACTIVAR PARTIDA 
+	static async deactivatePartida(req, res){
+		try {
+			const partida = req.body
+			const partidaDeactivated = await partidasModel.deactivatePartida(partida)
+			res.status(200).send(partidaDeactivated)
+		} catch (error) {
+			res.status(400).send(error)
+		}
+	}
+
 
 }

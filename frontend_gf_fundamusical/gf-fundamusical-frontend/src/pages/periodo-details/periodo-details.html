@@ -1,15 +1,48 @@
-<div class="full-page-container">
-<app-header></app-header>
+<mat-sidenav-container class="dashboard-container">
+  <!-- Contenido dentro de la barra de navegación -->
+  <mat-sidenav [(opened)]="opened" class="sidebar">
+    <app-aside-bar></app-aside-bar>
+  </mat-sidenav>
 
-  <div class="main-content-wrapper">
-<app-aside-bar></app-aside-bar>
+  <!-- Contenido fuero de la barra de navegación -->
+  <mat-sidenav-content>
+    <div class="top-bar">
+      <app-header></app-header>
+      <!-- Abrir menu / Cerrar sesión -->
+      <div class="actions-btn">
+        <button
+          id="menu-btn"
+          matButton="filled"
+          type="button"
+          (click)="changeState()"
+        >
+          MENU
+          <mat-icon>menu</mat-icon>
+        </button>
+        <button
+          id="logout-btn"
+          matButton="filled"
+          type="button"
+          (click)="logOut()"
+        >
+          Cerrar Sesión
+          <mat-icon>exit_to_app</mat-icon>
+        </button>
+      </div>
+    </div>
 
-    <main class="content-area">
-<app-nucleo-info></app-nucleo-info>
+    <div class="content-area">
+      <app-nucleo-info></app-nucleo-info>
+      <!-- Componente variable -->
+      <app-ingresos-list></app-ingresos-list>
+      @if (userInfo?.userRol === "USER") {
+      <div class="btns">
+        <app-registrar-operacion id="registrar"></app-registrar-operacion>
+        <app-aperturar-periodo id="aperturar-periodo"></app-aperturar-periodo>
+      </div>
+      }
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
-<app-ingresos-list></app-ingresos-list>
 
-
-    </main>
-  </div>
-</div>

@@ -15,7 +15,10 @@ export class userController {
         const token = jwt.sign(
           {
             userId: validUser[0].userId,
-            userName: validUser[0].userName,
+            nombreCoordinador: validUser[0].nombreCoordinador,
+			cedulaCoordinador: validUser[0].cedulaCoordinador,
+			nucleoId: validUser[0].nucleoId,
+			telefonoCoordinador: validUser[0].telefonoCoordinador,
             userEmail: validUser[0].email,
             userPass: validUser[0].userPass,
             userRol: validUser[0].rol,
@@ -61,7 +64,7 @@ export class userController {
       const updatedUser = await userModel.updateUser(userInfo)
       res.status(200).send(updatedUser)
     } catch (error) {
-      console.log(error)
+      res.status(400).send(error)
     }
   }
 
@@ -91,7 +94,8 @@ export class userController {
       const createdUser = await userModel.createUser(userInfo)
       res.status(200).send(createdUser)
     } catch (error) {
-      console.log(error)
+      res.send(error)
+	  console.log(error)
     }
   }
 

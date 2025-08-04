@@ -1,65 +1,92 @@
-<div class="main-content">
-  <h1>Crear Usuario/Núcleo</h1>
+<div class="content-wrapper">
+  <div class="main-content">
+    <h1>Registrar Coordinador</h1>
 
-  <!-- Inicio de formulario -->
-  <form class="wp-form" [formGroup]="userForm" (submit)="submitForm()">
+    <!-- Inicio de formulario -->
+    <form class="wp-form" [formGroup]="userForm">
+      <div class="first-clm">
+        <!-- Nombre coordinador -->
+        <mat-form-field class="form-row">
+          <mat-label>Nombre Coordinador</mat-label>
+          <input matInput required formControlName="nombreCoordinador" type="text"/>
+        </mat-form-field>
+
+        <!-- Cedula -->
+        <mat-form-field class="form-row">
+          <mat-label>Cédula</mat-label>
+          <input matInput required formControlName="cedulaCoordinador" type="number"/>
+        </mat-form-field>
+
+        <!-- Telefono -->
+        <mat-form-field class="form-row">
+          <mat-label>Teléfono</mat-label>
+          <input matInput required formControlName="telefonoCoordinador" type="number"/>
+        </mat-form-field>
+
+        <!-- Correo Electrónico -->
+        <mat-form-field class="form-row">
+          <mat-label required>Correo</mat-label>
+          <input
+            matInput
+            placeholder="nucleo@ejemplo.com"
+			formControlName="userEmail"
+            (blur)="updateErrorMessage()"
+            required
+          />
+          @if (userEmail.invalid) {
+          <mat-error>{{errorMessage()}}</mat-error>
+          }
+        </mat-form-field>
+
+        <!-- Contraseña -->
+        <mat-form-field class="form-row">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [type]="hide() ? 'password' : 'text'" formControlName="userPassword" required/>
+          <button
+            matIconButton
+            matSuffix
+            (click)="clickEvent($event)"
+            [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()"
+          >
+            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+
+      <div class="second-clm">
+        <!-- Seleccionar Núcleo -->
+
+        <mat-form-field class="form-row">
+          <mat-label>Nucleo</mat-label>
+          <mat-select formControlName="nucleoId">
+            @if (!nucleosArray?.length) {
+            <mat-option >No existen Núcleos disponibles</mat-option>
+			} @else {
+				@for (nucleo of nucleosArray; track $index) {
+				<mat-option value="{{nucleo.nucleoId}}">{{nucleo.nucleoName}}</mat-option>
+				} 
+			}
+          </mat-select>
+        </mat-form-field>
+
+
+        <!-- Seleccionar Rol -->
+        <!--  -->
+        <mat-form-field class="form-row">
+          <mat-label>Rol</mat-label>
+          <mat-select  formControlName="userRol" >
+            <mat-option  value="USER">Usuario</mat-option>
+            <mat-option value="ADMIN">Administrador</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+
+    <!-- Boton submit de formulario -->
     <div class="form-row">
-      <label>Nombre de Usuario<span class="required">*</span></label>
-      <input type="text" required formControlName="userName" />
+      <!-- [disabled]="userForm.invalid" -->
+      <button matButton="filled" type="submit" class="wp-btn" (click)="submitForm()">Crear</button>
     </div>
-    <div class="form-row">
-      <label>Correo electrónico<span class="required">*</span></label>
-      <input type="email" required formControlName="userEmail" />
-    </div>
-    <div class="form-row">
-      <label>Contraseña</label>
-      <input type="text" formControlName="userPassword" />
-    </div>
-    <div class="form-row">
-      <label>Nombre del Núcleo (sin la palabra Núcleo delante).</label>
-      @if (creaAdmin == true) {
-      <input type="text" style="background-color: #a5a6a6" disabled />
-      } @else {
-      <input type="text" formControlName="nucleoName" />
-      }
-    </div>
-    <div class="form-row">
-      <label
-        >Nombre Coordinador del Núcleo<span class="required">*</span></label
-      >
-      @if (creaAdmin == true) {
-      <input type="text" style="background-color: #a5a6a6" disabled />
-      } @else {
-      <input type="text" formControlName="coordinadorName" />
-      }
-    </div>
-    <div class="form-row">
-      <label
-        >Nombre Director Musical del Núcleo<span class="required"
-          >*</span
-        ></label
-      >
-      @if (creaAdmin == true) {
-      <input type="text" style="background-color: #a5a6a6" disabled />
-      } @else {
-      <input type="text" formControlName="directorName" />
-      }
-    </div>
-    <div class="form-row">
-      <label>Rol</label>
-      <select
-        #roles
-        (change)="onSelectChange($event)"
-        formControlName="userRol"
-      >
-        <option value="USER">Usuario</option>
-        <option value="ADMIN">Administrador</option>
-      </select>
-    </div>
-    <div class="form-row">
-      <button type="submit" class="wp-btn" [disabled]="userForm.invalid">
-        Crear
-      </button>
-    </div>
-  </form>
+  </div>
 </div>

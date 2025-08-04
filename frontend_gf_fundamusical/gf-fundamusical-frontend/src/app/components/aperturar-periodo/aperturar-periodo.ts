@@ -36,7 +36,7 @@ export class AperturarPeriodo implements OnInit {
   partidas!: any;
 
   // Loged In User ID
-  userId!: any;
+  userInfo!: any;
 
   // donde se almacena el Anio del perdio
   periodoAnio!: any;
@@ -116,7 +116,7 @@ export class AperturarPeriodo implements OnInit {
   getLogedInUserInfo() {
     this.userService.validateSession().subscribe({
       next: (data) => {
-        this.userId = data.data.userId;
+        this.userInfo = data.data;
       },
       error: (error) => {
         console.log(error);
@@ -134,7 +134,7 @@ export class AperturarPeriodo implements OnInit {
   getAllPartidas() {
     this.partidasService.getAllPartidas().subscribe({
       next: (data) => {
-        this.partidas = data;
+        this.partidas = data.filter((partida: any) => partida.isActive === 'Activo');
       },
       error: (e) => {
         console.log(e);
@@ -183,17 +183,10 @@ export class AperturarPeriodo implements OnInit {
   }
 
   //   Primero crea el nuevo periodo
-  //   Luego llena la tala periodo_partida
+  //   Luego llena la tabla periodo_partida
   submitForm() {
     // Obtengo el id del nucleo que corresponde al usuario
-    this.nucleoInfo.getNucleoInfoByUserId(this.userId).subscribe({
-      next: (data) => {
-        this.createPeriodo(data.nucleoId);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+        this.createPeriodo(this.userInfo.nucleoId);
   }
 
   // Crea un array de objetos [{}] coon las partidas, el año seleccionado y nucleo Id relacionado
@@ -221,8 +214,8 @@ export class AperturarPeriodo implements OnInit {
 		this.designedPI = [];
         this.fullForm.reset();
         this.formPR.reset();
-        window.location.reload();
-        alert('Periodo creado satisfactoriamente');
+		alert('Periodo creado satisfactoriamente')
+		window.location.reload()
       },
       error: (error) => {
         console.log(error);

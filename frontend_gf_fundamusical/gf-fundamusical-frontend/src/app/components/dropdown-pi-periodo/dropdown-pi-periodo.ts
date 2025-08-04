@@ -52,6 +52,13 @@ export class DropdownPIPeriodo implements OnInit{
   // Limpiar subscripcion de parametros de ruta, aun no se para que se usa 
     private routeSub: Subscription | undefined; // Para limpiar la suscripción
 
+
+	// almacenar información del usuario
+	userInfo!: any;
+
+	// almacenar los datos del usuario que vienen del LS si eres admin
+	selectedUser!: any;
+
 	// almacenar la ruta actual
 	tipoRenderedLista!: string
 
@@ -87,7 +94,7 @@ export class DropdownPIPeriodo implements OnInit{
       'Diciembre',
     ];
 
-    this.getUserId();
+    this.getUserInfo();
   }
 
   // OnInit para capturar la ruta del componente si es ingreso o egreso o informe
@@ -103,10 +110,15 @@ export class DropdownPIPeriodo implements OnInit{
   }
 
   // Obtiene la información del usuario y su id
-  getUserId() {
+  getUserInfo() {
     this.userService.validateSession().subscribe({
       next: (data) => {
-        this.getNucleoByUserId(data.data.userId);
+		this.userInfo = data.data
+		if (this.userInfo.userRol === 'ADMIN') {
+			this.obtenerDato();
+		} else {
+			this.getAllPeriodos(this.userInfo);
+		}
       },
       error: (error) => {
         console.log(error);
@@ -114,26 +126,26 @@ export class DropdownPIPeriodo implements OnInit{
     });
   }
 
-  // Obtiene la información del nucleo y el nucleo ID segun el id del usuario logeado
-  getNucleoByUserId(userId: any) {
-    this.nucleoService.getNucleoInfoByUserId(userId).subscribe({
-      next: (data) => {
-        this.getAllPeriodos(data.nucleoId);
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
+  	// Si soy admin obtengo mis datos del LS para ver la informacion del usuario
+	  obtenerDato(): void {
+    const datoJSON = localStorage.getItem('userInfo');
+    if (datoJSON) {
+      this.selectedUser = JSON.parse(datoJSON);
+	  this.getAllPeriodos(this.selectedUser)
+    } else {
+      this.selectedUser = null;
+      console.log('no hay datos almacenados con esa clave');
+    }
   }
 
   // Obtener todos los periodos que corresponden al nucleo del usuario logeado
-  getAllPeriodos(nucleoId: any) {
+  getAllPeriodos(userInfo: any) {
     this.periodoService.getAllPeriodos().subscribe({
       next: (data) => {
         this.periodosArray = data.filter(
-          (periodo: any) => periodo.nucleoId === nucleoId
+          (periodo: any) => periodo.nucleoId === userInfo.nucleoId
         );
-        this.getAllOperaciones(nucleoId);
+        this.getAllOperaciones(userInfo);
       },
       error: (error) => {
         console.log(error);
@@ -142,11 +154,11 @@ export class DropdownPIPeriodo implements OnInit{
   }
 
   // Obtener todas las operaciones que correspondan al nucleo del usuario logueado
-  getAllOperaciones(nucleoId: any) {
+  getAllOperaciones(userInfo: any) {
     this.operacionesService.getAllOperaciones().subscribe({
       next: (data) => {
         this.operacionesArray = data.filter(
-          (operacion: any) => operacion.nucleoId === nucleoId
+          (operacion: any) => operacion.nucleoId === userInfo.nucleoId
         );
       },
       error: (error) => {
